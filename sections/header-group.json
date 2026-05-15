@@ -25,6 +25,7 @@
       "block_order": [
         "announcement-bar-0"
       ],
+      "disabled": true,
       "settings": {
         "auto_rotate": false,
         "change_slides_speed": 5,
@@ -64,9 +65,15 @@
             "menu_item": "inicio",
             "title": "inicio",
             "links": "customer-account-main-menu",
-            "image": "shopify://shop_images/1744338_02_jpg.webp",
-            "image_caption": "Latest rotation",
-            "image_link": ""
+            "image_1": "shopify://shop_images/1744338_02_jpg.webp",
+            "image_1_text": "Latest rotation",
+            "image_1_link": "",
+            "image_2": "shopify://shop_images/1640893_01_jpg.webp",
+            "image_2_text": "",
+            "image_2_link": "",
+            "image_3": "shopify://shop_images/Screenshot-2026-05-06-at-14-40-31.webp",
+            "image_3_text": "",
+            "image_3_link": ""
           }
         }
       },
@@ -75,27 +82,21 @@
       ],
       "name": "Borrego header",
       "settings": {
-        "logo_desktop": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
         "logo_width_desktop": 95,
         "logo_width_mobile": 112,
         "menu": "main-menu",
         "show_account_icon": true,
-        "show_wishlist_icon": true,
+        "show_wishlist_icon": false,
         "wishlist_link": "",
-        "enable_transparent_home": true,
-        "header_background": "#11110C",
-        "header_scrolled_background": "#11110C",
-        "header_text_color": "#F2ECDD",
-        "transparent_text_color": "#11110C",
-        "header_hover_color": "#D9B26F",
+        "transparent_on_home": true,
+        "header_background": "#11110c",
+        "header_scrolled_background": "#11110c",
+        "header_text_color": "#f2ecdd",
+        "transparent_text_color": "#ffffff",
+        "header_hover_color": "#d9b26f",
         "mega_menu_theme": "light",
         "mega_menu_background": "#ffffff",
-        "mega_menu_text_color": "#11110C",
-        "show_announcement": false,
-        "announcement_text": "AUTHENTIC PAIRS ONLY / REQUEST YOUR SIZE / WORLDWIDE SOURCING",
-        "announcement_link": "",
-        "announcement_background": "#D9B26F",
-        "announcement_text_color": "#11110C"
+        "mega_menu_text_color": "#11110c"
       }
     }
   },
