@@ -37,6 +37,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/referenciaejm.jpg",
+        "mobile_image": "shopify://shop_images/Sneaker-Politics-LA_Trainer_Editorial-IG-7_3093b7d6-5306-42bc-b2aa-dbf399f77cd4.jpg",
         "image_overlay_opacity": 30,
         "image_height": "adapt",
         "image_behavior": "zoom-in",
