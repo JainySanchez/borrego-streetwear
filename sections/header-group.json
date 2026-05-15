@@ -11,32 +11,9 @@
   "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "announcement-bar": {
-      "type": "announcement-bar",
-      "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "announcement-bar-0"
-      ],
-      "settings": {
-        "auto_rotate": false,
-        "change_slides_speed": 5,
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
-        "show_social": false,
-        "enable_country_selector": false,
-        "enable_language_selector": false
-      }
-    },
     "header": {
       "type": "header",
+      "disabled": true,
       "settings": {
         "logo_position": "middle-left",
         "mobile_logo_position": "center",
@@ -53,10 +30,50 @@
         "padding_top": 20,
         "padding_bottom": 20
       }
+    },
+    "borrego_header_RqdA8g": {
+      "type": "borrego-header",
+      "blocks": {
+        "mega_menu_na83NT": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "",
+            "title": "Featured",
+            "links": "",
+            "image_1_text": "Latest rotation",
+            "image_1_link": "",
+            "image_2_text": "",
+            "image_2_link": "",
+            "image_3_text": "",
+            "image_3_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_na83NT"
+      ],
+      "name": "Borrego header",
+      "settings": {
+        "logo_width_desktop": 170,
+        "logo_width_mobile": 112,
+        "menu": "main-menu",
+        "show_account_icon": true,
+        "show_wishlist_icon": false,
+        "wishlist_link": "",
+        "transparent_on_home": true,
+        "header_background": "#11110C",
+        "header_scrolled_background": "#11110C",
+        "header_text_color": "#F2ECDD",
+        "transparent_text_color": "#F2ECDD",
+        "header_hover_color": "#D9B26F",
+        "mega_menu_theme": "light",
+        "mega_menu_background": "#F2ECDD",
+        "mega_menu_text_color": "#11110C"
+      }
     }
   },
   "order": [
-    "announcement-bar",
-    "header"
+    "header",
+    "borrego_header_RqdA8g"
   ]
 }
