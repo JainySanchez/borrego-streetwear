@@ -61,9 +61,10 @@
         "mega_menu_HreJpK": {
           "type": "mega_menu",
           "settings": {
-            "menu_item": "",
-            "title": "Featured",
-            "links": "",
+            "menu_item": "inicio",
+            "title": "inicio",
+            "links": "customer-account-main-menu",
+            "image": "shopify://shop_images/1744338_02_jpg.webp",
             "image_caption": "Latest rotation",
             "image_link": ""
           }
@@ -88,7 +89,7 @@
         "transparent_text_color": "#11110C",
         "header_hover_color": "#D9B26F",
         "mega_menu_theme": "light",
-        "mega_menu_background": "#F2ECDD",
+        "mega_menu_background": "#ffffff",
         "mega_menu_text_color": "#11110C",
         "show_announcement": false,
         "announcement_text": "AUTHENTIC PAIRS ONLY / REQUEST YOUR SIZE / WORLDWIDE SOURCING",
