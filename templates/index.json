@@ -40,7 +40,7 @@
         "mobile_image": "shopify://shop_images/99268844-d665-4cec-ad48-ab1139b95a7e-Mobile_16.gif",
         "image_overlay_opacity": 30,
         "image_height": "adapt",
-        "image_behavior": "zoom-in",
+        "image_behavior": "fixed",
         "desktop_content_position": "bottom-center",
         "desktop_content_alignment": "center",
         "show_text_box": false,
