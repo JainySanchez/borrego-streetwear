@@ -217,8 +217,8 @@
   .borrego-header__mobile-close svg,
   .borrego-header__mobile-action svg {
     display: block;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
   .borrego-header__icon .svg-wrapper,
@@ -226,13 +226,14 @@
   .borrego-header__mobile-close .svg-wrapper,
   .borrego-header__mobile-action .svg-wrapper {
     display: inline-flex;
-    width: 2.4rem;
-    height: 2.4rem;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 
   .borrego-header__icon--cart svg {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2.2rem;
+    height: 2.2rem;
+    overflow: visible;
   }
 
   .borrego-header__cart-count {
@@ -482,46 +483,6 @@
     letter-spacing: 0.04em;
   }
 
-  .borrego-header__mobile-image {
-    display: block;
-    overflow: hidden;
-    margin: 1rem 0 1.6rem;
-    color: #f2ecdd;
-    text-decoration: none;
-  }
-
-  .borrego-header__mobile-images {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(18rem, 72%);
-    gap: 1.2rem;
-    overflow-x: auto;
-    padding: 0.2rem 0 1.2rem;
-    scroll-snap-type: x proximity;
-  }
-
-  .borrego-header__mobile-images:empty {
-    display: none;
-  }
-
-  .borrego-header__mobile-image img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    scroll-snap-align: start;
-  }
-
-  .borrego-header__mobile-image span {
-    display: block;
-    margin-top: 0.8rem;
-    color: #d9b26f;
-    font-size: 1.1rem;
-    font-weight: 900;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
   .borrego-header__mobile-actions {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -582,6 +543,23 @@
     .borrego-header__mobile-cart {
       display: inline-flex;
       justify-self: end;
+    }
+
+    .borrego-header__icon svg,
+    .borrego-header__mobile-toggle svg,
+    .borrego-header__mobile-close svg,
+    .borrego-header__mobile-action svg,
+    .borrego-header__icon--cart svg {
+      width: 2.4rem;
+      height: 2.4rem;
+    }
+
+    .borrego-header__icon .svg-wrapper,
+    .borrego-header__mobile-toggle .svg-wrapper,
+    .borrego-header__mobile-close .svg-wrapper,
+    .borrego-header__mobile-action .svg-wrapper {
+      width: 2.4rem;
+      height: 2.4rem;
     }
 
     .borrego-header__logo-image {
@@ -868,10 +846,11 @@
           {%- endif -%}
           <li>
             <a class="borrego-header__icon borrego-header__icon--cart" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
-              {%- if cart == empty -%}
-                {{ 'icon-cart-empty.svg' | inline_asset_content }}
-              {%- else -%}
-                {{ 'icon-cart.svg' | inline_asset_content }}
+              <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none">
+                <path d="M7.2 8.5H16.8L18 21H6L7.2 8.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M9 8.5V6.8C9 4.9 10.3 3.5 12 3.5C13.7 3.5 15 4.9 15 6.8V8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              {%- if cart != empty -%}
                 <span class="borrego-header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
                 <span class="borrego-header__sr-only">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
               {%- endif -%}
@@ -881,10 +860,11 @@
       </div>
 
       <a class="borrego-header__icon borrego-header__icon--cart borrego-header__mobile-cart" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
-        {%- if cart == empty -%}
-          {{ 'icon-cart-empty.svg' | inline_asset_content }}
-        {%- else -%}
-          {{ 'icon-cart.svg' | inline_asset_content }}
+        <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none">
+          <path d="M7.2 8.5H16.8L18 21H6L7.2 8.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+          <path d="M9 8.5V6.8C9 4.9 10.3 3.5 12 3.5C13.7 3.5 15 4.9 15 6.8V8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        {%- if cart != empty -%}
           <span class="borrego-header__cart-count" aria-hidden="true">{{ cart.item_count }}</span>
           <span class="borrego-header__sr-only">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
         {%- endif -%}
@@ -914,7 +894,7 @@
               for block in section.blocks
                 assign block_key = block.settings.menu_item | handleize
                 if block.type == 'mega_menu' and block_key == link_key
-                  if block.settings.links != blank or block.settings.image_1 != blank or block.settings.image_2 != blank or block.settings.image_3 != blank
+                  if block.settings.links != blank
                     assign has_mobile_content = true
                   endif
                 endif
@@ -958,77 +938,6 @@
                     {%- endfor -%}
                   </ul>
 
-                  <div class="borrego-header__mobile-images">
-                    {%- for block in section.blocks -%}
-                      {%- liquid
-                        assign block_key = block.settings.menu_item | handleize
-                      -%}
-                      {%- if block.type == 'mega_menu' and block_key == link_key -%}
-                        {%- if block.settings.image_1 != blank -%}
-                          <a
-                            class="borrego-header__mobile-image"
-                            href="{% if block.settings.image_1_link != blank %}{{ block.settings.image_1_link }}{% else %}{{ link.url }}{% endif %}"
-                            data-borrego-mobile-link
-                          >
-                            {{
-                              block.settings.image_1
-                              | image_url: width: 620
-                              | image_tag:
-                                loading: 'lazy',
-                                widths: '260, 420, 620',
-                                sizes: '72vw',
-                                alt: block.settings.image_1.alt
-                            }}
-                            {%- if block.settings.image_1_text != blank -%}
-                              <span>{{ block.settings.image_1_text | escape }}</span>
-                            {%- endif -%}
-                          </a>
-                        {%- endif -%}
-
-                        {%- if block.settings.image_2 != blank -%}
-                          <a
-                            class="borrego-header__mobile-image"
-                            href="{% if block.settings.image_2_link != blank %}{{ block.settings.image_2_link }}{% else %}{{ link.url }}{% endif %}"
-                            data-borrego-mobile-link
-                          >
-                            {{
-                              block.settings.image_2
-                              | image_url: width: 620
-                              | image_tag:
-                                loading: 'lazy',
-                                widths: '260, 420, 620',
-                                sizes: '72vw',
-                                alt: block.settings.image_2.alt
-                            }}
-                            {%- if block.settings.image_2_text != blank -%}
-                              <span>{{ block.settings.image_2_text | escape }}</span>
-                            {%- endif -%}
-                          </a>
-                        {%- endif -%}
-
-                        {%- if block.settings.image_3 != blank -%}
-                          <a
-                            class="borrego-header__mobile-image"
-                            href="{% if block.settings.image_3_link != blank %}{{ block.settings.image_3_link }}{% else %}{{ link.url }}{% endif %}"
-                            data-borrego-mobile-link
-                          >
-                            {{
-                              block.settings.image_3
-                              | image_url: width: 620
-                              | image_tag:
-                                loading: 'lazy',
-                                widths: '260, 420, 620',
-                                sizes: '72vw',
-                                alt: block.settings.image_3.alt
-                            }}
-                            {%- if block.settings.image_3_text != blank -%}
-                              <span>{{ block.settings.image_3_text | escape }}</span>
-                            {%- endif -%}
-                          </a>
-                        {%- endif -%}
-                      {%- endif -%}
-                    {%- endfor -%}
-                  </div>
                 </details>
               {%- else -%}
                 <a class="borrego-header__mobile-link" href="{{ link.url }}" data-borrego-mobile-link>
