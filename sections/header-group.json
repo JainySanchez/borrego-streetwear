@@ -37,11 +37,13 @@
         "mega_menu_na83NT": {
           "type": "mega_menu",
           "settings": {
-            "menu_item": "",
-            "title": "Featured",
-            "links": "",
-            "image_1_text": "Latest rotation",
+            "menu_item": "Inicio",
+            "title": "Inicio",
+            "links": "customer-account-main-menu",
+            "image_1": "shopify://shop_images/fecha-de-lanzamiento-de-los-nocta-air-force_1-white-cz8065-101.avif",
+            "image_1_text": "",
             "image_1_link": "",
+            "image_2": "shopify://shop_images/ih7971-001-5-e1764188697520_1920x_8237a7e3-8e10-483d-9042-8ba12dfcaa45.webp",
             "image_2_text": "",
             "image_2_link": "",
             "image_3_text": "",
