@@ -53,10 +53,10 @@
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "collection": "all",
+        "collection": "supreme",
         "products_to_show": 8,
         "title": "Featured products",
-        "heading_size": "h2",
+        "heading_size": "h0",
         "description": "",
         "show_description": false,
         "description_style": "body",
