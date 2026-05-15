@@ -1,7 +1,7 @@
 {%- liquid
   assign borrego_menu = section.settings.menu
   assign transparent_home = false
-  if request.page_type == 'index' and section.settings.enable_transparent_home
+  if request.page_type == 'index' and section.settings.transparent_on_home
     assign transparent_home = true
   endif
 -%}
@@ -20,29 +20,24 @@
     z-index: 40;
   }
 
+  {%- if transparent_home -%}
+    #shopify-section-{{ section.id }} {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      background: transparent;
+    }
+  {%- endif -%}
+
   body.borrego-header-lock {
     overflow: hidden;
   }
 
   .borrego-header {
     color: var(--borrego-header-text);
-  }
-
-  .borrego-header__announcement {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 3.4rem;
-    padding: 0.8rem 2rem;
-    background: {{ section.settings.announcement_background }};
-    color: {{ section.settings.announcement_text_color }};
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.16em;
-    line-height: 1.3;
-    text-align: center;
-    text-transform: uppercase;
-    text-decoration: none;
+    background: transparent;
   }
 
   .borrego-header__shell {
@@ -57,7 +52,15 @@
   .borrego-header.is-transparent:not(.is-scrolled) .borrego-header__shell {
     background: transparent;
     color: {{ section.settings.transparent_text_color }};
+    backdrop-filter: none;
     box-shadow: none;
+  }
+
+  .borrego-header.is-transparent .borrego-header__shell {
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
 
   .borrego-header.is-scrolled .borrego-header__shell,
@@ -213,23 +216,38 @@
   .borrego-header__mobile-toggle svg,
   .borrego-header__mobile-close svg,
   .borrego-header__mobile-action svg {
-    width: 2rem;
-    height: 2rem;
+    display: block;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .borrego-header__icon .svg-wrapper,
+  .borrego-header__mobile-toggle .svg-wrapper,
+  .borrego-header__mobile-close .svg-wrapper,
+  .borrego-header__mobile-action .svg-wrapper {
+    display: inline-flex;
+    width: 2.4rem;
+    height: 2.4rem;
+  }
+
+  .borrego-header__icon--cart svg {
+    width: 2.5rem;
+    height: 2.5rem;
   }
 
   .borrego-header__cart-count {
     position: absolute;
-    top: 0.4rem;
-    right: 0.2rem;
-    min-width: 1.7rem;
-    height: 1.7rem;
-    padding: 0 0.4rem;
+    top: 0.1rem;
+    right: 0;
+    min-width: 1.8rem;
+    height: 1.8rem;
+    padding: 0 0.45rem;
     border-radius: 999px;
     background: var(--borrego-header-hover);
     color: #11110c;
     font-size: 1rem;
     font-weight: 800;
-    line-height: 1.7rem;
+    line-height: 1.8rem;
     text-align: center;
   }
 
@@ -258,11 +276,11 @@
 
   .borrego-header__mega-inner {
     display: grid;
-    grid-template-columns: minmax(24rem, 0.8fr) minmax(0, 1.2fr);
-    gap: 5rem;
-    max-width: 152rem;
+    grid-template-columns: minmax(22rem, 0.52fr) minmax(0, 1.48fr);
+    gap: clamp(3rem, 5vw, 7rem);
+    max-width: 144rem;
     margin: 0 auto;
-    padding: 4rem 3.2rem;
+    padding: 3.2rem 3.2rem 3.6rem;
   }
 
   .borrego-header__mega-copy {
@@ -302,24 +320,26 @@
 
   .borrego-header__mega-media-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(18rem, 1fr));
+    grid-template-columns: repeat(3, minmax(14rem, 1fr));
     gap: 1.6rem;
+    align-items: start;
   }
 
   .borrego-header__mega-card {
     position: relative;
     display: block;
     overflow: hidden;
-    min-height: 26rem;
+    min-height: 0;
     background: rgba(17, 17, 12, 0.08);
     color: #f2ecdd;
     text-decoration: none;
   }
 
   .borrego-header__mega-card img {
+    display: block;
     width: 100%;
-    height: 100%;
-    min-height: 26rem;
+    aspect-ratio: 4 / 5;
+    height: auto;
     object-fit: cover;
     transition: transform 360ms ease;
   }
@@ -331,11 +351,11 @@
 
   .borrego-header__mega-caption {
     position: absolute;
-    left: 1.6rem;
-    right: 1.6rem;
-    bottom: 1.6rem;
+    left: 1.2rem;
+    right: 1.2rem;
+    bottom: 1.2rem;
     z-index: 1;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 900;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -470,11 +490,26 @@
     text-decoration: none;
   }
 
+  .borrego-header__mobile-images {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(18rem, 72%);
+    gap: 1.2rem;
+    overflow-x: auto;
+    padding: 0.2rem 0 1.2rem;
+    scroll-snap-type: x proximity;
+  }
+
+  .borrego-header__mobile-images:empty {
+    display: none;
+  }
+
   .borrego-header__mobile-image img {
     display: block;
     width: 100%;
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 4 / 5;
     object-fit: cover;
+    scroll-snap-align: start;
   }
 
   .borrego-header__mobile-image span {
@@ -524,13 +559,6 @@
   }
 
   @media screen and (max-width: 989px) {
-    .borrego-header__announcement {
-      min-height: 3.2rem;
-      padding-inline: 1.4rem;
-      font-size: 0.95rem;
-      letter-spacing: 0.12em;
-    }
-
     .borrego-header__bar {
       min-height: 6.4rem;
       padding: 0 1.6rem;
@@ -576,24 +604,22 @@
       display: none;
     }
   }
+
+  @media screen and (min-width: 990px) and (max-width: 1180px) {
+    .borrego-header__mega-inner {
+      grid-template-columns: minmax(20rem, 0.65fr) minmax(0, 1.35fr);
+    }
+
+    .borrego-header__mega-media-grid {
+      grid-template-columns: repeat(3, minmax(11rem, 1fr));
+    }
+  }
 {% endstyle %}
 
 <borrego-header
   class="borrego-header{% if transparent_home %} is-transparent{% endif %}"
   data-transparent-home="{% if transparent_home %}true{% else %}false{% endif %}"
 >
-  {%- if section.settings.show_announcement and section.settings.announcement_text != blank -%}
-    {%- if section.settings.announcement_link != blank -%}
-      <a class="borrego-header__announcement" href="{{ section.settings.announcement_link }}">
-        {{ section.settings.announcement_text | escape }}
-      </a>
-    {%- else -%}
-      <div class="borrego-header__announcement">
-        {{ section.settings.announcement_text | escape }}
-      </div>
-    {%- endif -%}
-  {%- endif -%}
-
   <div class="borrego-header__shell">
     <div class="borrego-header__bar">
       <button
@@ -668,25 +694,69 @@
                         {%- liquid
                           assign block_key = block.settings.menu_item | handleize
                         -%}
-                        {%- if block.type == 'mega_menu' and block_key == link_key and block.settings.image != blank -%}
-                          <a
-                            class="borrego-header__mega-card"
-                            href="{% if block.settings.image_link != blank %}{{ block.settings.image_link }}{% else %}{{ link.url }}{% endif %}"
-                            {{ block.shopify_attributes }}
-                          >
-                            {{
-                              block.settings.image
-                              | image_url: width: 900
-                              | image_tag:
-                                loading: 'lazy',
-                                widths: '360, 540, 720, 900',
-                                sizes: '(min-width: 990px) 34vw, 100vw',
-                                alt: block.settings.image.alt
-                            }}
-                            {%- if block.settings.image_caption != blank -%}
-                              <span class="borrego-header__mega-caption">{{ block.settings.image_caption | escape }}</span>
-                            {%- endif -%}
-                          </a>
+                        {%- if block.type == 'mega_menu' and block_key == link_key -%}
+                          {%- if block.settings.image_1 != blank -%}
+                            <a
+                              class="borrego-header__mega-card"
+                              href="{% if block.settings.image_1_link != blank %}{{ block.settings.image_1_link }}{% else %}{{ link.url }}{% endif %}"
+                              {{ block.shopify_attributes }}
+                            >
+                              {{
+                                block.settings.image_1
+                                | image_url: width: 720
+                                | image_tag:
+                                  loading: 'lazy',
+                                  widths: '280, 420, 560, 720',
+                                  sizes: '(min-width: 990px) 21vw, 100vw',
+                                  alt: block.settings.image_1.alt
+                              }}
+                              {%- if block.settings.image_1_text != blank -%}
+                                <span class="borrego-header__mega-caption">{{ block.settings.image_1_text | escape }}</span>
+                              {%- endif -%}
+                            </a>
+                          {%- endif -%}
+
+                          {%- if block.settings.image_2 != blank -%}
+                            <a
+                              class="borrego-header__mega-card"
+                              href="{% if block.settings.image_2_link != blank %}{{ block.settings.image_2_link }}{% else %}{{ link.url }}{% endif %}"
+                              {{ block.shopify_attributes }}
+                            >
+                              {{
+                                block.settings.image_2
+                                | image_url: width: 720
+                                | image_tag:
+                                  loading: 'lazy',
+                                  widths: '280, 420, 560, 720',
+                                  sizes: '(min-width: 990px) 21vw, 100vw',
+                                  alt: block.settings.image_2.alt
+                              }}
+                              {%- if block.settings.image_2_text != blank -%}
+                                <span class="borrego-header__mega-caption">{{ block.settings.image_2_text | escape }}</span>
+                              {%- endif -%}
+                            </a>
+                          {%- endif -%}
+
+                          {%- if block.settings.image_3 != blank -%}
+                            <a
+                              class="borrego-header__mega-card"
+                              href="{% if block.settings.image_3_link != blank %}{{ block.settings.image_3_link }}{% else %}{{ link.url }}{% endif %}"
+                              {{ block.shopify_attributes }}
+                            >
+                              {{
+                                block.settings.image_3
+                                | image_url: width: 720
+                                | image_tag:
+                                  loading: 'lazy',
+                                  widths: '280, 420, 560, 720',
+                                  sizes: '(min-width: 990px) 21vw, 100vw',
+                                  alt: block.settings.image_3.alt
+                              }}
+                              {%- if block.settings.image_3_text != blank -%}
+                                <span class="borrego-header__mega-caption">{{ block.settings.image_3_text | escape }}</span>
+                              {%- endif -%}
+                            </a>
+                          {%- endif -%}
                         {%- endif -%}
                       {%- endfor -%}
                     </div>
@@ -797,7 +867,7 @@
             </li>
           {%- endif -%}
           <li>
-            <a class="borrego-header__icon" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
+            <a class="borrego-header__icon borrego-header__icon--cart" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
               {%- if cart == empty -%}
                 {{ 'icon-cart-empty.svg' | inline_asset_content }}
               {%- else -%}
@@ -810,7 +880,7 @@
         </ul>
       </div>
 
-      <a class="borrego-header__icon borrego-header__mobile-cart" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
+      <a class="borrego-header__icon borrego-header__icon--cart borrego-header__mobile-cart" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
         {%- if cart == empty -%}
           {{ 'icon-cart-empty.svg' | inline_asset_content }}
         {%- else -%}
@@ -844,7 +914,7 @@
               for block in section.blocks
                 assign block_key = block.settings.menu_item | handleize
                 if block.type == 'mega_menu' and block_key == link_key
-                  if block.settings.links != blank or block.settings.image != blank
+                  if block.settings.links != blank or block.settings.image_1 != blank or block.settings.image_2 != blank or block.settings.image_3 != blank
                     assign has_mobile_content = true
                   endif
                 endif
@@ -888,32 +958,77 @@
                     {%- endfor -%}
                   </ul>
 
-                  {%- for block in section.blocks -%}
-                    {%- liquid
-                      assign block_key = block.settings.menu_item | handleize
-                    -%}
-                    {%- if block.type == 'mega_menu' and block_key == link_key and block.settings.image != blank -%}
-                      <a
-                        class="borrego-header__mobile-image"
-                        href="{% if block.settings.image_link != blank %}{{ block.settings.image_link }}{% else %}{{ link.url }}{% endif %}"
-                        data-borrego-mobile-link
-                      >
-                        {{
-                          block.settings.image
-                          | image_url: width: 700
-                          | image_tag:
-                            loading: 'lazy',
-                            widths: '320, 480, 700',
-                            sizes: '100vw',
-                            alt: block.settings.image.alt
-                        }}
-                        {%- if block.settings.image_caption != blank -%}
-                          <span>{{ block.settings.image_caption | escape }}</span>
+                  <div class="borrego-header__mobile-images">
+                    {%- for block in section.blocks -%}
+                      {%- liquid
+                        assign block_key = block.settings.menu_item | handleize
+                      -%}
+                      {%- if block.type == 'mega_menu' and block_key == link_key -%}
+                        {%- if block.settings.image_1 != blank -%}
+                          <a
+                            class="borrego-header__mobile-image"
+                            href="{% if block.settings.image_1_link != blank %}{{ block.settings.image_1_link }}{% else %}{{ link.url }}{% endif %}"
+                            data-borrego-mobile-link
+                          >
+                            {{
+                              block.settings.image_1
+                              | image_url: width: 620
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '260, 420, 620',
+                                sizes: '72vw',
+                                alt: block.settings.image_1.alt
+                            }}
+                            {%- if block.settings.image_1_text != blank -%}
+                              <span>{{ block.settings.image_1_text | escape }}</span>
+                            {%- endif -%}
+                          </a>
                         {%- endif -%}
-                      </a>
-                      {%- break -%}
-                    {%- endif -%}
-                  {%- endfor -%}
+
+                        {%- if block.settings.image_2 != blank -%}
+                          <a
+                            class="borrego-header__mobile-image"
+                            href="{% if block.settings.image_2_link != blank %}{{ block.settings.image_2_link }}{% else %}{{ link.url }}{% endif %}"
+                            data-borrego-mobile-link
+                          >
+                            {{
+                              block.settings.image_2
+                              | image_url: width: 620
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '260, 420, 620',
+                                sizes: '72vw',
+                                alt: block.settings.image_2.alt
+                            }}
+                            {%- if block.settings.image_2_text != blank -%}
+                              <span>{{ block.settings.image_2_text | escape }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+
+                        {%- if block.settings.image_3 != blank -%}
+                          <a
+                            class="borrego-header__mobile-image"
+                            href="{% if block.settings.image_3_link != blank %}{{ block.settings.image_3_link }}{% else %}{{ link.url }}{% endif %}"
+                            data-borrego-mobile-link
+                          >
+                            {{
+                              block.settings.image_3
+                              | image_url: width: 620
+                              | image_tag:
+                                loading: 'lazy',
+                                widths: '260, 420, 620',
+                                sizes: '72vw',
+                                alt: block.settings.image_3.alt
+                            }}
+                            {%- if block.settings.image_3_text != blank -%}
+                              <span>{{ block.settings.image_3_text | escape }}</span>
+                            {%- endif -%}
+                          </a>
+                        {%- endif -%}
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
                 </details>
               {%- else -%}
                 <a class="borrego-header__mobile-link" href="{{ link.url }}" data-borrego-mobile-link>
@@ -1126,7 +1241,7 @@
     },
     {
       "type": "checkbox",
-      "id": "enable_transparent_home",
+      "id": "transparent_on_home",
       "label": "Transparent header on home",
       "default": true
     },
@@ -1191,39 +1306,6 @@
       "id": "mega_menu_text_color",
       "label": "Mega menu text",
       "default": "#11110C"
-    },
-    {
-      "type": "header",
-      "content": "Announcement bar"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_announcement",
-      "label": "Show announcement bar",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "announcement_text",
-      "label": "Announcement text",
-      "default": "AUTHENTIC PAIRS ONLY / REQUEST YOUR SIZE / WORLDWIDE SOURCING"
-    },
-    {
-      "type": "url",
-      "id": "announcement_link",
-      "label": "Announcement link"
-    },
-    {
-      "type": "color",
-      "id": "announcement_background",
-      "label": "Announcement background",
-      "default": "#D9B26F"
-    },
-    {
-      "type": "color",
-      "id": "announcement_text_color",
-      "label": "Announcement text",
-      "default": "#11110C"
     }
   ],
   "blocks": [
@@ -1250,19 +1332,49 @@
         },
         {
           "type": "image_picker",
-          "id": "image",
-          "label": "Featured image"
+          "id": "image_1",
+          "label": "Image 1"
         },
         {
           "type": "text",
-          "id": "image_caption",
-          "label": "Small image text",
+          "id": "image_1_text",
+          "label": "Image 1 text",
           "default": "Latest rotation"
         },
         {
           "type": "url",
-          "id": "image_link",
-          "label": "Image link"
+          "id": "image_1_link",
+          "label": "Image 1 link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image 2"
+        },
+        {
+          "type": "text",
+          "id": "image_2_text",
+          "label": "Image 2 text"
+        },
+        {
+          "type": "url",
+          "id": "image_2_link",
+          "label": "Image 2 link"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_3",
+          "label": "Image 3"
+        },
+        {
+          "type": "text",
+          "id": "image_3_text",
+          "label": "Image 3 text"
+        },
+        {
+          "type": "url",
+          "id": "image_3_link",
+          "label": "Image 3 link"
         }
       ]
     }
