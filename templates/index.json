@@ -16,7 +16,7 @@
           "type": "heading",
           "settings": {
             "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "heading_size": "h2"
           }
         },
         "button": {
@@ -27,7 +27,7 @@
             "button_style_secondary_1": true,
             "button_label_2": "",
             "button_link_2": "",
-            "button_style_secondary_2": false
+            "button_style_secondary_2": true
           }
         }
       },
@@ -37,7 +37,7 @@
       ],
       "settings": {
         "image": "shopify://shop_images/referenciaejm.jpg",
-        "image_overlay_opacity": 40,
+        "image_overlay_opacity": 30,
         "image_height": "adapt",
         "image_behavior": "zoom-in",
         "desktop_content_position": "bottom-center",
