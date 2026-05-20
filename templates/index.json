@@ -55,9 +55,58 @@
       "name": "HANAN Marquee",
       "settings": {
         "marquee_text": "BORREGO STREETWEAR  ✦  PREMIUM SNEAKERS  ✦  ENVÍOS A TODO EL PERÚ  ✦ NEW DROPS  ✦  AUTHENTIC STREETWEAR  ✦  LIMITED PIECES  ✦",
-        "background_color": "#11110C",
-        "text_color": "#F2ECDD",
+        "background_color": "#11110c",
+        "text_color": "#f2ecdd",
         "scrolling_speed": 28
+      }
+    },
+    "hanan_featured_categories_MXdnE9": {
+      "type": "hanan-featured-categories",
+      "blocks": {
+        "category_kg4Lnb": {
+          "type": "category",
+          "settings": {
+            "category_title": "SNEAKERS",
+            "subtitle": "DISCOVER THE DROP",
+            "image": "shopify://shop_images/b04f97a6ae4c9931ac9df7c7483e910d.webp",
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        },
+        "category_EWM6h9": {
+          "type": "category",
+          "settings": {
+            "category_title": "APPAREL",
+            "subtitle": "CURATED STREETWEAR",
+            "image": "shopify://shop_images/2512_VALLEY-DREAMS_PATCHWORK_VARSITY-JACKET_BRWN_001.webp",
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        },
+        "category_fHptEk": {
+          "type": "category",
+          "settings": {
+            "category_title": "ACCESSORIES",
+            "subtitle": "PREMIUM ESSENTIALS",
+            "image": "shopify://shop_images/25415082_55573095_2048.webp",
+            "button_label": "SHOP NOW",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_kg4Lnb",
+        "category_EWM6h9",
+        "category_fHptEk"
+      ],
+      "name": "HANAN Featured Categories",
+      "settings": {
+        "section_background": "#11110C",
+        "text_color": "#F2ECDD",
+        "overlay_opacity": 25,
+        "animation_speed": 900,
+        "padding_top": 56,
+        "padding_bottom": 56
       }
     },
     "collection_list_TXrjA8": {
@@ -87,6 +136,7 @@
         "featured_collection_dtKQAg",
         "featured_collection_Vcn6mr"
       ],
+      "disabled": true,
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "Colecciones",
@@ -133,6 +183,7 @@
   "order": [
     "image_banner",
     "hanan_marquee_ihRFXM",
+    "hanan_featured_categories_MXdnE9",
     "collection_list_TXrjA8",
     "featured_collection"
   ]
