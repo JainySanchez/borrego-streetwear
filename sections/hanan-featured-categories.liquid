@@ -1,0 +1,429 @@
+<section
+  class="hanan-featured-categories"
+  style="
+    --section-bg: {{ section.settings.section_background }};
+    --text-color: {{ section.settings.text_color }};
+    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --animation-speed: {{ section.settings.animation_speed }}ms;
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="hanan-featured-categories__inner">
+    <div class="hanan-featured-categories__grid">
+      {% for block in section.blocks %}
+        <a
+          href="{{ block.settings.button_link }}"
+          class="hanan-category-card"
+          {{ block.shopify_attributes }}
+        >
+          <div class="hanan-category-card__media">
+            {% if block.settings.image != blank %}
+              {{
+                block.settings.image
+                | image_url: width: 1400
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '500, 700, 900, 1100, 1400',
+                  sizes: '(max-width: 749px) 100vw, 33vw',
+                  class: 'hanan-category-card__image'
+              }}
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: 'hanan-category-card__placeholder' }}
+            {% endif %}
+          </div>
+
+          <div class="hanan-category-card__overlay"></div>
+
+          <div class="hanan-category-card__content">
+            <p class="hanan-category-card__subtitle">
+              {{ block.settings.subtitle }}
+            </p>
+
+            <h2 class="hanan-category-card__title">
+              {{ block.settings.category_title }}
+            </h2>
+
+            {% if block.settings.button_label != blank %}
+              <span class="hanan-category-card__button">
+                {{ block.settings.button_label }}
+              </span>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hanan-featured-categories {
+    width: 100%;
+    background: var(--section-bg);
+    padding-top: var(--section-padding-top);
+    padding-bottom: var(--section-padding-bottom);
+    overflow: hidden;
+  }
+
+  .hanan-featured-categories__inner {
+    width: 100%;
+    padding: 0 24px;
+  }
+
+  .hanan-featured-categories__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .hanan-category-card {
+    position: relative;
+    display: block;
+    min-height: 620px;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--text-color);
+    background: #11110c;
+    isolation: isolate;
+    opacity: 0;
+    transform: translateY(28px);
+    animation: hanan-card-reveal var(--animation-speed) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  .hanan-category-card:nth-child(2) {
+    animation-delay: 120ms;
+  }
+
+  .hanan-category-card:nth-child(3) {
+    animation-delay: 240ms;
+  }
+
+  .hanan-category-card__media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hanan-category-card__image,
+  .hanan-category-card__placeholder {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    transform: scale(1.03);
+    transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1), filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hanan-category-card__placeholder {
+    background: #1b1a14;
+  }
+
+  .hanan-category-card__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(17, 17, 12, 0.08) 0%,
+        rgba(17, 17, 12, 0.24) 45%,
+        rgba(17, 17, 12, 0.88) 100%
+      ),
+      rgba(17, 17, 12, var(--overlay-opacity));
+    z-index: 1;
+    transition: opacity 700ms ease;
+  }
+
+  .hanan-category-card__content {
+    position: absolute;
+    left: 28px;
+    right: 28px;
+    bottom: 30px;
+    z-index: 2;
+    transform: translateY(0);
+    transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hanan-category-card__subtitle {
+    margin: 0 0 12px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #d9b26f;
+  }
+
+  .hanan-category-card__title {
+    margin: 0;
+    font-size: clamp(30px, 3.4vw, 58px);
+    line-height: 0.9;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-color);
+    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .hanan-category-card__button {
+    position: relative;
+    display: inline-flex;
+    margin-top: 24px;
+    padding-bottom: 7px;
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-color);
+  }
+
+  .hanan-category-card__button::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: #d9b26f;
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hanan-category-card:hover .hanan-category-card__image {
+    transform: scale(1.1) translateY(-8px);
+    filter: contrast(1.06) saturate(0.96);
+  }
+
+  .hanan-category-card:hover .hanan-category-card__content {
+    transform: translateY(-8px);
+  }
+
+  .hanan-category-card:hover .hanan-category-card__button::after {
+    transform: scaleX(0.55);
+  }
+
+  @keyframes hanan-card-reveal {
+    from {
+      opacity: 0;
+      transform: translateY(28px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .hanan-featured-categories__inner {
+      padding: 0 18px;
+    }
+
+    .hanan-featured-categories__grid {
+      gap: 14px;
+    }
+
+    .hanan-category-card {
+      min-height: 520px;
+    }
+
+    .hanan-category-card__content {
+      left: 22px;
+      right: 22px;
+      bottom: 24px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hanan-featured-categories {
+      padding-top: calc(var(--section-padding-top) * 0.7);
+      padding-bottom: calc(var(--section-padding-bottom) * 0.7);
+    }
+
+    .hanan-featured-categories__inner {
+      padding: 0 14px;
+    }
+
+    .hanan-featured-categories__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    .hanan-category-card {
+      min-height: 430px;
+    }
+
+    .hanan-category-card__image,
+    .hanan-category-card__placeholder {
+      transform: scale(1.01);
+    }
+
+    .hanan-category-card__content {
+      left: 20px;
+      right: 20px;
+      bottom: 22px;
+    }
+
+    .hanan-category-card__subtitle {
+      margin-bottom: 10px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+
+    .hanan-category-card__title {
+      font-size: 34px;
+      letter-spacing: 0.07em;
+    }
+
+    .hanan-category-card__button {
+      margin-top: 18px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hanan-category-card,
+    .hanan-category-card__image,
+    .hanan-category-card__placeholder,
+    .hanan-category-card__content,
+    .hanan-category-card__button::after {
+      animation: none;
+      transition: none;
+    }
+
+    .hanan-category-card {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "HANAN Featured Categories",
+  "settings": [
+    {
+      "type": "color",
+      "id": "section_background",
+      "label": "Color de fondo",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Opacidad del overlay",
+      "min": 0,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "animation_speed",
+      "label": "Velocidad de animación",
+      "min": 400,
+      "max": 1600,
+      "step": 100,
+      "unit": "ms",
+      "default": 900
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Categoría",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "text",
+          "id": "category_title",
+          "label": "Título",
+          "default": "SNEAKERS"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtítulo",
+          "default": "DISCOVER THE DROP"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Imagen"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Texto del botón",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Link del botón"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HANAN Featured Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "SNEAKERS",
+            "subtitle": "DISCOVER THE DROP",
+            "button_label": "SHOP NOW"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "APPAREL",
+            "subtitle": "CURATED STREETWEAR",
+            "button_label": "SHOP NOW"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "category_title": "ACCESSORIES",
+            "subtitle": "PREMIUM ESSENTIALS",
+            "button_label": "SHOP NOW"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
