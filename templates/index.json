@@ -50,6 +50,16 @@
         "show_text_below": false
       }
     },
+    "hanan_marquee_ihRFXM": {
+      "type": "hanan-marquee",
+      "name": "HANAN Marquee",
+      "settings": {
+        "marquee_text": "BORREGO STREETWEAR  ✦  PREMIUM SNEAKERS  ✦  ENVÍOS A TODO EL PERÚ  ✦ NEW DROPS  ✦  AUTHENTIC STREETWEAR  ✦  LIMITED PIECES  ✦",
+        "background_color": "#11110C",
+        "text_color": "#F2ECDD",
+        "scrolling_speed": 28
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -81,6 +91,7 @@
   },
   "order": [
     "image_banner",
+    "hanan_marquee_ihRFXM",
     "featured_collection"
   ]
 }
