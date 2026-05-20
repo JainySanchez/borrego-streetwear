@@ -60,6 +60,47 @@
         "scrolling_speed": 28
       }
     },
+    "collection_list_TXrjA8": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_zwziht": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "purple-valey-y-essentials"
+          }
+        },
+        "featured_collection_dtKQAg": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "nike-y-jordan"
+          }
+        },
+        "featured_collection_Vcn6mr": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "supreme"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_zwziht",
+        "featured_collection_dtKQAg",
+        "featured_collection_Vcn6mr"
+      ],
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "Colecciones",
+        "heading_size": "h1",
+        "image_ratio": "square",
+        "columns_desktop": 3,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -92,6 +133,7 @@
   "order": [
     "image_banner",
     "hanan_marquee_ihRFXM",
+    "collection_list_TXrjA8",
     "featured_collection"
   ]
 }
