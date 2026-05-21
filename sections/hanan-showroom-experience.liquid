@@ -1,0 +1,452 @@
+{% liquid
+  assign whatsapp_phone = section.settings.whatsapp_phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+  assign whatsapp_message = section.settings.whatsapp_message | url_encode
+  assign whatsapp_url = 'https://wa.me/' | append: whatsapp_phone | append: '?text=' | append: whatsapp_message
+%}
+
+<section
+  class="hanan-showroom {% if section.settings.reverse_layout %}hanan-showroom--reverse{% endif %} {% if section.settings.enable_animation %}hanan-showroom--animated{% endif %}"
+  style="
+    --section-bg: {{ section.settings.background_color }};
+    --text-color: {{ section.settings.text_color }};
+    --accent-color: {{ section.settings.accent_color }};
+    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="hanan-showroom__inner">
+    <div class="hanan-showroom__content">
+      {% if section.settings.small_label != blank %}
+        <p class="hanan-showroom__label">
+          {{ section.settings.small_label }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.heading != blank %}
+        <h2 class="hanan-showroom__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <div class="hanan-showroom__description">
+          {{ section.settings.description }}
+        </div>
+      {% endif %}
+
+      {% if section.settings.button_label != blank and section.settings.whatsapp_phone != blank %}
+        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" class="hanan-showroom__button">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    <div class="hanan-showroom__media">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 1800
+          | image_tag:
+            loading: 'lazy',
+            widths: '600, 800, 1000, 1300, 1600, 1800',
+            sizes: '(max-width: 749px) 100vw, 55vw',
+            class: 'hanan-showroom__image'
+        }}
+      {% else %}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'hanan-showroom__placeholder' }}
+      {% endif %}
+
+      <div class="hanan-showroom__overlay"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hanan-showroom {
+    width: 100%;
+    background: var(--section-bg);
+    color: var(--text-color);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  .hanan-showroom__inner {
+    display: grid;
+    grid-template-columns: 42% 58%;
+    align-items: stretch;
+    gap: clamp(28px, 5vw, 72px);
+    padding: 0 5vw;
+  }
+
+  .hanan-showroom--reverse .hanan-showroom__inner {
+    grid-template-columns: 58% 42%;
+  }
+
+  .hanan-showroom--reverse .hanan-showroom__content {
+    order: 2;
+  }
+
+  .hanan-showroom--reverse .hanan-showroom__media {
+    order: 1;
+  }
+
+  .hanan-showroom__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 560px;
+    max-width: 520px;
+  }
+
+  .hanan-showroom__label {
+    margin: 0 0 18px;
+    color: var(--accent-color);
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .hanan-showroom__heading {
+    margin: 0;
+    color: var(--text-color);
+    font-size: clamp(34px, 4.8vw, 72px);
+    line-height: 0.9;
+    font-weight: 900;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .hanan-showroom__description {
+    max-width: 430px;
+    margin-top: 24px;
+    color: rgba(242, 236, 221, 0.72);
+    font-size: 15px;
+    line-height: 1.7;
+    letter-spacing: 0.035em;
+  }
+
+  .hanan-showroom__description p {
+    margin: 0;
+  }
+
+  .hanan-showroom__button {
+    position: relative;
+    width: fit-content;
+    display: inline-flex;
+    margin-top: 32px;
+    padding-bottom: 8px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 800;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+  }
+
+  .hanan-showroom__button::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: calc(100% - 18px);
+    height: 1px;
+    background: var(--accent-color);
+    transform: scaleX(1);
+    transform-origin: left;
+    transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-showroom__button:hover::after {
+    transform: scaleX(0.6);
+  }
+
+  .hanan-showroom__media {
+    position: relative;
+    min-height: 560px;
+    overflow: hidden;
+    background: #1a1914;
+  }
+
+  .hanan-showroom__image,
+  .hanan-showroom__placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 560px;
+    display: block;
+    object-fit: cover;
+    object-position: center 45%;
+    transform: scale(1.04);
+    filter: contrast(1.05) saturate(0.92) brightness(0.86);
+    transition:
+      transform 1400ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-showroom__placeholder {
+    background: #1a1914;
+  }
+
+  .hanan-showroom__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(17, 17, 12, 0.08) 0%,
+        rgba(17, 17, 12, 0.22) 54%,
+        rgba(17, 17, 12, 0.76) 100%
+      ),
+      radial-gradient(
+        circle at 50% 18%,
+        rgba(242, 236, 221, 0.08) 0%,
+        rgba(17, 17, 12, 0.08) 36%,
+        rgba(17, 17, 12, 0.5) 100%
+      ),
+      rgba(17, 17, 12, var(--overlay-opacity));
+    pointer-events: none;
+  }
+
+  .hanan-showroom__media:hover .hanan-showroom__image {
+    transform: scale(1.08);
+    filter: contrast(1.08) saturate(0.95) brightness(0.78);
+  }
+
+  .hanan-showroom--animated .hanan-showroom__content,
+  .hanan-showroom--animated .hanan-showroom__media {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: hananShowroomReveal 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hanan-showroom--animated .hanan-showroom__media {
+    animation-delay: 140ms;
+  }
+
+  @keyframes hananShowroomReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .hanan-showroom__inner,
+    .hanan-showroom--reverse .hanan-showroom__inner {
+      grid-template-columns: 1fr;
+      gap: 36px;
+      padding: 0 28px;
+    }
+
+    .hanan-showroom__content,
+    .hanan-showroom--reverse .hanan-showroom__content {
+      order: 2;
+      min-height: auto;
+      max-width: 100%;
+    }
+
+    .hanan-showroom__media,
+    .hanan-showroom--reverse .hanan-showroom__media {
+      order: 1;
+      min-height: 440px;
+    }
+
+    .hanan-showroom__image,
+    .hanan-showroom__placeholder {
+      min-height: 440px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hanan-showroom {
+      padding-top: calc(var(--padding-top) * 0.72);
+      padding-bottom: calc(var(--padding-bottom) * 0.72);
+    }
+
+    .hanan-showroom__inner {
+      padding: 0 16px;
+      gap: 30px;
+    }
+
+    .hanan-showroom__media,
+    .hanan-showroom__image,
+    .hanan-showroom__placeholder {
+      min-height: 350px;
+    }
+
+    .hanan-showroom__label {
+      margin-bottom: 14px;
+      font-size: 8.5px;
+      letter-spacing: 0.23em;
+    }
+
+    .hanan-showroom__heading {
+      font-size: 34px;
+      line-height: 0.92;
+      letter-spacing: 0.065em;
+    }
+
+    .hanan-showroom__description {
+      margin-top: 18px;
+      font-size: 13.5px;
+      line-height: 1.62;
+    }
+
+    .hanan-showroom__button {
+      width: 100%;
+      justify-content: center;
+      margin-top: 26px;
+      padding: 16px 18px;
+      border: 1px solid rgba(242, 236, 221, 0.28);
+      font-size: 8.5px;
+      letter-spacing: 0.22em;
+    }
+
+    .hanan-showroom__button::after {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hanan-showroom__content,
+    .hanan-showroom__media,
+    .hanan-showroom__image,
+    .hanan-showroom__placeholder,
+    .hanan-showroom__button::after {
+      animation: none;
+      transition: none;
+    }
+
+    .hanan-showroom--animated .hanan-showroom__content,
+    .hanan-showroom--animated .hanan-showroom__media {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "HANAN Showroom",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "small_label",
+      "label": "Etiqueta pequeña",
+      "default": "PRIVATE SHOWROOM"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Título",
+      "default": "VISITA NUESTRO SHOWROOM"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Descripción",
+      "default": "<p>Agenda una visita y descubre sneakers, apparel y piezas seleccionadas en una experiencia personalizada.</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Texto del botón",
+      "default": "AGENDAR VISITA →"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_phone",
+      "label": "Número de WhatsApp",
+      "default": "51999999999"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "Mensaje de WhatsApp",
+      "default": "Hola, quiero agendar una visita al showroom de BORREGO."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Imagen del showroom"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_layout",
+      "label": "Invertir layout",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color de texto",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color acento",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Opacidad del overlay",
+      "min": 10,
+      "max": 70,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Activar animación",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "HANAN Showroom"
+    }
+  ]
+}
+{% endschema %}
