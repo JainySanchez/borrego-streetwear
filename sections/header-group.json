@@ -17,7 +17,7 @@
       "settings": {
         "logo_position": "middle-left",
         "mobile_logo_position": "center",
-        "menu": "main-menu",
+        "menu": "menu_new",
         "menu_type_desktop": "dropdown",
         "sticky_header_type": "on-scroll-up",
         "show_line_separator": true,
@@ -31,81 +31,36 @@
         "padding_bottom": 20
       }
     },
-    "borrego_header_RqdA8g": {
+    "borrego_header_RCABMN": {
       "type": "borrego-header",
-      "blocks": {
-        "mega_menu_UzwGeN": {
-          "type": "mega_menu",
-          "settings": {
-            "menu_item": "ACCESORIOS",
-            "title": "ACCESORIOS",
-            "links": "",
-            "image_1_text": "Latest rotation",
-            "image_1_link": "",
-            "image_2_text": "",
-            "image_2_link": "",
-            "image_3_text": "",
-            "image_3_link": ""
-          }
-        },
-        "mega_menu_LYAT4r": {
-          "type": "mega_menu",
-          "settings": {
-            "menu_item": "ROPA",
-            "title": "ROPA",
-            "links": "",
-            "image_1_text": "Latest rotation",
-            "image_1_link": "",
-            "image_2_text": "",
-            "image_2_link": "",
-            "image_3_text": "",
-            "image_3_link": ""
-          }
-        },
-        "mega_menu_na83NT": {
-          "type": "mega_menu",
-          "settings": {
-            "menu_item": "ZAPATILLAS",
-            "title": "ZAPATILLAS",
-            "links": "customer-account-main-menu",
-            "image_1": "shopify://shop_images/fecha-de-lanzamiento-de-los-nocta-air-force_1-white-cz8065-101.avif",
-            "image_1_text": "",
-            "image_1_link": "",
-            "image_2": "shopify://shop_images/ih7971-001-5-e1764188697520_1920x_8237a7e3-8e10-483d-9042-8ba12dfcaa45.webp",
-            "image_2_text": "",
-            "image_2_link": "",
-            "image_3_text": "",
-            "image_3_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "mega_menu_UzwGeN",
-        "mega_menu_LYAT4r",
-        "mega_menu_na83NT"
-      ],
-      "name": "Borrego header",
+      "name": "BORREGO Clean Header",
       "settings": {
-        "logo_width_desktop": 170,
-        "logo_width_mobile": 112,
+        "logo_size": 170,
+        "mobile_logo_size": 120,
         "menu": "menu_new",
-        "show_account_icon": true,
-        "show_wishlist_icon": false,
-        "wishlist_link": "",
-        "transparent_on_home": true,
-        "header_background": "#11110c",
-        "header_scrolled_background": "#11110c",
-        "header_text_color": "#f2ecdd",
-        "transparent_text_color": "#f2ecdd",
-        "header_hover_color": "#d9b26f",
-        "mega_menu_theme": "light",
-        "mega_menu_background": "#f2ecdd",
-        "mega_menu_text_color": "#11110c"
+        "show_account_icon": false,
+        "header_background": "#F5F1E8",
+        "header_sticky_background": "#F2ECDD",
+        "header_text_color": "#11110C",
+        "header_hover_color": "#8A6634",
+        "submenu_background": "#F5F1E8",
+        "submenu_text_color": "#11110C",
+        "submenu_hover_color": "#8A6634",
+        "divider_color": "rgba(17,17,12,0.12)",
+        "header_height": 76,
+        "desktop_spacing": 32,
+        "enable_sticky": true,
+        "enable_blur": true,
+        "instagram_link": "",
+        "tiktok_link": "",
+        "whatsapp_link": "",
+        "mobile_showroom_title": "PRIVATE SHOWROOM",
+        "mobile_showroom_text": "Lima, Perú · Visitas solo con cita"
       }
     }
   },
   "order": [
     "header",
-    "borrego_header_RqdA8g"
+    "borrego_header_RCABMN"
   ]
 }
