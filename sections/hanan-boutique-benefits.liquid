@@ -1,0 +1,389 @@
+<section
+  class="hanan-benefits"
+  style="
+    --section-bg: {{ section.settings.background_color }};
+    --title-color: {{ section.settings.title_color }};
+    --description-color: {{ section.settings.description_color }};
+    --icon-size: {{ section.settings.icon_size }}px;
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="hanan-benefits__inner">
+    <div class="hanan-benefits__grid">
+      {% for block in section.blocks %}
+        <div
+          class="hanan-benefits__item {% if section.settings.enable_animation %}hanan-benefits__item--animated{% endif %}"
+          style="--delay: {{ forloop.index0 | times: 120 }}ms;"
+          {{ block.shopify_attributes }}
+        >
+          <div class="hanan-benefits__icon" aria-hidden="true">
+            {% case block.settings.icon %}
+              {% when 'authentic' %}
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M24 5L39 11V22C39 32 33 39 24 43C15 39 9 32 9 22V11L24 5Z" />
+                  <path d="M17 24L22 29L32 18" />
+                </svg>
+              {% when 'drops' %}
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M12 16L24 9L36 16V32L24 39L12 32V16Z" />
+                  <path d="M24 9V24L36 16" />
+                  <path d="M24 24L12 16" />
+                  <path d="M24 24V39" />
+                </svg>
+              {% when 'shipping' %}
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M7 17H29V34H7V17Z" />
+                  <path d="M29 22H37L42 28V34H29V22Z" />
+                  <path d="M14 38C16.2091 38 18 36.2091 18 34C18 31.7909 16.2091 30 14 30C11.7909 30 10 31.7909 10 34C10 36.2091 11.7909 38 14 38Z" />
+                  <path d="M35 38C37.2091 38 39 36.2091 39 34C39 31.7909 37.2091 30 35 30C32.7909 30 31 31.7909 31 34C31 36.2091 32.7909 38 35 38Z" />
+                </svg>
+              {% when 'support' %}
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M12 28V22C12 15.3726 17.3726 10 24 10C30.6274 10 36 15.3726 36 22V28" />
+                  <path d="M12 28H17V36H12V28Z" />
+                  <path d="M31 28H36V36H31V28Z" />
+                  <path d="M28 38H24C21.7909 38 20 36.2091 20 34" />
+                </svg>
+              {% else %}
+                <svg viewBox="0 0 48 48" fill="none">
+                  <path d="M24 6L39 15V33L24 42L9 33V15L24 6Z" />
+                  <path d="M16 24H32" />
+                  <path d="M24 16V32" />
+                </svg>
+            {% endcase %}
+          </div>
+
+          {% if block.settings.title != blank %}
+            <h3 class="hanan-benefits__title">
+              {{ block.settings.title }}
+            </h3>
+          {% endif %}
+
+          {% if block.settings.description != blank %}
+            <div class="hanan-benefits__description">
+              {{ block.settings.description }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hanan-benefits {
+    width: 100%;
+    background: var(--section-bg);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  .hanan-benefits__inner {
+    width: 100%;
+    padding: 0 5vw;
+  }
+
+  .hanan-benefits__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 72px);
+  }
+
+  .hanan-benefits__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 190px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(242, 236, 221, 0.18);
+    transition:
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-benefits__item--animated {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: hananBenefitsReveal 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation-delay: var(--delay);
+  }
+
+  .hanan-benefits__icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    margin-bottom: 34px;
+    color: var(--title-color);
+    opacity: 0.72;
+    transition:
+      opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-benefits__icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .hanan-benefits__title {
+    margin: 0 0 16px;
+    color: var(--title-color);
+    font-size: 12px;
+    line-height: 1.25;
+    font-weight: 850;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .hanan-benefits__description {
+    max-width: 260px;
+    color: var(--description-color);
+    font-size: 13px;
+    line-height: 1.7;
+    letter-spacing: 0.035em;
+  }
+
+  .hanan-benefits__description p {
+    margin: 0;
+  }
+
+  .hanan-benefits__item:hover {
+    transform: translateY(-4px);
+    border-color: rgba(217, 178, 111, 0.55);
+  }
+
+  .hanan-benefits__item:hover .hanan-benefits__icon {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+
+  @keyframes hananBenefitsReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .hanan-benefits__inner {
+      padding: 0 28px;
+    }
+
+    .hanan-benefits__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 44px 32px;
+    }
+
+    .hanan-benefits__item {
+      min-height: 170px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hanan-benefits {
+      padding-top: calc(var(--padding-top) * 0.72);
+      padding-bottom: calc(var(--padding-bottom) * 0.72);
+    }
+
+    .hanan-benefits__inner {
+      padding: 0 18px;
+    }
+
+    .hanan-benefits__grid {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+
+    .hanan-benefits__item {
+      min-height: auto;
+      padding-top: 22px;
+    }
+
+    .hanan-benefits__icon {
+      margin-bottom: 26px;
+    }
+
+    .hanan-benefits__title {
+      margin-bottom: 12px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+    }
+
+    .hanan-benefits__description {
+      max-width: 100%;
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hanan-benefits__item,
+    .hanan-benefits__icon {
+      animation: none;
+      transition: none;
+    }
+
+    .hanan-benefits__item--animated {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "HANAN Boutique Benefits",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Color de títulos",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Color de descripción",
+      "default": "rgba(242, 236, 221, 0.64)"
+    },
+    {
+      "type": "range",
+      "id": "icon_size",
+      "label": "Tamaño de ícono",
+      "min": 24,
+      "max": 56,
+      "step": 2,
+      "unit": "px",
+      "default": 34
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Activar animación",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 32,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Ícono",
+          "options": [
+            {
+              "value": "authentic",
+              "label": "Autenticidad"
+            },
+            {
+              "value": "drops",
+              "label": "Drops"
+            },
+            {
+              "value": "shipping",
+              "label": "Envíos"
+            },
+            {
+              "value": "support",
+              "label": "Soporte"
+            }
+          ],
+          "default": "authentic"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "AUTHENTIC PRODUCTS"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Descripción",
+          "default": "<p>Curated sneakers and apparel from premium streetwear brands.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HANAN Boutique Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "AUTHENTIC PRODUCTS",
+            "description": "<p>Curated sneakers and apparel from premium streetwear brands.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "drops",
+            "title": "CURATED DROPS",
+            "description": "<p>Selected pieces inspired by modern streetwear culture.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "shipping",
+            "title": "NATIONWIDE SHIPPING",
+            "description": "<p>Available across Peru.</p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "icon": "support",
+            "title": "PERSONALIZED SUPPORT",
+            "description": "<p>A premium shopping experience from discovery to delivery.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
