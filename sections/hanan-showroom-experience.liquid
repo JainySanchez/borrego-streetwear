@@ -5,330 +5,336 @@
 %}
 
 <section
-  class="hanan-showroom {% if section.settings.reverse_layout %}hanan-showroom--reverse{% endif %} {% if section.settings.enable_animation %}hanan-showroom--animated{% endif %}"
+  class="hanan-private-showroom {% if section.settings.enable_blur %}hanan-private-showroom--blur{% endif %} {% if section.settings.enable_animation %}hanan-private-showroom--animated{% endif %}"
   style="
     --section-bg: {{ section.settings.background_color }};
-    --text-color: {{ section.settings.text_color }};
-    --accent-color: {{ section.settings.accent_color }};
-    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --card-bg: {{ section.settings.card_background_color }};
+    --card-border: {{ section.settings.card_border_color }};
+    --label-color: {{ section.settings.label_color }};
+    --heading-color: {{ section.settings.heading_color }};
+    --description-color: {{ section.settings.description_color }};
+    --button-text: {{ section.settings.button_text_color }};
+    --button-border: {{ section.settings.button_border_color }};
+    --button-hover-text: {{ section.settings.button_hover_text_color }};
+    --button-hover-bg: {{ section.settings.button_hover_background_color }};
+    --shadow-opacity: {{ section.settings.shadow_intensity | divided_by: 100.0 }};
     --padding-top: {{ section.settings.padding_top }}px;
     --padding-bottom: {{ section.settings.padding_bottom }}px;
+    --logo-size-desktop: {{ section.settings.logo_size_desktop }}px;
+    --logo-size-mobile: {{ section.settings.logo_size_mobile }}px;
   "
 >
-  <div class="hanan-showroom__inner">
-    <div class="hanan-showroom__content">
+  <div class="hanan-private-showroom__inner">
+    <div class="hanan-private-showroom__card">
+      <div class="hanan-private-showroom__logo-wrap">
+        {% if section.settings.logo_image != blank %}
+          {{
+            section.settings.logo_image
+            | image_url: width: 900
+            | image_tag:
+              loading: 'lazy',
+              widths: '260, 420, 620, 760, 900',
+              sizes: '(max-width: 749px) 70vw, 520px',
+              class: 'hanan-private-showroom__logo'
+          }}
+        {% else %}
+          <div class="hanan-private-showroom__logo-placeholder">
+            BORREGO
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="hanan-private-showroom__divider"></div>
+
       {% if section.settings.small_label != blank %}
-        <p class="hanan-showroom__label">
+        <p class="hanan-private-showroom__label">
           {{ section.settings.small_label }}
         </p>
       {% endif %}
 
       {% if section.settings.heading != blank %}
-        <h2 class="hanan-showroom__heading">
+        <h2 class="hanan-private-showroom__heading">
           {{ section.settings.heading }}
         </h2>
       {% endif %}
 
       {% if section.settings.description != blank %}
-        <div class="hanan-showroom__description">
+        <div class="hanan-private-showroom__description">
           {{ section.settings.description }}
         </div>
       {% endif %}
 
       {% if section.settings.button_label != blank and section.settings.whatsapp_phone != blank %}
-        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" class="hanan-showroom__button">
+        <a
+          href="{{ whatsapp_url }}"
+          target="_blank"
+          rel="noopener"
+          class="hanan-private-showroom__button"
+        >
           {{ section.settings.button_label }}
         </a>
       {% endif %}
-    </div>
-
-    <div class="hanan-showroom__media">
-      {% if section.settings.image != blank %}
-        {{
-          section.settings.image
-          | image_url: width: 1800
-          | image_tag:
-            loading: 'lazy',
-            widths: '600, 800, 1000, 1300, 1600, 1800',
-            sizes: '(max-width: 749px) 100vw, 55vw',
-            class: 'hanan-showroom__image'
-        }}
-      {% else %}
-        {{ 'lifestyle-1' | placeholder_svg_tag: 'hanan-showroom__placeholder' }}
-      {% endif %}
-
-      <div class="hanan-showroom__overlay"></div>
     </div>
   </div>
 </section>
 
 <style>
-  .hanan-showroom {
+  .hanan-private-showroom {
     width: 100%;
-    background: var(--section-bg);
-    color: var(--text-color);
+    background:
+      radial-gradient(circle at 50% 0%, rgba(217, 178, 111, 0.09), transparent 34%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.015), transparent 44%),
+      var(--section-bg);
     padding-top: var(--padding-top);
     padding-bottom: var(--padding-bottom);
     overflow: hidden;
   }
 
-  .hanan-showroom__inner {
-    display: grid;
-    grid-template-columns: 70% 30%;
-    align-items: stretch;
-    gap: clamp(28px, 5vw, 72px);
+  .hanan-private-showroom__inner {
+    width: 100%;
     padding: 0 5vw;
-  }
-
-  .hanan-showroom--reverse .hanan-showroom__inner {
-    grid-template-columns: 30% 70%;
-  }
-
-  .hanan-showroom--reverse .hanan-showroom__content {
-    order: 2;
-  }
-
-  .hanan-showroom--reverse .hanan-showroom__media {
-    order: 1;
-  }
-
-  .hanan-showroom__content {
     display: flex;
-    flex-direction: column;
     justify-content: center;
-    min-height: 560px;
-    max-width: 520px;
   }
 
-  .hanan-showroom__label {
+  .hanan-private-showroom__card {
+    position: relative;
+    width: min(100%, 880px);
+    padding: clamp(42px, 6vw, 76px) clamp(26px, 6vw, 84px);
+    background:
+      linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+      var(--card-bg);
+    border: 1px solid var(--card-border);
+    box-shadow:
+      0 34px 90px rgba(0, 0, 0, var(--shadow-opacity)),
+      inset 0 1px 0 rgba(242, 236, 221, 0.055);
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hanan-private-showroom--blur .hanan-private-showroom__card {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .hanan-private-showroom__card::before,
+  .hanan-private-showroom__card::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+  }
+
+  .hanan-private-showroom__card::before {
+    inset: 18px;
+    border: 1px solid rgba(242, 236, 221, 0.055);
+  }
+
+  .hanan-private-showroom__card::after {
+    width: 220px;
+    height: 220px;
+    right: -80px;
+    top: -90px;
+    background: radial-gradient(circle, rgba(217, 178, 111, 0.12), transparent 68%);
+  }
+
+  .hanan-private-showroom__logo-wrap {
+    position: relative;
+    z-index: 1;
+    width: min(100%, var(--logo-size-desktop));
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hanan-private-showroom__logo {
+    width: 100%;
+    max-width: var(--logo-size-desktop);
+    height: auto;
+    max-height: 180px;
+    display: block;
+    object-fit: contain;
+    object-position: center;
+    opacity: 0.92;
+  }
+
+  .hanan-private-showroom__logo-placeholder {
+    color: var(--heading-color);
+    font-size: clamp(42px, 8vw, 96px);
+    line-height: 0.9;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    opacity: 0.92;
+  }
+
+  .hanan-private-showroom__divider {
+    position: relative;
+    z-index: 1;
+    width: 76px;
+    height: 1px;
+    margin: 34px auto 28px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--button-border),
+      transparent
+    );
+    opacity: 0.8;
+  }
+
+  .hanan-private-showroom__label {
+    position: relative;
+    z-index: 1;
     margin: 0 0 18px;
-    color: var(--accent-color);
-    font-size: 10px;
+    color: var(--label-color);
+    font-size: 9px;
     line-height: 1;
     font-weight: 800;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
   }
 
-  .hanan-showroom__heading {
-    margin: 0;
-    color: var(--text-color);
-    font-size: clamp(34px, 4.8vw, 72px);
-    line-height: 0.9;
+  .hanan-private-showroom__heading {
+    position: relative;
+    z-index: 1;
+    max-width: 620px;
+    margin: 0 auto;
+    color: var(--heading-color);
+    font-size: clamp(30px, 4vw, 56px);
+    line-height: 0.95;
     font-weight: 900;
-    letter-spacing: 0.075em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   }
 
-  .hanan-showroom__description {
-    max-width: 430px;
-    margin-top: 24px;
-    color: rgba(142, 137, 124, 0.72);
-    font-size: 15px;
+  .hanan-private-showroom__description {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin: 22px auto 0;
+    color: var(--description-color);
+    font-size: 14px;
     line-height: 1.7;
     letter-spacing: 0.035em;
   }
 
-  .hanan-showroom__description p {
+  .hanan-private-showroom__description p {
     margin: 0;
   }
 
-  .hanan-showroom__button {
+  .hanan-private-showroom__button {
     position: relative;
-    width: fit-content;
+    z-index: 1;
     display: inline-flex;
-    margin-top: 32px;
-    padding-bottom: 8px;
-    color: var(--text-color);
+    align-items: center;
+    justify-content: center;
+    margin-top: 34px;
+    min-height: 46px;
+    padding: 15px 28px;
+    border: 1px solid var(--button-border);
+    color: var(--button-text);
     text-decoration: none;
     font-size: 9px;
     line-height: 1;
     font-weight: 800;
     letter-spacing: 0.26em;
     text-transform: uppercase;
-  }
-
-  .hanan-showroom__button::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: calc(100% - 18px);
-    height: 1px;
-    background: var(--accent-color);
-    transform: scaleX(1);
-    transform-origin: left;
-    transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .hanan-showroom__button:hover::after {
-    transform: scaleX(0.6);
-  }
-
-  .hanan-showroom__media {
-    position: relative;
-    min-height: 560px;
-    overflow: hidden;
-    background: #1a1914;
-  }
-
-  .hanan-showroom__image,
-  .hanan-showroom__placeholder {
-    width: 100%;
-    height: 100%;
-    min-height: 560px;
-    display: block;
-    object-fit: cover;
-    object-position: center 45%;
-    transform: scale(1.04);
-    filter: contrast(1.05) saturate(0.92) brightness(0.86);
+    background: transparent;
     transition:
-      transform 1400ms cubic-bezier(0.16, 1, 0.3, 1),
-      filter 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+      background 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .hanan-showroom__placeholder {
-    background: #1a1914;
+  .hanan-private-showroom__button:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-hover-text);
+    border-color: var(--button-hover-bg);
+    transform: translateY(-2px);
   }
 
-  .hanan-showroom__overlay {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(17, 17, 12, 0.08) 0%,
-        rgba(17, 17, 12, 0.22) 54%,
-        rgba(17, 17, 12, 0.76) 100%
-      ),
-      radial-gradient(
-        circle at 50% 18%,
-        rgba(242, 236, 221, 0.08) 0%,
-        rgba(17, 17, 12, 0.08) 36%,
-        rgba(17, 17, 12, 0.5) 100%
-      ),
-      rgba(17, 17, 12, var(--overlay-opacity));
-    pointer-events: none;
-  }
-
-  .hanan-showroom__media:hover .hanan-showroom__image {
-    transform: scale(1.08);
-    filter: contrast(1.08) saturate(0.95) brightness(0.78);
-  }
-
-  .hanan-showroom--animated .hanan-showroom__content,
-  .hanan-showroom--animated .hanan-showroom__media {
+  .hanan-private-showroom--animated .hanan-private-showroom__card {
     opacity: 0;
-    transform: translateY(24px);
-    animation: hananShowroomReveal 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translateY(28px) scale(0.985);
+    animation: hananPrivateShowroomReveal 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .hanan-showroom--animated .hanan-showroom__media {
-    animation-delay: 140ms;
-  }
-
-  @keyframes hananShowroomReveal {
+  @keyframes hananPrivateShowroomReveal {
     from {
       opacity: 0;
-      transform: translateY(24px);
+      transform: translateY(28px) scale(0.985);
     }
 
     to {
       opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @media screen and (max-width: 989px) {
-    .hanan-showroom__inner,
-    .hanan-showroom--reverse .hanan-showroom__inner {
-      grid-template-columns: 1fr;
-      gap: 36px;
-      padding: 0 28px;
-    }
-
-    .hanan-showroom__content,
-    .hanan-showroom--reverse .hanan-showroom__content {
-      order: 2;
-      min-height: auto;
-      max-width: 100%;
-    }
-
-    .hanan-showroom__media,
-    .hanan-showroom--reverse .hanan-showroom__media {
-      order: 1;
-      min-height: 440px;
-    }
-
-    .hanan-showroom__image,
-    .hanan-showroom__placeholder {
-      min-height: 440px;
+      transform: translateY(0) scale(1);
     }
   }
 
   @media screen and (max-width: 749px) {
-    .hanan-showroom {
+    .hanan-private-showroom {
       padding-top: calc(var(--padding-top) * 0.72);
       padding-bottom: calc(var(--padding-bottom) * 0.72);
     }
 
-    .hanan-showroom__inner {
+    .hanan-private-showroom__inner {
       padding: 0 16px;
-      gap: 30px;
     }
 
-    .hanan-showroom__media,
-    .hanan-showroom__image,
-    .hanan-showroom__placeholder {
-      min-height: 350px;
+    .hanan-private-showroom__card {
+      padding: 38px 22px;
     }
 
-    .hanan-showroom__label {
+    .hanan-private-showroom__logo-wrap {
+      width: min(100%, var(--logo-size-mobile));
+    }
+
+    .hanan-private-showroom__logo {
+      max-width: var(--logo-size-mobile);
+      max-height: 120px;
+    }
+
+    .hanan-private-showroom__divider {
+      margin: 28px auto 24px;
+    }
+
+    .hanan-private-showroom__label {
       margin-bottom: 14px;
-      font-size: 8.5px;
-      letter-spacing: 0.23em;
+      font-size: 8px;
+      letter-spacing: 0.24em;
     }
 
-    .hanan-showroom__heading {
-      font-size: 34px;
-      line-height: 0.92;
+    .hanan-private-showroom__heading {
+      font-size: 30px;
       letter-spacing: 0.065em;
     }
 
-    .hanan-showroom__description {
+    .hanan-private-showroom__description {
       margin-top: 18px;
-      font-size: 13.5px;
+      font-size: 13px;
       line-height: 1.62;
     }
 
-    .hanan-showroom__button {
+    .hanan-private-showroom__button {
       width: 100%;
-      justify-content: center;
-      margin-top: 26px;
-      padding: 16px 18px;
-      border: 1px solid rgba(242, 236, 221, 0.28);
+      margin-top: 28px;
+      padding: 15px 18px;
       font-size: 8.5px;
-      letter-spacing: 0.22em;
-    }
-
-    .hanan-showroom__button::after {
-      display: none;
+      letter-spacing: 0.2em;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hanan-showroom__content,
-    .hanan-showroom__media,
-    .hanan-showroom__image,
-    .hanan-showroom__placeholder,
-    .hanan-showroom__button::after {
+    .hanan-private-showroom__card,
+    .hanan-private-showroom__button {
       animation: none;
       transition: none;
     }
 
-    .hanan-showroom--animated .hanan-showroom__content,
-    .hanan-showroom--animated .hanan-showroom__media {
+    .hanan-private-showroom--animated .hanan-private-showroom__card {
       opacity: 1;
       transform: none;
     }
@@ -337,10 +343,15 @@
 
 {% schema %}
 {
-  "name": "HANAN Showroom",
+  "name": "HANAN Private Showroom",
   "tag": "section",
   "class": "section",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo"
+    },
     {
       "type": "text",
       "id": "small_label",
@@ -378,17 +389,6 @@
       "default": "Hola, quiero agendar una visita al showroom de BORREGO."
     },
     {
-      "type": "image_picker",
-      "id": "image",
-      "label": "Imagen del showroom"
-    },
-    {
-      "type": "checkbox",
-      "id": "reverse_layout",
-      "label": "Invertir layout",
-      "default": false
-    },
-    {
       "type": "color",
       "id": "background_color",
       "label": "Color de fondo",
@@ -396,45 +396,113 @@
     },
     {
       "type": "color",
-      "id": "text_color",
-      "label": "Color de texto",
+      "id": "card_background_color",
+      "label": "Color de fondo del card",
+      "default":"#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Color de borde del card",
+      "default": "rgba(242, 236, 221, 0.14)"
+    },
+    {
+      "type": "color",
+      "id": "label_color",
+      "label": "Color de etiqueta",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Color de título",
       "default": "#F2ECDD"
     },
     {
       "type": "color",
-      "id": "accent_color",
-      "label": "Color acento",
+      "id": "description_color",
+      "label": "Color de descripción",
+      "default": "rgba(242, 236, 221, 0.68)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Color texto botón",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "button_border_color",
+      "label": "Color borde botón",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Color texto hover botón",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background_color",
+      "label": "Color fondo hover botón",
       "default": "#D9B26F"
     },
     {
       "type": "range",
-      "id": "overlay_opacity",
-      "label": "Opacidad del overlay",
-      "min": 10,
+      "id": "shadow_intensity",
+      "label": "Intensidad de sombra",
+      "min": 0,
       "max": 70,
       "step": 5,
       "unit": "%",
-      "default": 20
+      "default": 35
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_blur",
+      "label": "Activar efecto blur",
+      "default": true
     },
     {
       "type": "range",
       "id": "padding_top",
       "label": "Espaciado superior",
-      "min": 0,
-      "max": 160,
+      "min": 32,
+      "max": 180,
       "step": 4,
       "unit": "px",
-      "default": 88
+      "default": 96
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "label": "Espaciado inferior",
-      "min": 0,
-      "max": 160,
+      "min": 32,
+      "max": 180,
       "step": 4,
       "unit": "px",
-      "default": 88
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "logo_size_desktop",
+      "label": "Tamaño logo desktop",
+      "min": 180,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "default": 520
+    },
+    {
+      "type": "range",
+      "id": "logo_size_mobile",
+      "label": "Tamaño logo mobile",
+      "min": 140,
+      "max": 360,
+      "step": 10,
+      "unit": "px",
+      "default": 260
     },
     {
       "type": "checkbox",
@@ -445,7 +513,7 @@
   ],
   "presets": [
     {
-      "name": "HANAN Showroom"
+      "name": "HANAN Private Showroom"
     }
   ]
 }
