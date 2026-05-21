@@ -101,9 +101,9 @@
       ],
       "name": "HANAN Featured Categories",
       "settings": {
-        "section_background": "#11110C",
-        "text_color": "#F2ECDD",
-        "overlay_opacity": 25,
+        "section_background": "#11110c",
+        "text_color": "#f2ecdd",
+        "overlay_opacity": 50,
         "animation_speed": 900,
         "padding_top": 56,
         "padding_bottom": 56
