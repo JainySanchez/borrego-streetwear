@@ -214,9 +214,9 @@
       "settings": {
         "image": "shopify://shop_images/ContentBlocks-Main-_1_of_1.webp",
         "reverse_layout": false,
-        "heading": "CURATED FOR THE CULTURE",
-        "text": "<p>A premium selection of sneakers, apparel, and essentials from the world’s most influential streetwear brands.</p>",
-        "button_label": "EXPLORE COLLECTION →",
+        "heading": "STREETWEAR ELEVADO",
+        "text": "<p>Descubre nuevos lanzamientos de Jordan, Nike y marcas premium seleccionadas para la cultura streetwear.<br/></p><h3></h3>",
+        "button_label": "VER NUEVOS INGRESOS  →",
         "button_link": "",
         "background_color": "#ffffff",
         "text_color": "#d9b26f",
