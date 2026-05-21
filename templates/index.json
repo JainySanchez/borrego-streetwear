@@ -230,6 +230,7 @@
       "type": "hanan-showroom-experience",
       "name": "HANAN Showroom",
       "settings": {
+        "logo_image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
         "small_label": "PRIVATE SHOWROOM",
         "heading": "VISITA NUESTRO SHOWROOM",
         "description": "<p>Agenda una visita y descubre sneakers, apparel y piezas seleccionadas en una experiencia personalizada.</p>",
