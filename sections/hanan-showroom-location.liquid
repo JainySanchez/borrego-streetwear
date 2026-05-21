@@ -5,7 +5,7 @@
 %}
 
 <section
-  class="hanan-showroom-location {% if section.settings.enable_blur %}hanan-showroom-location--blur{% endif %} {% if section.settings.enable_animation %}hanan-showroom-location--animated{% endif %}"
+  class="hanan-showroom-location {% if section.settings.enable_animation %}hanan-showroom-location--animated{% endif %}"
   style="
     --section-bg: {{ section.settings.background_color }};
     --container-bg: {{ section.settings.container_background_color }};
@@ -13,14 +13,17 @@
     --label-color: {{ section.settings.label_color }};
     --heading-color: {{ section.settings.heading_color }};
     --description-color: {{ section.settings.description_color }};
+    --address-color: {{ section.settings.address_color }};
+    --schedule-color: {{ section.settings.schedule_color }};
     --info-label-color: {{ section.settings.info_label_color }};
-    --info-text-color: {{ section.settings.info_text_color }};
     --button-text: {{ section.settings.button_text_color }};
+    --button-bg: {{ section.settings.button_background_color }};
     --button-border: {{ section.settings.button_border_color }};
     --button-hover-text: {{ section.settings.button_hover_text_color }};
     --button-hover-bg: {{ section.settings.button_hover_background_color }};
-    --overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
-    --shadow-opacity: {{ section.settings.shadow_intensity | divided_by: 100.0 }};
+    --divider-color: {{ section.settings.divider_color }};
+    --border-color: {{ section.settings.border_color }};
+    --shadow-opacity: {{ section.settings.shadow_opacity | divided_by: 100.0 }};
     --radius: {{ section.settings.border_radius }}px;
     --padding-top: {{ section.settings.padding_top }}px;
     --padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -28,43 +31,33 @@
 >
   <div class="hanan-showroom-location__inner">
     <div class="hanan-showroom-location__map-card">
-      <a
-        href="{{ section.settings.google_maps_url }}"
-        target="_blank"
-        rel="noopener"
-        class="hanan-showroom-location__map-link"
-      >
-        {% if section.settings.enable_embed_map and section.settings.google_maps_embed != blank %}
+      <div class="hanan-showroom-location__map-frame">
+        {% if section.settings.google_maps_embed != blank %}
           <iframe
             src="{{ section.settings.google_maps_embed }}"
             class="hanan-showroom-location__iframe"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade"
-            title="Showroom map"
+            title="Showroom Google Map"
           ></iframe>
-        {% elsif section.settings.map_image != blank %}
-          {{
-            section.settings.map_image
-            | image_url: width: 1600
-            | image_tag:
-              loading: 'lazy',
-              widths: '600, 900, 1200, 1600',
-              sizes: '(max-width: 749px) 100vw, 55vw',
-              class: 'hanan-showroom-location__map-image'
-          }}
         {% else %}
           <div class="hanan-showroom-location__map-placeholder">
-            <span>LIMA</span>
-            <small>PRIVATE SHOWROOM</small>
+            <span>GOOGLE MAPS</span>
+            <small>Agrega la URL embed desde el editor</small>
           </div>
         {% endif %}
+      </div>
 
-        <div class="hanan-showroom-location__map-overlay"></div>
-
-        <div class="hanan-showroom-location__map-cta">
+      {% if section.settings.google_maps_url != blank %}
+        <a
+          href="{{ section.settings.google_maps_url }}"
+          target="_blank"
+          rel="noopener"
+          class="hanan-showroom-location__map-cta"
+        >
           VER EN MAPS →
-        </div>
-      </a>
+        </a>
+      {% endif %}
     </div>
 
     <div class="hanan-showroom-location__content-card">
@@ -92,14 +85,14 @@
         {% if section.settings.showroom_address != blank %}
           <div class="hanan-showroom-location__info-item">
             <span>SHOWROOM</span>
-            <p>{{ section.settings.showroom_address }}</p>
+            <p class="hanan-showroom-location__address">{{ section.settings.showroom_address }}</p>
           </div>
         {% endif %}
 
         {% if section.settings.showroom_schedule != blank %}
           <div class="hanan-showroom-location__info-item">
             <span>HORARIO</span>
-            <p>{{ section.settings.showroom_schedule }}</p>
+            <p class="hanan-showroom-location__schedule">{{ section.settings.showroom_schedule }}</p>
           </div>
         {% endif %}
       </div>
@@ -116,185 +109,120 @@
 <style>
   .hanan-showroom-location {
     width: 100%;
-    position: relative;
     background:
-      radial-gradient(circle at 18% 18%, rgba(217, 178, 111, 0.1), transparent 32%),
-      radial-gradient(circle at 82% 74%, rgba(242, 236, 221, 0.055), transparent 34%),
-      linear-gradient(180deg, rgba(255,255,255,0.018), transparent 48%),
+      radial-gradient(circle at 18% 20%, rgba(217, 178, 111, 0.1), transparent 28%),
+      radial-gradient(circle at 84% 74%, rgba(242, 236, 221, 0.045), transparent 30%),
       var(--section-bg);
     padding-top: var(--padding-top);
     padding-bottom: var(--padding-bottom);
     overflow: hidden;
   }
 
-  .hanan-showroom-location::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    opacity: 0.2;
-    background-image:
-      linear-gradient(rgba(242, 236, 221, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(242, 236, 221, 0.022) 1px, transparent 1px);
-    background-size: 90px 90px;
-    mask-image: radial-gradient(circle at center, black, transparent 74%);
-  }
-
   .hanan-showroom-location__inner {
-    position: relative;
-    z-index: 1;
     display: grid;
-    grid-template-columns: 55% 45%;
-    gap: clamp(22px, 3vw, 42px);
-    width: 100%;
+    grid-template-columns: 54% 46%;
+    gap: clamp(18px, 2.4vw, 34px);
     padding: 0 5vw;
     align-items: stretch;
   }
 
   .hanan-showroom-location__map-card,
   .hanan-showroom-location__content-card {
-    position: relative;
     border-radius: var(--radius);
-    background:
-      linear-gradient(145deg, rgba(255,255,255,0.055), rgba(255,255,255,0)),
-      var(--container-bg);
-    border: 1px solid rgba(242, 236, 221, 0.12);
-    box-shadow:
-      0 34px 90px rgba(0, 0, 0, var(--shadow-opacity)),
-      inset 0 1px 0 rgba(255,255,255,0.06);
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, var(--shadow-opacity));
     overflow: hidden;
   }
 
-  .hanan-showroom-location--blur .hanan-showroom-location__map-card,
-  .hanan-showroom-location--blur .hanan-showroom-location__content-card {
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-
   .hanan-showroom-location__map-card {
-    min-height: 620px;
+    position: relative;
+    min-height: 430px;
     background: var(--map-bg);
   }
 
-  .hanan-showroom-location__map-link {
-    position: relative;
-    display: block;
+  .hanan-showroom-location__map-frame {
     width: 100%;
     height: 100%;
-    min-height: 620px;
-    color: inherit;
-    text-decoration: none;
+    min-height: 430px;
+    overflow: hidden;
   }
 
-  .hanan-showroom-location__map-image,
   .hanan-showroom-location__iframe {
     width: 100%;
     height: 100%;
-    min-height: 620px;
-    display: block;
+    min-height: 430px;
     border: 0;
-    object-fit: cover;
-    object-position: center;
-    filter: grayscale(1) contrast(1.12) brightness(0.7);
-    transform: scale(1.03);
-    transition:
-      transform 1300ms cubic-bezier(0.16, 1, 0.3, 1),
-      filter 1300ms cubic-bezier(0.16, 1, 0.3, 1);
+    display: block;
+    filter: grayscale(1) contrast(1.08) brightness(0.82);
   }
 
   .hanan-showroom-location__map-placeholder {
     width: 100%;
-    min-height: 620px;
+    min-height: 430px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     background:
-      radial-gradient(circle at center, rgba(217,178,111,0.12), transparent 34%),
-      linear-gradient(135deg, #191812, #0f0f0b);
+      radial-gradient(circle at center, rgba(217, 178, 111, 0.12), transparent 34%),
+      #171711;
     color: #F2ECDD;
+    text-align: center;
   }
 
   .hanan-showroom-location__map-placeholder span {
-    font-size: clamp(62px, 8vw, 120px);
-    line-height: 0.9;
-    font-weight: 900;
-    letter-spacing: 0.12em;
+    font-size: 18px;
+    font-weight: 850;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-    opacity: 0.9;
   }
 
   .hanan-showroom-location__map-placeholder small {
-    margin-top: 18px;
-    font-size: 9px;
-    font-weight: 800;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    color: rgba(242, 236, 221, 0.64);
-  }
-
-  .hanan-showroom-location__map-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(
-        180deg,
-        rgba(17,17,12,0.1) 0%,
-        rgba(17,17,12,0.18) 45%,
-        rgba(17,17,12,0.68) 100%
-      ),
-      rgba(17, 17, 12, var(--overlay-opacity));
-    pointer-events: none;
+    margin-top: 12px;
+    font-size: 11px;
+    opacity: 0.65;
   }
 
   .hanan-showroom-location__map-cta {
     position: absolute;
-    left: 28px;
-    bottom: 28px;
+    left: 22px;
+    bottom: 22px;
     z-index: 2;
+    padding: 11px 15px;
+    border: 1px solid rgba(242, 236, 221, 0.22);
+    background: rgba(17, 17, 12, 0.72);
     color: #F2ECDD;
-    font-size: 9px;
+    text-decoration: none;
+    font-size: 8.5px;
     line-height: 1;
     font-weight: 850;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    padding-bottom: 8px;
+    backdrop-filter: blur(10px);
+    transition:
+      background 550ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 550ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 550ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .hanan-showroom-location__map-cta::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: calc(100% - 18px);
-    height: 1px;
-    background: #D9B26F;
-    transition: transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
-    transform-origin: left;
-  }
-
-  .hanan-showroom-location__map-link:hover .hanan-showroom-location__map-image,
-  .hanan-showroom-location__map-link:hover .hanan-showroom-location__iframe {
-    transform: scale(1.07);
-    filter: grayscale(1) contrast(1.18) brightness(0.62);
-  }
-
-  .hanan-showroom-location__map-link:hover .hanan-showroom-location__map-cta::after {
-    transform: scaleX(0.62);
+  .hanan-showroom-location__map-cta:hover {
+    background: #F2ECDD;
+    color: #11110C;
+    transform: translateY(-2px);
   }
 
   .hanan-showroom-location__content-card {
-    padding: clamp(38px, 5vw, 72px);
+    padding: clamp(32px, 4.2vw, 58px);
     display: flex;
     flex-direction: column;
     justify-content: center;
   }
 
   .hanan-showroom-location__label {
-    margin: 0 0 20px;
+    margin: 0 0 14px;
     color: var(--label-color);
-    font-size: 9px;
+    font-size: 8.5px;
     line-height: 1;
     font-weight: 850;
     letter-spacing: 0.3em;
@@ -302,23 +230,23 @@
   }
 
   .hanan-showroom-location__heading {
-    max-width: 520px;
+    max-width: 460px;
     margin: 0;
     color: var(--heading-color);
-    font-size: clamp(34px, 4.2vw, 68px);
-    line-height: 0.9;
+    font-size: clamp(30px, 3.4vw, 54px);
+    line-height: 0.92;
     font-weight: 900;
-    letter-spacing: 0.075em;
+    letter-spacing: 0.07em;
     text-transform: uppercase;
     font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   }
 
   .hanan-showroom-location__description {
-    max-width: 460px;
-    margin-top: 24px;
+    max-width: 430px;
+    margin-top: 18px;
     color: var(--description-color);
-    font-size: 14px;
-    line-height: 1.72;
+    font-size: 13.5px;
+    line-height: 1.62;
     letter-spacing: 0.035em;
   }
 
@@ -329,95 +257,90 @@
   .hanan-showroom-location__divider {
     width: 100%;
     height: 1px;
-    margin: 34px 0;
-    background: linear-gradient(90deg, var(--button-border), transparent);
-    opacity: 0.42;
+    margin: 26px 0;
+    background: var(--divider-color);
+    opacity: 0.7;
   }
 
   .hanan-showroom-location__info {
     display: grid;
-    gap: 20px;
+    gap: 16px;
   }
 
   .hanan-showroom-location__info-item {
     display: grid;
-    gap: 7px;
+    gap: 6px;
   }
 
   .hanan-showroom-location__info-item span {
     color: var(--info-label-color);
-    font-size: 8.5px;
+    font-size: 8px;
     line-height: 1;
     font-weight: 850;
-    letter-spacing: 0.26em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
   }
 
   .hanan-showroom-location__info-item p {
     margin: 0;
-    color: var(--info_text_color);
-    font-size: 13px;
-    line-height: 1.55;
-    letter-spacing: 0.04em;
+    font-size: 12.5px;
+    line-height: 1.5;
+    letter-spacing: 0.035em;
+  }
+
+  .hanan-showroom-location__address {
+    color: var(--address-color);
+  }
+
+  .hanan-showroom-location__schedule {
+    color: var(--schedule-color);
   }
 
   .hanan-showroom-location__button {
-    position: relative;
     width: fit-content;
     display: inline-flex;
-    margin-top: 38px;
-    padding: 0 0 8px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 28px;
+    padding: 13px 18px;
+    border: 1px solid var(--button-border);
+    background: var(--button-bg);
     color: var(--button-text);
     text-decoration: none;
-    font-size: 9px;
+    font-size: 8.5px;
     line-height: 1;
     font-weight: 850;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     transition:
-      color 650ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .hanan-showroom-location__button::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: calc(100% - 18px);
-    height: 1px;
-    background: var(--button-border);
-    transform-origin: left;
-    transition:
-      background 650ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+      background 550ms cubic-bezier(0.16, 1, 0.3, 1),
+      color 550ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 550ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 550ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .hanan-showroom-location__button:hover {
-    color: var(--button-hover-text);
-    transform: translateY(-2px);
-  }
-
-  .hanan-showroom-location__button:hover::after {
     background: var(--button-hover-bg);
-    transform: scaleX(0.62);
+    color: var(--button-hover-text);
+    border-color: var(--button-hover-bg);
+    transform: translateY(-2px);
   }
 
   .hanan-showroom-location--animated .hanan-showroom-location__map-card,
   .hanan-showroom-location--animated .hanan-showroom-location__content-card {
     opacity: 0;
-    transform: translateY(28px);
-    animation: hananShowroomLocationReveal 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: translateY(22px);
+    animation: hananShowroomLocationReveal 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
   .hanan-showroom-location--animated .hanan-showroom-location__content-card {
-    animation-delay: 140ms;
+    animation-delay: 120ms;
   }
 
   @keyframes hananShowroomLocationReveal {
     from {
       opacity: 0;
-      transform: translateY(28px);
+      transform: translateY(22px);
     }
 
     to {
@@ -433,11 +356,10 @@
     }
 
     .hanan-showroom-location__map-card,
-    .hanan-showroom-location__map-link,
-    .hanan-showroom-location__map-image,
+    .hanan-showroom-location__map-frame,
     .hanan-showroom-location__iframe,
     .hanan-showroom-location__map-placeholder {
-      min-height: 440px;
+      min-height: 360px;
     }
   }
 
@@ -449,62 +371,53 @@
 
     .hanan-showroom-location__inner {
       padding: 0 16px;
-      gap: 18px;
+      gap: 16px;
     }
 
     .hanan-showroom-location__map-card,
-    .hanan-showroom-location__map-link,
-    .hanan-showroom-location__map-image,
+    .hanan-showroom-location__map-frame,
     .hanan-showroom-location__iframe,
     .hanan-showroom-location__map-placeholder {
-      min-height: 340px;
+      min-height: 300px;
     }
 
     .hanan-showroom-location__map-cta {
-      left: 20px;
-      bottom: 20px;
-      font-size: 8.5px;
-      letter-spacing: 0.22em;
+      left: 16px;
+      bottom: 16px;
+      font-size: 8px;
+      letter-spacing: 0.18em;
     }
 
     .hanan-showroom-location__content-card {
-      padding: 32px 22px;
+      padding: 28px 20px;
     }
 
     .hanan-showroom-location__label {
-      margin-bottom: 16px;
       font-size: 8px;
-      letter-spacing: 0.24em;
+      letter-spacing: 0.22em;
     }
 
     .hanan-showroom-location__heading {
-      font-size: 34px;
-      letter-spacing: 0.065em;
+      font-size: 31px;
+      letter-spacing: 0.06em;
     }
 
     .hanan-showroom-location__description {
-      margin-top: 18px;
+      margin-top: 16px;
       font-size: 13px;
-      line-height: 1.64;
-    }
-
-    .hanan-showroom-location__divider {
-      margin: 28px 0;
     }
 
     .hanan-showroom-location__button {
-      margin-top: 32px;
-      font-size: 8.5px;
-      letter-spacing: 0.22em;
+      width: 100%;
+      margin-top: 24px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .hanan-showroom-location__map-card,
     .hanan-showroom-location__content-card,
-    .hanan-showroom-location__map-image,
-    .hanan-showroom-location__iframe,
-    .hanan-showroom-location__button {
+    .hanan-showroom-location__button,
+    .hanan-showroom-location__map-cta {
       animation: none;
       transition: none;
     }
@@ -545,29 +458,18 @@
       "type": "text",
       "id": "showroom_address",
       "label": "Dirección showroom",
-      "default": "📍 Av. Ejemplo 123 — Lima, Perú"
+      "default": "Av. Ejemplo 123 — Lima, Perú"
     },
     {
       "type": "text",
       "id": "showroom_schedule",
       "label": "Horario showroom",
-      "default": "🕒 Lunes — Sábado · 10AM — 8PM"
-    },
-    {
-      "type": "image_picker",
-      "id": "map_image",
-      "label": "Imagen de mapa"
+      "default": "Lunes — Sábado · 10AM — 8PM"
     },
     {
       "type": "url",
       "id": "google_maps_url",
       "label": "URL de Google Maps"
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_embed_map",
-      "label": "Activar mapa embebido",
-      "default": false
     },
     {
       "type": "text",
@@ -595,14 +497,14 @@
     {
       "type": "color",
       "id": "background_color",
-      "label": "Color de fondo",
+      "label": "Color fondo sección",
       "default": "#11110C"
     },
     {
       "type": "color",
       "id": "container_background_color",
-      "label": "Color de contenedor",
-      "default": "rgba(232, 226, 213, 0.06)"
+      "label": "Color fondo contenedor",
+      "default": "rgba(247, 241, 225, 0.06)"
     },
     {
       "type": "color",
@@ -631,14 +533,20 @@
     {
       "type": "color",
       "id": "info_label_color",
-      "label": "Color etiqueta info",
+      "label": "Color etiquetas info",
       "default": "#D9B26F"
     },
     {
       "type": "color",
-      "id": "info_text_color",
-      "label": "Color texto info",
-      "default": "rgba(242, 236, 221, 0.72)"
+      "id": "address_color",
+      "label": "Color dirección",
+      "default": "rgba(242, 236, 221, 0.78)"
+    },
+    {
+      "type": "color",
+      "id": "schedule_color",
+      "label": "Color horario",
+      "default": "rgba(242, 236, 221, 0.68)"
     },
     {
       "type": "color",
@@ -648,57 +556,69 @@
     },
     {
       "type": "color",
+      "id": "button_background_color",
+      "label": "Color fondo botón",
+      "default": "rgba(242, 236, 221, 0)"
+    },
+    {
+      "type": "color",
       "id": "button_border_color",
-      "label": "Color línea botón",
+      "label": "Color borde botón",
       "default": "#D9B26F"
     },
     {
       "type": "color",
       "id": "button_hover_text_color",
       "label": "Color texto hover botón",
-      "default": "#D9B26F"
+      "default": "#11110C"
     },
     {
       "type": "color",
       "id": "button_hover_background_color",
-      "label": "Color línea hover botón",
-      "default": "#F2ECDD"
+      "label": "Color fondo hover botón",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color divisor",
+      "default": "rgba(217, 178, 111, 0.38)"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color borde contenedores",
+      "default": "rgba(242, 236, 221, 0.12)"
     },
     {
       "type": "range",
-      "id": "overlay_opacity",
-      "label": "Opacidad overlay mapa",
+      "id": "shadow_opacity",
+      "label": "Opacidad sombra",
       "min": 0,
       "max": 70,
       "step": 5,
       "unit": "%",
-      "default": 20
-    },
-    {
-      "type": "checkbox",
-      "id": "enable_blur",
-      "label": "Activar efecto blur",
-      "default": true
+      "default": 35
     },
     {
       "type": "range",
       "id": "padding_top",
       "label": "Espaciado superior",
-      "min": 32,
-      "max": 180,
+      "min": 24,
+      "max": 140,
       "step": 4,
       "unit": "px",
-      "default": 88
+      "default": 72
     },
     {
       "type": "range",
       "id": "padding_bottom",
       "label": "Espaciado inferior",
-      "min": 32,
-      "max": 180,
+      "min": 24,
+      "max": 140,
       "step": 4,
       "unit": "px",
-      "default": 88
+      "default": 72
     },
     {
       "type": "range",
@@ -709,16 +629,6 @@
       "step": 2,
       "unit": "px",
       "default": 18
-    },
-    {
-      "type": "range",
-      "id": "shadow_intensity",
-      "label": "Intensidad sombra",
-      "min": 0,
-      "max": 70,
-      "step": 5,
-      "unit": "%",
-      "default": 35
     },
     {
       "type": "checkbox",
