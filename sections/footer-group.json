@@ -11,8 +11,99 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "hanan_premium_footer_wWWXzc": {
+      "type": "hanan-premium-footer",
+      "blocks": {
+        "custom_link_QcJXWW": {
+          "type": "custom_link",
+          "settings": {
+            "title": "SHOP",
+            "link_label_1": "Sneakers",
+            "link_url_1": "",
+            "open_new_tab_1": false,
+            "link_label_2": "Apparel",
+            "link_url_2": "",
+            "open_new_tab_2": false,
+            "link_label_3": "Accessories",
+            "link_url_3": "",
+            "open_new_tab_3": false,
+            "link_label_4": "New Arrivals",
+            "link_url_4": "",
+            "open_new_tab_4": false
+          }
+        },
+        "custom_link_XUa8NN": {
+          "type": "custom_link",
+          "settings": {
+            "title": "INFORMACIÓN",
+            "link_label_1": "Showroom",
+            "link_url_1": "",
+            "open_new_tab_1": false,
+            "link_label_2": "Envíos",
+            "link_url_2": "",
+            "open_new_tab_2": false,
+            "link_label_3": "Cambios y devoluciones",
+            "link_url_3": "",
+            "open_new_tab_3": false,
+            "link_label_4": "Preguntas frecuentes",
+            "link_url_4": "",
+            "open_new_tab_4": false
+          }
+        },
+        "social_link_yhQm83": {
+          "type": "social_link",
+          "settings": {
+            "title": "COMUNIDAD",
+            "social_label_1": "Instagram",
+            "social_url_1": "",
+            "social_label_2": "TikTok",
+            "social_url_2": "",
+            "social_label_3": "WhatsApp",
+            "social_url_3": ""
+          }
+        },
+        "showroom_info_NejEjB": {
+          "type": "showroom_info",
+          "settings": {
+            "title": "SHOWROOM",
+            "label": "PRIVATE SHOWROOM",
+            "address": "Lima, Perú",
+            "schedule": "Lunes — Sábado · 10AM — 8PM"
+          }
+        }
+      },
+      "block_order": [
+        "custom_link_QcJXWW",
+        "custom_link_XUa8NN",
+        "social_link_yhQm83",
+        "showroom_info_NejEjB"
+      ],
+      "name": "HANAN Premium Footer",
+      "settings": {
+        "brand_statement": "PREMIUM SNEAKERS • STREETWEAR • ESSENTIALS",
+        "background_color": "#11110C",
+        "primary_text_color": "#F2ECDD",
+        "secondary_text_color": "rgba(242, 236, 221, 0.65)",
+        "accent_color": "#D9B26F",
+        "divider_color": "rgba(242, 236, 221, 0.14)",
+        "hover_color": "#D9B26F",
+        "copyright_text": "© 2026 BORREGO STREETWEAR",
+        "payment_text": "SECURE PAYMENTS · VISA · MASTERCARD · YAPE",
+        "newsletter_enable": true,
+        "newsletter_heading": "EARLY ACCESS",
+        "newsletter_description": "<p>Acceso anticipado a nuevos drops y lanzamientos seleccionados.</p>",
+        "newsletter_button_label": "JOIN",
+        "watermark_opacity": 6,
+        "watermark_position": "right",
+        "padding_top": 104,
+        "padding_bottom": 56,
+        "mobile_accordion": true,
+        "enable_animation": true
+      }
+    },
     "footer": {
       "type": "footer",
+      "disabled": true,
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
@@ -30,6 +121,7 @@
     }
   },
   "order": [
+    "hanan_premium_footer_wWWXzc",
     "footer"
   ]
 }
