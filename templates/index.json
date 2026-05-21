@@ -290,7 +290,7 @@
         "whatsapp_phone": "51999999999",
         "whatsapp_message": "Hola, quiero agendar una visita al showroom de BORREGO.",
         "image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
-        "reverse_layout": true,
+        "reverse_layout": false,
         "background_color": "#ffffff",
         "text_color": "#121212",
         "accent_color": "#d9b26f",
