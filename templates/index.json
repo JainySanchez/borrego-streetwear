@@ -225,6 +225,59 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
+    },
+    "hanan_boutique_benefits_MhWUfG": {
+      "type": "hanan-boutique-benefits",
+      "blocks": {
+        "benefit_6rkHEB": {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "AUTHENTIC PRODUCTS",
+            "description": "<p>Curated sneakers and apparel from premium streetwear brands.</p>"
+          }
+        },
+        "benefit_ib6rwa": {
+          "type": "benefit",
+          "settings": {
+            "icon": "drops",
+            "title": "CURATED DROPS",
+            "description": "<p>Selected pieces inspired by modern streetwear culture.</p>"
+          }
+        },
+        "benefit_VYwrgM": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shipping",
+            "title": "NATIONWIDE SHIPPING",
+            "description": "<p>Available across Peru.</p>"
+          }
+        },
+        "benefit_aJDXqq": {
+          "type": "benefit",
+          "settings": {
+            "icon": "support",
+            "title": "PERSONALIZED SUPPORT",
+            "description": "<p>A premium shopping experience from discovery to delivery.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_6rkHEB",
+        "benefit_ib6rwa",
+        "benefit_VYwrgM",
+        "benefit_aJDXqq"
+      ],
+      "name": "HANAN Boutique Benefits",
+      "settings": {
+        "background_color": "#11110C",
+        "title_color": "#F2ECDD",
+        "description_color": "rgba(242, 236, 221, 0.64)",
+        "icon_size": 34,
+        "enable_animation": true,
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
     }
   },
   "order": [
@@ -234,6 +287,7 @@
     "hanan_featured_brands_REEXKn",
     "featured_collection",
     "hanan_editorial_collection_jMXkix",
-    "hanan_editorial_split_banner_XErHCe"
+    "hanan_editorial_split_banner_XErHCe",
+    "hanan_boutique_benefits_MhWUfG"
   ]
 }
