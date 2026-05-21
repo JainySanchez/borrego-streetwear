@@ -149,6 +149,24 @@
         "padding_top": 75,
         "padding_bottom": 120
       }
+    },
+    "hanan_editorial_split_banner_XErHCe": {
+      "type": "hanan-editorial-split-banner",
+      "name": "HANAN Split Banner",
+      "settings": {
+        "image": "shopify://shop_images/AJ5_2_a790732c-88bd-4d53-b355-5736bd0ea095.webp",
+        "reverse_layout": false,
+        "heading": "CURATED FOR THE CULTURE",
+        "text": "<p>A premium selection of sneakers, apparel, and essentials from the world’s most influential streetwear brands.</p>",
+        "button_label": "EXPLORE COLLECTION →",
+        "button_link": "",
+        "background_color": "#ffffff",
+        "text_color": "#d9b26f",
+        "accent_color": "#000000",
+        "overlay_opacity": 25,
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
     }
   },
   "order": [
@@ -156,6 +174,7 @@
     "hanan_marquee_ihRFXM",
     "hanan_featured_categories_MXdnE9",
     "featured_collection",
-    "hanan_editorial_collection_jMXkix"
+    "hanan_editorial_collection_jMXkix",
+    "hanan_editorial_split_banner_XErHCe"
   ]
 }
