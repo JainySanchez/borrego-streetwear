@@ -58,19 +58,19 @@
       "settings": {
         "logo_width_desktop": 170,
         "logo_width_mobile": 112,
-        "menu": "main-menu",
+        "menu": "menu_new",
         "show_account_icon": true,
         "show_wishlist_icon": false,
         "wishlist_link": "",
         "transparent_on_home": true,
-        "header_background": "#11110C",
-        "header_scrolled_background": "#11110C",
-        "header_text_color": "#F2ECDD",
-        "transparent_text_color": "#F2ECDD",
-        "header_hover_color": "#D9B26F",
+        "header_background": "#11110c",
+        "header_scrolled_background": "#11110c",
+        "header_text_color": "#f2ecdd",
+        "transparent_text_color": "#f2ecdd",
+        "header_hover_color": "#d9b26f",
         "mega_menu_theme": "light",
-        "mega_menu_background": "#F2ECDD",
-        "mega_menu_text_color": "#11110C"
+        "mega_menu_background": "#f2ecdd",
+        "mega_menu_text_color": "#11110c"
       }
     }
   },
