@@ -240,33 +240,33 @@
         "benefit_ib6rwa": {
           "type": "benefit",
           "settings": {
+            "icon": "support",
+            "title": "ATENCIÓN PERSONALIZADA",
+            "description": "<p>Brindamos una experiencia de compra cercana y personalizada para ayudarte a encontrar las piezas ideales para tu estilo.</p>"
+          }
+        },
+        "benefit_aJDXqq": {
+          "type": "benefit",
+          "settings": {
             "icon": "drops",
-            "title": "CURATED DROPS",
-            "description": "<p>Selected pieces inspired by modern streetwear culture.</p>"
+            "title": "PAGOS FLEXIBLES Y SEGUROS",
+            "description": "<p>Compra fácilmente con Yape, Plin y distintos métodos de pago disponibles para una experiencia rápida y segura.</p>"
           }
         },
         "benefit_VYwrgM": {
           "type": "benefit",
           "settings": {
             "icon": "shipping",
-            "title": "NATIONWIDE SHIPPING",
-            "description": "<p>Available across Peru.</p>"
-          }
-        },
-        "benefit_aJDXqq": {
-          "type": "benefit",
-          "settings": {
-            "icon": "support",
-            "title": "PERSONALIZED SUPPORT",
-            "description": "<p>A premium shopping experience from discovery to delivery.</p>"
+            "title": "ENVÍOS A TODO EL PERÚ",
+            "description": "<p>Realizamos envíos seguros y rápidos a todo el Perú para que recibas tus productos donde estés.</p>"
           }
         }
       },
       "block_order": [
         "benefit_6rkHEB",
         "benefit_ib6rwa",
-        "benefit_VYwrgM",
-        "benefit_aJDXqq"
+        "benefit_aJDXqq",
+        "benefit_VYwrgM"
       ],
       "name": "HANAN Boutique Benefits",
       "settings": {
