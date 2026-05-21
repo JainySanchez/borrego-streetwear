@@ -1,0 +1,324 @@
+<section
+  class="hanan-featured-brands"
+  style="
+    --section-bg: {{ section.settings.background_color }};
+    --logo-color: {{ section.settings.logo_color }};
+    --scroll-speed: {{ section.settings.scrolling_speed }}s;
+    --logo-opacity: {{ section.settings.logo_opacity | divided_by: 100.0 }};
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="hanan-featured-brands__inner">
+    {% if section.settings.section_title != blank %}
+      <h2 class="hanan-featured-brands__title">
+        {{ section.settings.section_title }}
+      </h2>
+    {% endif %}
+
+    <div class="hanan-featured-brands__marquee {% unless section.settings.autoplay %}hanan-featured-brands__marquee--static{% endunless %}">
+      <div class="hanan-featured-brands__track">
+        {% for i in (1..2) %}
+          <div class="hanan-featured-brands__group">
+            {% for block in section.blocks %}
+              <a
+                href="{{ block.settings.brand_link }}"
+                class="hanan-featured-brands__item"
+                {{ block.shopify_attributes }}
+              >
+                {% if block.settings.brand_logo != blank %}
+                  {{
+                    block.settings.brand_logo
+                    | image_url: width: 320
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '120, 180, 240, 320',
+                      sizes: '(max-width: 749px) 120px, 180px',
+                      class: 'hanan-featured-brands__logo'
+                  }}
+                {% else %}
+                  <span class="hanan-featured-brands__placeholder">
+                    BRAND
+                  </span>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hanan-featured-brands {
+    width: 100%;
+    background: var(--section-bg);
+    color: var(--logo-color);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  .hanan-featured-brands__inner {
+    width: 100%;
+    opacity: 0;
+    transform: translateY(24px);
+    animation: hananBrandsReveal 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hanan-featured-brands__title {
+    margin: 0 0 44px;
+    padding: 0 5vw;
+    color: var(--logo-color);
+    font-size: clamp(18px, 2vw, 28px);
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .hanan-featured-brands__marquee {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .hanan-featured-brands__track {
+    display: flex;
+    width: max-content;
+    animation: hananBrandsScroll var(--scroll-speed) linear infinite;
+    will-change: transform;
+  }
+
+  .hanan-featured-brands__marquee:hover .hanan-featured-brands__track {
+    animation-play-state: paused;
+  }
+
+  .hanan-featured-brands__marquee--static .hanan-featured-brands__track {
+    animation: none;
+  }
+
+  .hanan-featured-brands__group {
+    display: flex;
+    align-items: center;
+    gap: clamp(56px, 7vw, 120px);
+    padding-right: clamp(56px, 7vw, 120px);
+    flex-shrink: 0;
+  }
+
+  .hanan-featured-brands__item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(120px, 12vw, 190px);
+    height: 70px;
+    color: var(--logo-color);
+    opacity: var(--logo-opacity);
+    text-decoration: none;
+    transition:
+      opacity 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-featured-brands__item:hover {
+    opacity: 1;
+    transform: scale(1.035);
+    filter: contrast(1.08);
+  }
+
+  .hanan-featured-brands__logo {
+    width: 100%;
+    max-width: 180px;
+    max-height: 58px;
+    object-fit: contain;
+    display: block;
+    filter: grayscale(1) brightness(0) invert(1);
+  }
+
+  .hanan-featured-brands__placeholder {
+    color: var(--logo-color);
+    font-size: 13px;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  @keyframes hananBrandsScroll {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes hananBrandsReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hanan-featured-brands {
+      padding-top: calc(var(--padding-top) * 0.72);
+      padding-bottom: calc(var(--padding-bottom) * 0.72);
+    }
+
+    .hanan-featured-brands__title {
+      margin-bottom: 32px;
+      padding: 0 18px;
+      font-size: 17px;
+      letter-spacing: 0.12em;
+    }
+
+    .hanan-featured-brands__group {
+      gap: 42px;
+      padding-right: 42px;
+    }
+
+    .hanan-featured-brands__item {
+      width: 118px;
+      height: 54px;
+    }
+
+    .hanan-featured-brands__logo {
+      max-width: 118px;
+      max-height: 42px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hanan-featured-brands__inner,
+    .hanan-featured-brands__track,
+    .hanan-featured-brands__item {
+      animation: none;
+      transition: none;
+    }
+
+    .hanan-featured-brands__inner {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "HANAN Featured Brands",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Título",
+      "default": "FEATURED BRANDS"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "logo_color",
+      "label": "Color de logos",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "range",
+      "id": "scrolling_speed",
+      "label": "Velocidad de desplazamiento",
+      "min": 18,
+      "max": 90,
+      "step": 2,
+      "unit": "s",
+      "default": 42
+    },
+    {
+      "type": "range",
+      "id": "logo_opacity",
+      "label": "Opacidad de logos",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Activar autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 88
+    }
+  ],
+  "blocks": [
+    {
+      "type": "brand",
+      "name": "Marca",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "brand_logo",
+          "label": "Logo de marca"
+        },
+        {
+          "type": "url",
+          "id": "brand_link",
+          "label": "Link de marca"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HANAN Featured Brands",
+      "blocks": [
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        },
+        {
+          "type": "brand"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
