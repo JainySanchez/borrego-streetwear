@@ -226,6 +226,35 @@
         "padding_bottom": 40
       }
     },
+    "hanan_showroom_experience_VenpDh": {
+      "type": "hanan-showroom-experience",
+      "name": "HANAN Showroom",
+      "settings": {
+        "small_label": "PRIVATE SHOWROOM",
+        "heading": "VISITA NUESTRO SHOWROOM",
+        "description": "<p>Agenda una visita y descubre sneakers, apparel y piezas seleccionadas en una experiencia personalizada.</p>",
+        "button_label": "AGENDAR VISITA →",
+        "whatsapp_phone": "51999999999",
+        "whatsapp_message": "Hola, quiero agendar una visita al showroom de BORREGO.",
+        "background_color": "#f2ecdd",
+        "card_background_color": "#121212",
+        "card_border_color": "#f2ecdd24",
+        "label_color": "#f2ecdd",
+        "heading_color": "#f2ecdd",
+        "description_color": "#f2ecddad",
+        "button_text_color": "#f2ecdd",
+        "button_border_color": "#d9b26f",
+        "button_hover_text_color": "#11110c",
+        "button_hover_background_color": "#d9b26f",
+        "shadow_intensity": 35,
+        "enable_blur": true,
+        "padding_top": 88,
+        "padding_bottom": 88,
+        "logo_size_desktop": 520,
+        "logo_size_mobile": 260,
+        "enable_animation": true
+      }
+    },
     "hanan_boutique_benefits_MhWUfG": {
       "type": "hanan-boutique-benefits",
       "blocks": {
@@ -278,35 +307,6 @@
         "padding_top": 96,
         "padding_bottom": 96
       }
-    },
-    "hanan_showroom_experience_VenpDh": {
-      "type": "hanan-showroom-experience",
-      "name": "HANAN Showroom",
-      "settings": {
-        "small_label": "PRIVATE SHOWROOM",
-        "heading": "VISITA NUESTRO SHOWROOM",
-        "description": "<p>Agenda una visita y descubre sneakers, apparel y piezas seleccionadas en una experiencia personalizada.</p>",
-        "button_label": "AGENDAR VISITA →",
-        "whatsapp_phone": "51999999999",
-        "whatsapp_message": "Hola, quiero agendar una visita al showroom de BORREGO.",
-        "background_color": "#ffffff",
-        "card_background_color": "#121212",
-        "card_border_color": "#f2ecdd24",
-        "label_color": "#f2ecdd",
-        "heading_color": "#f2ecdd",
-        "description_color": "#f2ecddad",
-        "button_text_color": "#f2ecdd",
-        "button_border_color": "#d9b26f",
-        "button_hover_text_color": "#11110c",
-        "button_hover_background_color": "#d9b26f",
-        "shadow_intensity": 35,
-        "enable_blur": true,
-        "padding_top": 88,
-        "padding_bottom": 88,
-        "logo_size_desktop": 520,
-        "logo_size_mobile": 260,
-        "enable_animation": true
-      }
     }
   },
   "order": [
@@ -317,7 +317,7 @@
     "featured_collection",
     "hanan_editorial_collection_jMXkix",
     "hanan_editorial_split_banner_XErHCe",
-    "hanan_boutique_benefits_MhWUfG",
-    "hanan_showroom_experience_VenpDh"
+    "hanan_showroom_experience_VenpDh",
+    "hanan_boutique_benefits_MhWUfG"
   ]
 }
