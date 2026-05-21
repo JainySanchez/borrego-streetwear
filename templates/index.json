@@ -109,6 +109,64 @@
         "padding_bottom": 56
       }
     },
+    "hanan_featured_brands_REEXKn": {
+      "type": "hanan-featured-brands",
+      "blocks": {
+        "brand_q8AMTe": {
+          "type": "brand",
+          "settings": {
+            "brand_logo": "shopify://shop_images/10c2b30308d2453a15566793858822e7.jpg",
+            "brand_link": ""
+          }
+        },
+        "brand_zcttmP": {
+          "type": "brand",
+          "settings": {
+            "brand_logo": "shopify://shop_images/logo-de-adidas.png",
+            "brand_link": "shopify://collections/adidsa"
+          }
+        },
+        "brand_7df86B": {
+          "type": "brand",
+          "settings": {
+            "brand_logo": "shopify://shop_images/logo-de-supreme.png",
+            "brand_link": "shopify://collections/adidsa"
+          }
+        },
+        "brand_VGdYfE": {
+          "type": "brand",
+          "settings": {
+            "brand_logo": "shopify://shop_images/logo-de-jordan.png",
+            "brand_link": ""
+          }
+        },
+        "brand_Bc4Q7x": {
+          "type": "brand",
+          "settings": {
+            "brand_logo": "shopify://shop_images/09d59e3f16fd9867cde816e1321f8259.jpg",
+            "brand_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "brand_q8AMTe",
+        "brand_zcttmP",
+        "brand_7df86B",
+        "brand_VGdYfE",
+        "brand_Bc4Q7x"
+      ],
+      "name": "HANAN Featured Brands",
+      "settings": {
+        "section_title": "",
+        "background_color": "#ffffff",
+        "logo_color": "#121212",
+        "scrolling_speed": 42,
+        "logo_opacity": 80,
+        "autoplay": true,
+        "padding_top": 44,
+        "padding_bottom": 52
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "disabled": true,
@@ -167,73 +225,15 @@
         "padding_top": 40,
         "padding_bottom": 40
       }
-    },
-    "hanan_featured_brands_REEXKn": {
-      "type": "hanan-featured-brands",
-      "blocks": {
-        "brand_q8AMTe": {
-          "type": "brand",
-          "settings": {
-            "brand_logo": "shopify://shop_images/10c2b30308d2453a15566793858822e7.jpg",
-            "brand_link": ""
-          }
-        },
-        "brand_zcttmP": {
-          "type": "brand",
-          "settings": {
-            "brand_logo": "shopify://shop_images/logo-de-adidas.png",
-            "brand_link": "shopify://collections/adidsa"
-          }
-        },
-        "brand_7df86B": {
-          "type": "brand",
-          "settings": {
-            "brand_logo": "shopify://shop_images/logo-de-supreme.png",
-            "brand_link": "shopify://collections/adidsa"
-          }
-        },
-        "brand_VGdYfE": {
-          "type": "brand",
-          "settings": {
-            "brand_logo": "shopify://shop_images/logo-de-jordan.png",
-            "brand_link": ""
-          }
-        },
-        "brand_Bc4Q7x": {
-          "type": "brand",
-          "settings": {
-            "brand_logo": "shopify://shop_images/09d59e3f16fd9867cde816e1321f8259.jpg",
-            "brand_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "brand_q8AMTe",
-        "brand_zcttmP",
-        "brand_7df86B",
-        "brand_VGdYfE",
-        "brand_Bc4Q7x"
-      ],
-      "name": "HANAN Featured Brands",
-      "settings": {
-        "section_title": "",
-        "background_color": "#ffffff",
-        "logo_color": "#121212",
-        "scrolling_speed": 42,
-        "logo_opacity": 80,
-        "autoplay": true,
-        "padding_top": 44,
-        "padding_bottom": 88
-      }
     }
   },
   "order": [
     "image_banner",
     "hanan_marquee_ihRFXM",
     "hanan_featured_categories_MXdnE9",
+    "hanan_featured_brands_REEXKn",
     "featured_collection",
     "hanan_editorial_collection_jMXkix",
-    "hanan_editorial_split_banner_XErHCe",
-    "hanan_featured_brands_REEXKn"
+    "hanan_editorial_split_banner_XErHCe"
   ]
 }
