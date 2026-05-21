@@ -34,11 +34,39 @@
     "borrego_header_RqdA8g": {
       "type": "borrego-header",
       "blocks": {
+        "mega_menu_UzwGeN": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "ACCESORIOS",
+            "title": "ACCESORIOS",
+            "links": "",
+            "image_1_text": "Latest rotation",
+            "image_1_link": "",
+            "image_2_text": "",
+            "image_2_link": "",
+            "image_3_text": "",
+            "image_3_link": ""
+          }
+        },
+        "mega_menu_LYAT4r": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "ROPA",
+            "title": "ROPA",
+            "links": "",
+            "image_1_text": "Latest rotation",
+            "image_1_link": "",
+            "image_2_text": "",
+            "image_2_link": "",
+            "image_3_text": "",
+            "image_3_link": ""
+          }
+        },
         "mega_menu_na83NT": {
           "type": "mega_menu",
           "settings": {
-            "menu_item": "Inicio",
-            "title": "Inicio",
+            "menu_item": "ZAPATILLAS",
+            "title": "ZAPATILLAS",
             "links": "customer-account-main-menu",
             "image_1": "shopify://shop_images/fecha-de-lanzamiento-de-los-nocta-air-force_1-white-cz8065-101.avif",
             "image_1_text": "",
@@ -52,6 +80,8 @@
         }
       },
       "block_order": [
+        "mega_menu_UzwGeN",
+        "mega_menu_LYAT4r",
         "mega_menu_na83NT"
       ],
       "name": "Borrego header",
