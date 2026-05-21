@@ -1,0 +1,963 @@
+<section
+  class="hanan-footer {% if section.settings.enable_animation %}hanan-footer--animated{% endif %} {% if section.settings.mobile_accordion %}hanan-footer--accordion{% endif %}"
+  style="
+    --footer-bg: {{ section.settings.background_color }};
+    --primary-color: {{ section.settings.primary_text_color }};
+    --secondary-color: {{ section.settings.secondary_text_color }};
+    --accent-color: {{ section.settings.accent_color }};
+    --divider-color: {{ section.settings.divider_color }};
+    --hover-color: {{ section.settings.hover_color }};
+    --watermark-opacity: {{ section.settings.watermark_opacity | divided_by: 100.0 }};
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {% if section.settings.watermark_logo != blank %}
+    <div class="hanan-footer__watermark hanan-footer__watermark--{{ section.settings.watermark_position }}">
+      {{
+        section.settings.watermark_logo
+        | image_url: width: 1400
+        | image_tag:
+          loading: 'lazy',
+          widths: '500, 800, 1100, 1400',
+          sizes: '80vw',
+          class: 'hanan-footer__watermark-image'
+      }}
+    </div>
+  {% endif %}
+
+  <div class="hanan-footer__inner">
+    {% if section.settings.brand_statement != blank %}
+      <div class="hanan-footer__statement">
+        {{ section.settings.brand_statement }}
+      </div>
+    {% endif %}
+
+    <div class="hanan-footer__main">
+      <div class="hanan-footer__columns">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'menu_column' %}
+              <div class="hanan-footer__column" {{ block.shopify_attributes }}>
+                {% if block.settings.title != blank %}
+                  <button class="hanan-footer__column-title" type="button">
+                    {{ block.settings.title }}
+                    <span>+</span>
+                  </button>
+                {% endif %}
+
+                <div class="hanan-footer__column-content">
+                  {% if block.settings.menu != blank %}
+                    {% for link in block.settings.menu.links %}
+                      <a href="{{ link.url }}" class="hanan-footer__link">
+                        {{ link.title }}
+                      </a>
+                    {% endfor %}
+                  {% endif %}
+                </div>
+              </div>
+
+            {% when 'custom_link' %}
+              <div class="hanan-footer__column" {{ block.shopify_attributes }}>
+                {% if block.settings.title != blank %}
+                  <button class="hanan-footer__column-title" type="button">
+                    {{ block.settings.title }}
+                    <span>+</span>
+                  </button>
+                {% endif %}
+
+                <div class="hanan-footer__column-content">
+                  {% if block.settings.link_label_1 != blank %}
+                    <a href="{{ block.settings.link_url_1 }}" {% if block.settings.open_new_tab_1 %}target="_blank" rel="noopener"{% endif %} class="hanan-footer__link">
+                      {{ block.settings.link_label_1 }}
+                    </a>
+                  {% endif %}
+                  {% if block.settings.link_label_2 != blank %}
+                    <a href="{{ block.settings.link_url_2 }}" {% if block.settings.open_new_tab_2 %}target="_blank" rel="noopener"{% endif %} class="hanan-footer__link">
+                      {{ block.settings.link_label_2 }}
+                    </a>
+                  {% endif %}
+                  {% if block.settings.link_label_3 != blank %}
+                    <a href="{{ block.settings.link_url_3 }}" {% if block.settings.open_new_tab_3 %}target="_blank" rel="noopener"{% endif %} class="hanan-footer__link">
+                      {{ block.settings.link_label_3 }}
+                    </a>
+                  {% endif %}
+                  {% if block.settings.link_label_4 != blank %}
+                    <a href="{{ block.settings.link_url_4 }}" {% if block.settings.open_new_tab_4 %}target="_blank" rel="noopener"{% endif %} class="hanan-footer__link">
+                      {{ block.settings.link_label_4 }}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+
+            {% when 'social_link' %}
+              <div class="hanan-footer__column" {{ block.shopify_attributes }}>
+                {% if block.settings.title != blank %}
+                  <button class="hanan-footer__column-title" type="button">
+                    {{ block.settings.title }}
+                    <span>+</span>
+                  </button>
+                {% endif %}
+
+                <div class="hanan-footer__column-content">
+                  {% if block.settings.social_label_1 != blank %}
+                    <a href="{{ block.settings.social_url_1 }}" target="_blank" rel="noopener" class="hanan-footer__link">
+                      {{ block.settings.social_label_1 }}
+                    </a>
+                  {% endif %}
+                  {% if block.settings.social_label_2 != blank %}
+                    <a href="{{ block.settings.social_url_2 }}" target="_blank" rel="noopener" class="hanan-footer__link">
+                      {{ block.settings.social_label_2 }}
+                    </a>
+                  {% endif %}
+                  {% if block.settings.social_label_3 != blank %}
+                    <a href="{{ block.settings.social_url_3 }}" target="_blank" rel="noopener" class="hanan-footer__link">
+                      {{ block.settings.social_label_3 }}
+                    </a>
+                  {% endif %}
+                </div>
+              </div>
+
+            {% when 'showroom_info' %}
+              <div class="hanan-footer__column" {{ block.shopify_attributes }}>
+                {% if block.settings.title != blank %}
+                  <button class="hanan-footer__column-title" type="button">
+                    {{ block.settings.title }}
+                    <span>+</span>
+                  </button>
+                {% endif %}
+
+                <div class="hanan-footer__column-content">
+                  {% if block.settings.label != blank %}
+                    <p class="hanan-footer__showroom-label">{{ block.settings.label }}</p>
+                  {% endif %}
+                  {% if block.settings.address != blank %}
+                    <p class="hanan-footer__text">{{ block.settings.address }}</p>
+                  {% endif %}
+                  {% if block.settings.schedule != blank %}
+                    <p class="hanan-footer__text">{{ block.settings.schedule }}</p>
+                  {% endif %}
+                </div>
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.newsletter_enable %}
+        <div class="hanan-footer__newsletter">
+          {% if section.settings.newsletter_heading != blank %}
+            <h3>{{ section.settings.newsletter_heading }}</h3>
+          {% endif %}
+
+          {% if section.settings.newsletter_description != blank %}
+            <div class="hanan-footer__newsletter-text">
+              {{ section.settings.newsletter_description }}
+            </div>
+          {% endif %}
+
+          {% form 'customer', class: 'hanan-footer__form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <input
+              type="email"
+              name="contact[email]"
+              class="hanan-footer__input"
+              value="{{ form.email }}"
+              placeholder="EMAIL"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              required
+            >
+            <button type="submit" class="hanan-footer__submit">
+              {{ section.settings.newsletter_button_label }}
+            </button>
+          {% endform %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="hanan-footer__bottom">
+      <div class="hanan-footer__bottom-left">
+        {% if section.settings.copyright_text != blank %}
+          <p>{{ section.settings.copyright_text }}</p>
+        {% endif %}
+        {% if section.settings.payment_text != blank %}
+          <p>{{ section.settings.payment_text }}</p>
+        {% endif %}
+      </div>
+
+      <div class="hanan-footer__bottom-right">
+        <p>DEVELOPED BY HANAN</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hanan-footer {
+    position: relative;
+    width: 100%;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(217, 178, 111, 0.08), transparent 32%),
+      var(--footer-bg);
+    color: var(--primary-color);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  .hanan-footer__inner {
+    position: relative;
+    z-index: 2;
+    padding: 0 5vw;
+  }
+
+  .hanan-footer__statement {
+    max-width: 1180px;
+    margin: 0 0 72px;
+    color: var(--primary-color);
+    font-size: clamp(42px, 7vw, 112px);
+    line-height: 0.88;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .hanan-footer__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 440px);
+    gap: clamp(48px, 7vw, 110px);
+    padding-top: 42px;
+    border-top: 1px solid var(--divider-color);
+  }
+
+  .hanan-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(28px, 4vw, 70px);
+  }
+
+  .hanan-footer__column-title {
+    width: 100%;
+    margin: 0 0 22px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--accent-color);
+    font-size: 10px;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    text-align: left;
+    font-family: inherit;
+  }
+
+  .hanan-footer__column-title span {
+    display: none;
+  }
+
+  .hanan-footer__column-content {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .hanan-footer__link {
+    position: relative;
+    width: fit-content;
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 1.35;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+    transition:
+      color 450ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-footer__link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background: var(--hover-color);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-footer__link:hover {
+    color: var(--hover-color);
+    transform: translateX(3px);
+  }
+
+  .hanan-footer__link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .hanan-footer__showroom-label {
+    margin: 0;
+    color: var(--primary-color);
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hanan-footer__text {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: 12px;
+    line-height: 1.65;
+    letter-spacing: 0.045em;
+  }
+
+  .hanan-footer__newsletter h3 {
+    margin: 0 0 18px;
+    color: var(--primary-color);
+    font-size: 18px;
+    line-height: 1.1;
+    font-weight: 850;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .hanan-footer__newsletter-text {
+    max-width: 390px;
+    margin-bottom: 26px;
+    color: var(--secondary-color);
+    font-size: 13px;
+    line-height: 1.7;
+    letter-spacing: 0.04em;
+  }
+
+  .hanan-footer__newsletter-text p {
+    margin: 0;
+  }
+
+  .hanan-footer__form {
+    display: flex;
+    gap: 10px;
+    border-bottom: 1px solid var(--divider-color);
+    padding-bottom: 10px;
+  }
+
+  .hanan-footer__input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--primary-color);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    outline: none;
+  }
+
+  .hanan-footer__input::placeholder {
+    color: var(--secondary-color);
+  }
+
+  .hanan-footer__submit {
+    border: 0;
+    background: transparent;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: 9px;
+    line-height: 1;
+    font-weight: 850;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: color 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .hanan-footer__submit:hover {
+    color: var(--hover-color);
+  }
+
+  .hanan-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 72px;
+    padding-top: 24px;
+    border-top: 1px solid var(--divider-color);
+  }
+
+  .hanan-footer__bottom-left,
+  .hanan-footer__bottom-right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .hanan-footer__bottom p {
+    margin: 0;
+    color: var(--secondary-color);
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .hanan-footer__watermark {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    opacity: var(--watermark-opacity);
+  }
+
+  .hanan-footer__watermark--center {
+    left: 50%;
+    bottom: 12%;
+    transform: translateX(-50%);
+  }
+
+  .hanan-footer__watermark--right {
+    right: -4vw;
+    bottom: 8%;
+  }
+
+  .hanan-footer__watermark--left {
+    left: -4vw;
+    bottom: 8%;
+  }
+
+  .hanan-footer__watermark-image {
+    width: min(78vw, 980px);
+    height: auto;
+    display: block;
+    object-fit: contain;
+    filter: grayscale(1);
+  }
+
+  .hanan-footer--animated .hanan-footer__statement,
+  .hanan-footer--animated .hanan-footer__main,
+  .hanan-footer--animated .hanan-footer__bottom {
+    opacity: 0;
+    transform: translateY(24px);
+    animation: hananFooterReveal 900ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .hanan-footer--animated .hanan-footer__main {
+    animation-delay: 120ms;
+  }
+
+  .hanan-footer--animated .hanan-footer__bottom {
+    animation-delay: 240ms;
+  }
+
+  @keyframes hananFooterReveal {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .hanan-footer__main {
+      grid-template-columns: 1fr;
+      gap: 52px;
+    }
+
+    .hanan-footer__columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 42px 34px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .hanan-footer {
+      padding-top: calc(var(--padding-top) * 0.72);
+      padding-bottom: calc(var(--padding-bottom) * 0.72);
+    }
+
+    .hanan-footer__inner {
+      padding: 0 18px;
+    }
+
+    .hanan-footer__statement {
+      margin-bottom: 46px;
+      font-size: 42px;
+      line-height: 0.92;
+      letter-spacing: 0.045em;
+    }
+
+    .hanan-footer__main {
+      padding-top: 32px;
+      gap: 44px;
+    }
+
+    .hanan-footer__columns {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .hanan-footer--accordion .hanan-footer__column {
+      border-bottom: 1px solid var(--divider-color);
+      padding: 18px 0;
+    }
+
+    .hanan-footer--accordion .hanan-footer__column-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0;
+    }
+
+    .hanan-footer--accordion .hanan-footer__column-title span {
+      display: block;
+    }
+
+    .hanan-footer--accordion .hanan-footer__column-content {
+      display: none;
+      padding-top: 20px;
+    }
+
+    .hanan-footer--accordion .hanan-footer__column.is-open .hanan-footer__column-content {
+      display: flex;
+    }
+
+    .hanan-footer:not(.hanan-footer--accordion) .hanan-footer__column {
+      margin-bottom: 34px;
+    }
+
+    .hanan-footer__newsletter h3 {
+      font-size: 16px;
+    }
+
+    .hanan-footer__form {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 18px;
+    }
+
+    .hanan-footer__bottom {
+      flex-direction: column;
+      margin-top: 48px;
+    }
+
+    .hanan-footer__bottom-left,
+    .hanan-footer__bottom-right {
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .hanan-footer__watermark-image {
+      width: 110vw;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hanan-footer__statement,
+    .hanan-footer__main,
+    .hanan-footer__bottom,
+    .hanan-footer__link,
+    .hanan-footer__link::after,
+    .hanan-footer__submit {
+      animation: none;
+      transition: none;
+    }
+
+    .hanan-footer--animated .hanan-footer__statement,
+    .hanan-footer--animated .hanan-footer__main,
+    .hanan-footer--animated .hanan-footer__bottom {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const footer = document.currentScript.closest('.hanan-footer');
+    if (!footer) return;
+
+    const columns = footer.querySelectorAll('.hanan-footer__column-title');
+
+    columns.forEach((button) => {
+      button.addEventListener('click', () => {
+        if (!footer.classList.contains('hanan-footer--accordion')) return;
+
+        const column = button.closest('.hanan-footer__column');
+        if (!column) return;
+
+        column.classList.toggle('is-open');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "HANAN Premium Footer",
+  "tag": "footer",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "brand_statement",
+      "label": "Texto editorial principal",
+      "default": "PREMIUM SNEAKERS • STREETWEAR • ESSENTIALS"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "primary_text_color",
+      "label": "Color texto principal",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "secondary_text_color",
+      "label": "Color texto secundario",
+      "default": "rgba(242, 236, 221, 0.65)"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color acento",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "color",
+      "id": "divider_color",
+      "label": "Color divisores",
+      "default": "rgba(242, 236, 221, 0.14)"
+    },
+    {
+      "type": "color",
+      "id": "hover_color",
+      "label": "Color hover",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "Copyright",
+      "default": "© 2026 BORREGO STREETWEAR"
+    },
+    {
+      "type": "text",
+      "id": "payment_text",
+      "label": "Texto métodos de pago",
+      "default": "SECURE PAYMENTS · VISA · MASTERCARD · YAPE"
+    },
+    {
+      "type": "checkbox",
+      "id": "newsletter_enable",
+      "label": "Activar newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "newsletter_heading",
+      "label": "Título newsletter",
+      "default": "EARLY ACCESS"
+    },
+    {
+      "type": "richtext",
+      "id": "newsletter_description",
+      "label": "Descripción newsletter",
+      "default": "<p>Acceso anticipado a nuevos drops y lanzamientos seleccionados.</p>"
+    },
+    {
+      "type": "text",
+      "id": "newsletter_button_label",
+      "label": "Botón newsletter",
+      "default": "JOIN"
+    },
+    {
+      "type": "image_picker",
+      "id": "watermark_logo",
+      "label": "Logo watermark"
+    },
+    {
+      "type": "range",
+      "id": "watermark_opacity",
+      "label": "Opacidad watermark",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "default": 6
+    },
+    {
+      "type": "select",
+      "id": "watermark_position",
+      "label": "Posición watermark",
+      "options": [
+        {
+          "value": "center",
+          "label": "Centro"
+        },
+        {
+          "value": "left",
+          "label": "Izquierda"
+        },
+        {
+          "value": "right",
+          "label": "Derecha"
+        }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 40,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 104
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 32,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_accordion",
+      "label": "Acordeón en mobile",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Activar animación",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu_column",
+      "name": "Menú",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título columna",
+          "default": "SHOP"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menú"
+        }
+      ]
+    },
+    {
+      "type": "custom_link",
+      "name": "Links personalizados",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título columna",
+          "default": "INFORMACIÓN"
+        },
+        {
+          "type": "text",
+          "id": "link_label_1",
+          "label": "Texto link 1",
+          "default": "Showroom"
+        },
+        {
+          "type": "url",
+          "id": "link_url_1",
+          "label": "URL link 1"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab_1",
+          "label": "Abrir link 1 en nueva pestaña",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "link_label_2",
+          "label": "Texto link 2",
+          "default": "Envíos"
+        },
+        {
+          "type": "url",
+          "id": "link_url_2",
+          "label": "URL link 2"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab_2",
+          "label": "Abrir link 2 en nueva pestaña",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "link_label_3",
+          "label": "Texto link 3",
+          "default": "Cambios y devoluciones"
+        },
+        {
+          "type": "url",
+          "id": "link_url_3",
+          "label": "URL link 3"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab_3",
+          "label": "Abrir link 3 en nueva pestaña",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "link_label_4",
+          "label": "Texto link 4",
+          "default": "Preguntas frecuentes"
+        },
+        {
+          "type": "url",
+          "id": "link_url_4",
+          "label": "URL link 4"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab_4",
+          "label": "Abrir link 4 en nueva pestaña",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "social_link",
+      "name": "Redes sociales",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título columna",
+          "default": "COMUNIDAD"
+        },
+        {
+          "type": "text",
+          "id": "social_label_1",
+          "label": "Red social 1",
+          "default": "Instagram"
+        },
+        {
+          "type": "url",
+          "id": "social_url_1",
+          "label": "URL red social 1"
+        },
+        {
+          "type": "text",
+          "id": "social_label_2",
+          "label": "Red social 2",
+          "default": "TikTok"
+        },
+        {
+          "type": "url",
+          "id": "social_url_2",
+          "label": "URL red social 2"
+        },
+        {
+          "type": "text",
+          "id": "social_label_3",
+          "label": "Red social 3",
+          "default": "WhatsApp"
+        },
+        {
+          "type": "url",
+          "id": "social_url_3",
+          "label": "URL red social 3"
+        }
+      ]
+    },
+    {
+      "type": "showroom_info",
+      "name": "Showroom",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título columna",
+          "default": "SHOWROOM"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Etiqueta",
+          "default": "PRIVATE SHOWROOM"
+        },
+        {
+          "type": "text",
+          "id": "address",
+          "label": "Dirección",
+          "default": "Lima, Perú"
+        },
+        {
+          "type": "text",
+          "id": "schedule",
+          "label": "Horario",
+          "default": "Lunes — Sábado · 10AM — 8PM"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "HANAN Premium Footer",
+      "blocks": [
+        {
+          "type": "custom_link",
+          "settings": {
+            "title": "SHOP",
+            "link_label_1": "Sneakers",
+            "link_label_2": "Apparel",
+            "link_label_3": "Accessories",
+            "link_label_4": "New Arrivals"
+          }
+        },
+        {
+          "type": "custom_link",
+          "settings": {
+            "title": "INFORMACIÓN",
+            "link_label_1": "Showroom",
+            "link_label_2": "Envíos",
+            "link_label_3": "Cambios y devoluciones",
+            "link_label_4": "Preguntas frecuentes"
+          }
+        },
+        {
+          "type": "social_link"
+        },
+        {
+          "type": "showroom_info"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
