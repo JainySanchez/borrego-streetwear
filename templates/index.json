@@ -278,6 +278,27 @@
         "padding_top": 96,
         "padding_bottom": 96
       }
+    },
+    "hanan_showroom_experience_VenpDh": {
+      "type": "hanan-showroom-experience",
+      "name": "HANAN Showroom",
+      "settings": {
+        "small_label": "PRIVATE SHOWROOM",
+        "heading": "VISITA NUESTRO SHOWROOM",
+        "description": "<p>Agenda una visita y descubre sneakers, apparel y piezas seleccionadas en una experiencia personalizada.</p>",
+        "button_label": "AGENDAR VISITA →",
+        "whatsapp_phone": "51999999999",
+        "whatsapp_message": "Hola, quiero agendar una visita al showroom de BORREGO.",
+        "image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
+        "reverse_layout": false,
+        "background_color": "#ffffff",
+        "text_color": "#121212",
+        "accent_color": "#D9B26F",
+        "overlay_opacity": 10,
+        "padding_top": 88,
+        "padding_bottom": 88,
+        "enable_animation": true
+      }
     }
   },
   "order": [
@@ -288,6 +309,7 @@
     "featured_collection",
     "hanan_editorial_collection_jMXkix",
     "hanan_editorial_split_banner_XErHCe",
-    "hanan_boutique_benefits_MhWUfG"
+    "hanan_boutique_benefits_MhWUfG",
+    "hanan_showroom_experience_VenpDh"
   ]
 }
