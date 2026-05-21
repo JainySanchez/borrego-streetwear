@@ -142,7 +142,7 @@
       "type": "HANANEditorialCollection",
       "name": "HANAN Collection",
       "settings": {
-        "collection": "adidsa",
+        "collection": "shoes-example-products",
         "title": "NEW ARRIVALS",
         "description": "<p>Curated sneakers and apparel.</p>",
         "products_to_show": 6,
