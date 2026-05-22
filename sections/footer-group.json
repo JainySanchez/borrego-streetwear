@@ -68,7 +68,8 @@
             "title": "SHOWROOM",
             "label": "PRIVATE SHOWROOM",
             "address": "Lima, Perú",
-            "schedule": "Lunes — Sábado · 10AM — 8PM"
+            "schedule": "Lunes — Sábado · 10AM — 8PM",
+            "detail": "Visitas solo con cita"
           }
         }
       },
@@ -80,7 +81,10 @@
       ],
       "name": "HANAN Premium Footer",
       "settings": {
+        "enable_large_heading": false,
         "brand_statement": "",
+        "heading_size": 72,
+        "brand_description": "<p>Curated sneakers, apparel and essentials inspired by modern streetwear culture.</p>",
         "background_color": "#f2ecdd",
         "primary_text_color": "#8a6634",
         "secondary_text_color": "#121212",
@@ -89,8 +93,8 @@
         "hover_color": "#d9b26f",
         "copyright_text": "© 2026 BORREGO STREETWEAR",
         "payment_text": "SECURE PAYMENTS · VISA · MASTERCARD · YAPE",
-        "padding_top": 104,
-        "padding_bottom": 56,
+        "padding_top": 40,
+        "padding_bottom": 36,
         "mobile_accordion": true,
         "enable_animation": true
       }
