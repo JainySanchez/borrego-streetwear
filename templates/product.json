@@ -89,24 +89,28 @@
         "benefit_7XYpPc": {
           "type": "benefit",
           "settings": {
+            "icon": "authentic",
             "title": "PRODUCTO 100% AUTÉNTICO"
           }
         },
         "benefit_kMURje": {
           "type": "benefit",
           "settings": {
+            "icon": "authentic",
             "title": "ENVÍOS A TODO EL PERÚ"
           }
         },
         "benefit_MgPiXQ": {
           "type": "benefit",
           "settings": {
+            "icon": "authentic",
             "title": "PAGOS CON YAPE, PLIN Y TARJETAS"
           }
         },
         "benefit_DxpzBh": {
           "type": "benefit",
           "settings": {
+            "icon": "authentic",
             "title": "ATENCIÓN PERSONALIZADA"
           }
         },
@@ -151,27 +155,28 @@
       ],
       "name": "BORREGO Product Page",
       "settings": {
-        "background_color": "#F5F1E8",
-        "card_background": "#F2ECDD",
-        "text_color": "#11110C",
-        "muted_text_color": "rgba(17,17,12,0.64)",
-        "accent_color": "#D9B26F",
-        "border_color": "rgba(17,17,12,0.14)",
-        "button_background": "#11110C",
-        "button_text": "#F2ECDD",
-        "button_hover_background": "#D9B26F",
-        "button_hover_text": "#11110C",
-        "add_to_cart_label": "AGREGAR AL CARRITO",
-        "enable_dynamic_checkout": false,
+        "editorial_label": "",
+        "background_color": "#ffffff",
+        "card_background": "#f2ecdd",
+        "text_color": "#11110c",
+        "muted_text_color": "#11110ca3",
+        "accent_color": "#d9b26f",
+        "border_color": "#11110c24",
+        "button_background": "#11110c",
+        "button_text": "#f2ecdd",
+        "button_hover_background": "#d9b26f",
+        "button_hover_text": "#11110c",
+        "primary_cta_label": "Seguir comprando →",
+        "purchase_microcopy": "<p>Compra personalizada vía WhatsApp. Selecciona tu talla y continúa la compra con atención personalizada.</p>",
         "whatsapp_phone": "51999999999",
         "whatsapp_message": "Hola, quiero consultar sobre este producto de BORREGO:",
-        "whatsapp_label": "CONSULTAR POR WHATSAPP →",
+        "show_showroom_availability": false,
+        "showroom_availability_text": "Disponible para visita en showroom privado.",
         "story_text": "<p>Una pieza seleccionada para quienes buscan elevar su rotación diaria con autenticidad y estilo.</p>",
         "show_showroom": true,
         "showroom_label": "PRIVATE SHOWROOM",
         "showroom_heading": "¿QUIERES VERLO ANTES DE COMPRAR?",
         "showroom_text": "<p>Agenda una visita a nuestro showroom o consulta disponibilidad por WhatsApp.</p>",
-        "showroom_button_label": "AGENDAR VISITA →",
         "show_related": true,
         "related_collection": "",
         "related_heading": "TAMBIÉN TE PUEDE GUSTAR",
