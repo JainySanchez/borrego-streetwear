@@ -66,6 +66,7 @@
         "description",
         "share"
       ],
+      "disabled": true,
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
@@ -82,8 +83,107 @@
         "padding_bottom": 12
       }
     },
+    "main_product_borrego_tkpGxk": {
+      "type": "main-product-borrego",
+      "blocks": {
+        "benefit_7XYpPc": {
+          "type": "benefit",
+          "settings": {
+            "title": "PRODUCTO 100% AUTÉNTICO"
+          }
+        },
+        "benefit_kMURje": {
+          "type": "benefit",
+          "settings": {
+            "title": "ENVÍOS A TODO EL PERÚ"
+          }
+        },
+        "benefit_MgPiXQ": {
+          "type": "benefit",
+          "settings": {
+            "title": "PAGOS CON YAPE, PLIN Y TARJETAS"
+          }
+        },
+        "benefit_DxpzBh": {
+          "type": "benefit",
+          "settings": {
+            "title": "ATENCIÓN PERSONALIZADA"
+          }
+        },
+        "accordion_bkfEmY": {
+          "type": "accordion",
+          "settings": {
+            "title": "GUÍA DE TALLAS",
+            "content": "<p>Si tienes dudas sobre tu talla, escríbenos por WhatsApp para ayudarte a elegir la opción ideal.</p>"
+          }
+        },
+        "accordion_hzUiUU": {
+          "type": "accordion",
+          "settings": {
+            "title": "ENVÍOS Y ENTREGAS",
+            "content": "<p>Realizamos envíos a Lima y provincias. Los tiempos pueden variar según destino y disponibilidad.</p>"
+          }
+        },
+        "accordion_yBkqK7": {
+          "type": "accordion",
+          "settings": {
+            "title": "CAMBIOS Y DEVOLUCIONES",
+            "content": "<p>Los cambios están sujetos a disponibilidad, estado del producto y políticas vigentes de la boutique.</p>"
+          }
+        },
+        "accordion_CVtqTk": {
+          "type": "accordion",
+          "settings": {
+            "title": "AUTENTICIDAD",
+            "content": "<p>Seleccionamos productos auténticos de marcas premium streetwear y sneaker culture.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_7XYpPc",
+        "benefit_kMURje",
+        "benefit_MgPiXQ",
+        "benefit_DxpzBh",
+        "accordion_bkfEmY",
+        "accordion_hzUiUU",
+        "accordion_yBkqK7",
+        "accordion_CVtqTk"
+      ],
+      "name": "BORREGO Product Page",
+      "settings": {
+        "background_color": "#ffffff",
+        "card_background": "#F2ECDD",
+        "text_color": "#11110C",
+        "muted_text_color": "rgba(17,17,12,0.64)",
+        "accent_color": "#D9B26F",
+        "border_color": "rgba(17,17,12,0.14)",
+        "button_background": "#11110C",
+        "button_text": "#F2ECDD",
+        "button_hover_background": "#D9B26F",
+        "button_hover_text": "#11110C",
+        "add_to_cart_label": "AGREGAR AL CARRITO",
+        "enable_dynamic_checkout": false,
+        "whatsapp_phone": "51999999999",
+        "whatsapp_message": "Hola, quiero consultar sobre este producto de BORREGO:",
+        "whatsapp_label": "CONSULTAR POR WHATSAPP →",
+        "story_text": "<p>Una pieza seleccionada para quienes buscan elevar su rotación diaria con autenticidad y estilo.</p>",
+        "show_showroom": true,
+        "showroom_label": "PRIVATE SHOWROOM",
+        "showroom_heading": "¿QUIERES VERLO ANTES DE COMPRAR?",
+        "showroom_text": "<p>Agenda una visita a nuestro showroom o consulta disponibilidad por WhatsApp.</p>",
+        "showroom_button_label": "AGENDAR VISITA →",
+        "show_related": true,
+        "related_collection": "",
+        "related_heading": "TAMBIÉN TE PUEDE GUSTAR",
+        "related_limit": 6,
+        "padding_top": 96,
+        "padding_bottom": 120,
+        "enable_animation": true
+      }
+    },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
@@ -103,6 +203,7 @@
   },
   "order": [
     "main",
+    "main_product_borrego_tkpGxk",
     "related-products"
   ]
 }
