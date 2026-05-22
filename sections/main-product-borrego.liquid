@@ -32,7 +32,10 @@
       <div class="borrego-product__media-main">
         {% for media in product.media %}
           {% if media.media_type == 'image' %}
-            <div class="borrego-product__media-item {% if forloop.first %}is-active{% endif %}" data-borrego-media="{{ media.id }}">
+            <div
+              class="borrego-product__media-item {% if forloop.first %}is-active{% endif %}"
+              data-borrego-media="{{ media.id }}"
+            >
               {{
                 media
                 | image_url: width: 1800
@@ -47,10 +50,20 @@
         {% endfor %}
 
         {% if product.media.size > 1 %}
-          <button class="borrego-product__gallery-arrow borrego-product__gallery-arrow--prev" type="button" aria-label="Imagen anterior" data-gallery-prev>
+          <button
+            class="borrego-product__gallery-arrow borrego-product__gallery-arrow--prev"
+            type="button"
+            aria-label="Imagen anterior"
+            data-gallery-prev
+          >
             ‹
           </button>
-          <button class="borrego-product__gallery-arrow borrego-product__gallery-arrow--next" type="button" aria-label="Imagen siguiente" data-gallery-next>
+          <button
+            class="borrego-product__gallery-arrow borrego-product__gallery-arrow--next"
+            type="button"
+            aria-label="Imagen siguiente"
+            data-gallery-next
+          >
             ›
           </button>
         {% endif %}
@@ -60,7 +73,11 @@
         <div class="borrego-product__thumbs">
           {% for media in product.media %}
             {% if media.media_type == 'image' %}
-              <button class="borrego-product__thumb {% if forloop.first %}is-active{% endif %}" type="button" data-borrego-thumb="{{ media.id }}">
+              <button
+                class="borrego-product__thumb {% if forloop.first %}is-active{% endif %}"
+                type="button"
+                data-borrego-thumb="{{ media.id }}"
+              >
                 {{
                   media
                   | image_url: width: 280
@@ -119,7 +136,9 @@
                       name="options[{{ option.name | escape }}]"
                       value="{{ value | escape }}"
                       data-option-position="{{ option.position }}"
-                      {% if option.selected_value == value %}checked{% endif %}
+                      {% if option.selected_value == value %}
+                        checked
+                      {% endif %}
                     >
                     <span>{{ value }}</span>
                   </label>
@@ -137,7 +156,13 @@
       {% endif %}
 
       {% if section.settings.whatsapp_phone != blank %}
-        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" class="borrego-product__primary-cta" data-borrego-whatsapp>
+        <a
+          href="{{ whatsapp_url }}"
+          target="_blank"
+          rel="noopener"
+          class="borrego-product__primary-cta"
+          data-borrego-whatsapp
+        >
           {{ section.settings.primary_cta_label }}
         </a>
       {% endif %}
@@ -155,13 +180,21 @@
               <span class="borrego-product__benefit-icon">
                 {% case block.settings.icon %}
                   {% when 'authentic' %}
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 3L19 6V11.5C19 16.2 16.2 19.4 12 21C7.8 19.4 5 16.2 5 11.5V6L12 3Z"/><path d="M8.8 12.2L11 14.4L15.4 9.8"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 3L19 6V11.5C19 16.2 16.2 19.4 12 21C7.8 19.4 5 16.2 5 11.5V6L12 3Z"/><path d="M8.8 12.2L11 14.4L15.4 9.8"/>
+                    </svg>
                   {% when 'shipping' %}
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M3.5 7.5H14.5V16.5H3.5V7.5Z"/><path d="M14.5 10H18.5L21 13V16.5H14.5V10Z"/><path d="M7 19C8.1 19 9 18.1 9 17C9 15.9 8.1 15 7 15C5.9 15 5 15.9 5 17C5 18.1 5.9 19 7 19Z"/><path d="M18 19C19.1 19 20 18.1 20 17C20 15.9 19.1 15 18 15C16.9 15 16 15.9 16 17C16 18.1 16.9 19 18 19Z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M3.5 7.5H14.5V16.5H3.5V7.5Z"/><path d="M14.5 10H18.5L21 13V16.5H14.5V10Z"/><path d="M7 19C8.1 19 9 18.1 9 17C9 15.9 8.1 15 7 15C5.9 15 5 15.9 5 17C5 18.1 5.9 19 7 19Z"/><path d="M18 19C19.1 19 20 18.1 20 17C20 15.9 19.1 15 18 15C16.9 15 16 15.9 16 17C16 18.1 16.9 19 18 19Z"/>
+                    </svg>
                   {% when 'payment' %}
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M4 7H20V17H4V7Z"/><path d="M4 10H20"/><path d="M7 14H10"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M4 7H20V17H4V7Z"/><path d="M4 10H20"/><path d="M7 14H10"/>
+                    </svg>
                   {% else %}
-                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 4C8.1 4 5 7.1 5 11V15.5C5 17.4 6.6 19 8.5 19H10"/><path d="M19 15.5V11C19 7.1 15.9 4 12 4"/><path d="M7 13H9.5V18H7V13Z"/><path d="M14.5 13H17V18H14.5V13Z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 4C8.1 4 5 7.1 5 11V15.5C5 17.4 6.6 19 8.5 19H10"/><path d="M19 15.5V11C19 7.1 15.9 4 12 4"/><path d="M7 13H9.5V18H7V13Z"/><path d="M14.5 13H17V18H14.5V13Z"/>
+                    </svg>
                 {% endcase %}
               </span>
               <span>{{ block.settings.title }}</span>
@@ -239,280 +272,280 @@
 </section>
 
 <style>
-  .borrego-product {
-    background: var(--bg);
-    color: var(--text);
-    padding-top: var(--padding-top);
-    padding-bottom: var(--padding-bottom);
-    overflow: hidden;
-  }
+    .borrego-product {
+      background: var(--bg);
+      color: var(--text);
+      padding-top: var(--padding-top);
+      padding-bottom: var(--padding-bottom);
+      overflow: hidden;
+    }
 
-  .borrego-product__inner {
-    display: grid;
-    grid-template-columns: minmax(0, 58%) minmax(360px, 42%);
-    gap: clamp(38px, 5vw, 88px);
-    padding: 0 5vw;
-    align-items: start;
-  }
+    .borrego-product__inner {
+      display: grid;
+      grid-template-columns: minmax(0, 58%) minmax(360px, 42%);
+      gap: clamp(38px, 5vw, 88px);
+      padding: 0 5vw;
+      align-items: start;
+    }
 
-  .borrego-product__gallery {
-    display: grid;
-    gap: 12px;
-  }
+    .borrego-product__gallery {
+      display: grid;
+      gap: 12px;
+    }
 
-  .borrego-product__media-main {
-    position: relative;
-    background:
-      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.72), transparent 34%),
-      linear-gradient(145deg, var(--card-bg), #ffffff);
-    overflow: hidden;
-    min-height: 620px;
-    box-shadow: 0 24px 60px rgba(17, 17, 12, 0.055);
-  }
+    .borrego-product__media-main {
+      position: relative;
+      background:
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.72), transparent 34%),
+        linear-gradient(145deg, var(--card-bg), #ffffff);
+      overflow: hidden;
+      min-height: 620px;
+      box-shadow: 0 24px 60px rgba(17, 17, 12, 0.055);
+    }
 
-  .borrego-product__media-item {
-    display: block;
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(10px) scale(1.01);
-    transition:
-      opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
-      visibility 620ms ease,
-      transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+    .borrego-product__media-item {
+      display: block;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(10px) scale(1.01);
+      transition:
+        opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 620ms ease,
+        transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .borrego-product__media-item.is-active {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0) scale(1);
-  }
+    .borrego-product__media-item.is-active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0) scale(1);
+    }
 
-  .borrego-product__image {
-    width: 100%;
-    height: 100%;
-    min-height: 620px;
-    object-fit: contain;
-    padding: 4.8%;
-    transform: scale(1.04);
-    transition: transform 1250ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+    .borrego-product__image {
+      width: 100%;
+      height: 100%;
+      min-height: 620px;
+      object-fit: contain;
+      padding: 4.8%;
+      transform: scale(1.04);
+      transition: transform 1250ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .borrego-product__media-main:hover .borrego-product__media-item.is-active .borrego-product__image {
-    transform: scale(1.075) translateY(-3px);
-  }
+    .borrego-product__media-main:hover .borrego-product__media-item.is-active .borrego-product__image {
+      transform: scale(1.075) translateY(-3px);
+    }
 
-  .borrego-product__gallery-arrow {
-    position: absolute;
-    top: 50%;
-    z-index: 3;
-    width: 38px;
-    height: 38px;
-    border: 1px solid rgba(17,17,12,0.16);
-    border-radius: 999px;
-    background: rgba(247, 247, 245, 0.82);
-    color: var(--text);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    line-height: 1;
-    cursor: pointer;
-    transform: translateY(-50%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition:
-      background 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 420ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+    .borrego-product__gallery-arrow {
+      position: absolute;
+      top: 50%;
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(17,17,12,0.16);
+      border-radius: 999px;
+      background: rgba(247, 247, 245, 0.82);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      transition:
+        background 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .borrego-product__gallery-arrow--prev {
-    left: 28px;
-  }
+    .borrego-product__gallery-arrow--prev {
+      left: 28px;
+    }
 
-  .borrego-product__gallery-arrow--next {
-    right: 28px;
-  }
+    .borrego-product__gallery-arrow--next {
+      right: 28px;
+    }
 
-  .borrego-product__gallery-arrow:hover {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-    transform: translateY(-50%) scale(1.04);
-  }
+    .borrego-product__gallery-arrow:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      transform: translateY(-50%) scale(1.04);
+    }
 
-  .borrego-product__thumbs {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    padding-bottom: 2px;
-  }
+    .borrego-product__thumbs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
 
-  .borrego-product__thumbs::-webkit-scrollbar {
-    display: none;
-  }
+    .borrego-product__thumbs::-webkit-scrollbar {
+      display: none;
+    }
 
-  .borrego-product__thumb {
-    width: 104px;
-    height: 116px;
-    flex: 0 0 104px;
-    padding: 8px;
-    border: 1px solid rgba(17,17,12,0.08);
-    background:
-      linear-gradient(145deg, var(--card-bg), #ffffff);
-    cursor: pointer;
-    opacity: 0.62;
-    transition:
-      opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+    .borrego-product__thumb {
+      width: 104px;
+      height: 116px;
+      flex: 0 0 104px;
+      padding: 8px;
+      border: 1px solid rgba(17,17,12,0.08);
+      background:
+        linear-gradient(145deg, var(--card-bg), #ffffff);
+      cursor: pointer;
+      opacity: 0.62;
+      transition:
+        opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .borrego-product__thumb.is-active {
-    opacity: 1;
-    border-color: var(--accent);
-    box-shadow: inset 0 0 0 1px var(--accent);
-  }
+    .borrego-product__thumb.is-active {
+      opacity: 1;
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
 
-  .borrego-product__thumb:hover {
-    opacity: 1;
-    transform: translateY(-2px);
-    border-color: rgba(17,17,12,0.24);
-  }
+    .borrego-product__thumb:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+      border-color: rgba(17,17,12,0.24);
+    }
 
-  .borrego-product__thumb-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
+    .borrego-product__thumb-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-  .borrego-product__info {
-    position: sticky;
-    top: 108px;
-  }
+    .borrego-product__info {
+      position: sticky;
+      top: 108px;
+    }
 
-  .borrego-product__editorial-label,
-  .borrego-product__vendor {
-    margin: 0 0 11px;
-    color: var(--accent);
-    font-size: 8.5px;
-    font-weight: 850;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-  }
+    .borrego-product__editorial-label,
+    .borrego-product__vendor {
+      margin: 0 0 11px;
+      color: var(--accent);
+      font-size: 8.5px;
+      font-weight: 850;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+    }
 
-  .borrego-product__vendor {
-    color: var(--muted);
-    margin-bottom: 14px;
-  }
+    .borrego-product__vendor {
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
 
-  .borrego-product__title {
-    margin: 0;
-    color: var(--text);
-    font-size: clamp(31px, 3.55vw, 58px);
-    line-height: 0.98;
-    font-weight: 900;
-    letter-spacing: 0.052em;
-    text-transform: uppercase;
-    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-  }
+    .borrego-product__title {
+      margin: 0;
+      color: var(--text);
+      font-size: clamp(31px, 3.55vw, 58px);
+      line-height: 0.98;
+      font-weight: 900;
+      letter-spacing: 0.052em;
+      text-transform: uppercase;
+      font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+    }
 
-  .borrego-product__price {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    margin-top: 24px;
-    color: var(--text);
-    font-size: 17px;
-    letter-spacing: 0.075em;
-  }
+    .borrego-product__price {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 24px;
+      color: var(--text);
+      font-size: 17px;
+      letter-spacing: 0.075em;
+    }
 
-  .borrego-product__price span {
-    color: var(--muted);
-    text-decoration: line-through;
-    font-size: 14px;
-  }
+    .borrego-product__price span {
+      color: var(--muted);
+      text-decoration: line-through;
+      font-size: 14px;
+    }
 
-  .borrego-product__availability {
-    margin: 14px 0 28px;
-    color: var(--muted);
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
+    .borrego-product__availability {
+      margin: 14px 0 28px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
 
-  .borrego-product__variants {
-    display: grid;
-    gap: 22px;
-    margin-bottom: 22px;
-  }
+    .borrego-product__variants {
+      display: grid;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
 
-  .borrego-product__option {
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
+    .borrego-product__option {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
 
-  .borrego-product__option legend {
-    margin-bottom: 13px;
-    color: var(--text);
-    font-size: 9px;
-    font-weight: 850;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-  }
+    .borrego-product__option legend {
+      margin-bottom: 13px;
+      color: var(--text);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
 
-  .borrego-product__option-values {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-  }
+    .borrego-product__option-values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
 
-  .borrego-product__option-value input {
-    position: absolute;
-    opacity: 0;
-  }
+    .borrego-product__option-value input {
+      position: absolute;
+      opacity: 0;
+    }
 
-  .borrego-product__option-value span {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 46px;
-    height: 38px;
-    padding: 0 14px;
-    border: 1px solid var(--border);
-    color: var(--text);
-    background: rgba(255,255,255,0.18);
-    font-size: 10px;
-    font-weight: 780;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition:
-      background 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
+    .borrego-product__option-value span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 46px;
+      height: 38px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: rgba(255,255,255,0.18);
+      font-size: 10px;
+      font-weight: 780;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        background 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-  .borrego-product__option-value input:checked + span {
-    background: var(--text);
-    color: var(--bg);
-    border-color: var(--text);
-  }
+    .borrego-product__option-value input:checked + span {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
 
-  .borrego-product__option-value span:hover {
-    border-color: var(--accent);
-    transform: translateY(-1px);
-  }
+    .borrego-product__option-value span:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
 
-  .borrego-product__option-value.is-unavailable {
+   .borrego-product__option-value.is-unavailable {
     pointer-events: none;
   }
 
@@ -546,426 +579,426 @@
     transform: none;
   }
 
-  .borrego-product__purchase-copy {
-    margin: 4px 0 18px;
-    color: var(--muted);
-    font-size: 12.5px;
-    line-height: 1.65;
-    letter-spacing: 0.035em;
-  }
-
-  .borrego-product__purchase-copy p {
-    margin: 0;
-  }
-
-  .borrego-product__primary-cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 52px;
-    width: 100%;
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 850;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border: 1px solid var(--button-bg);
-    background: var(--button-bg);
-    color: var(--button-text);
-    transition:
-      background 520ms cubic-bezier(0.16, 1, 0.3, 1),
-      color 520ms cubic-bezier(0.16, 1, 0.3, 1),
-      border-color 520ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 520ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .borrego-product__primary-cta:hover {
-    background: var(--button-hover-bg);
-    color: var(--button-hover-text);
-    border-color: var(--button-hover-bg);
-    transform: translateY(-2px);
-  }
-
-  .borrego-product__primary-cta.is-disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-  }
-
-  .borrego-product__showroom-note {
-    margin: 16px 0 0;
-    color: var(--accent);
-    font-size: 10px;
-    line-height: 1.5;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-  }
-
-  .borrego-product__benefits {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 15px 18px;
-    margin-top: 34px;
-    padding-top: 30px;
-    border-top: 1px solid var(--border);
-  }
-
-  .borrego-product__benefit {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    color: var(--muted);
-    font-size: 9.5px;
-    font-weight: 800;
-    line-height: 1.45;
-    letter-spacing: 0.13em;
-    text-transform: uppercase;
-  }
-
-  .borrego-product__benefit-icon {
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
-    color: var(--accent);
-  }
-
-  .borrego-product__benefit-icon svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    stroke: currentColor;
-    stroke-width: 1.35;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .borrego-product__description {
-    margin-top: 38px;
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.75;
-    letter-spacing: 0.035em;
-  }
-
-  .borrego-product__story {
-    color: var(--text);
-    margin-bottom: 18px;
-  }
-
-  .borrego-product__rte p {
-    margin-top: 0;
-  }
-
-  .borrego-product__accordions {
-    margin-top: 34px;
-    border-top: 1px solid var(--border);
-  }
-
-  .borrego-product__accordion {
-    border-bottom: 1px solid var(--border);
-  }
-
-  .borrego-product__accordion summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    padding: 19px 0;
-    cursor: pointer;
-    color: var(--text);
-    font-size: 10px;
-    font-weight: 850;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    transition: color 320ms ease;
-  }
-
-  .borrego-product__accordion summary:hover {
-    color: var(--accent);
-  }
-
-  .borrego-product__accordion summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .borrego-product__accordion summary span {
-    position: relative;
-    width: 13px;
-    height: 13px;
-    flex: 0 0 13px;
-  }
-
-  .borrego-product__accordion summary span::before,
-  .borrego-product__accordion summary span::after {
-    content: "";
-    position: absolute;
-    background: currentColor;
-    transition: transform 320ms ease;
-  }
-
-  .borrego-product__accordion summary span::before {
-    top: 6px;
-    left: 0;
-    width: 13px;
-    height: 1px;
-  }
-
-  .borrego-product__accordion summary span::after {
-    top: 0;
-    left: 6px;
-    width: 1px;
-    height: 13px;
-  }
-
-  .borrego-product__accordion[open] summary span::after {
-    transform: scaleY(0);
-  }
-
-  .borrego-product__accordion div {
-    padding: 0 0 21px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.7;
-  }
-
-  .borrego-product__showroom {
-    margin-top: 36px;
-    padding: 24px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.2);
-  }
-
-  .borrego-product__showroom p {
-    margin: 0 0 12px;
-    color: var(--accent);
-    font-size: 9px;
-    font-weight: 850;
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-  }
-
-  .borrego-product__showroom h3 {
-    margin: 0 0 12px;
-    color: var(--text);
-    font-size: 21px;
-    line-height: 1;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .borrego-product__showroom div {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.65;
-  }
-
-  .borrego-related {
-    margin-top: 96px;
-    padding: 0 5vw;
-  }
-
-  .borrego-related h2 {
-    margin: 0 0 34px;
-    color: var(--text);
-    font-size: clamp(24px, 3vw, 42px);
-    line-height: 1;
-    font-weight: 900;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-  }
-
-  .borrego-related__slider {
-    display: flex;
-    gap: 22px;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .borrego-related__slider::-webkit-scrollbar {
-    display: none;
-  }
-
-  .borrego-related__card {
-    width: min(32vw, 390px);
-    min-width: min(32vw, 390px);
-    text-decoration: none;
-    color: var(--text);
-  }
-
-  .borrego-related__media {
-    height: 420px;
-    background: var(--card-bg);
-    overflow: hidden;
-  }
-
-  .borrego-related__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 12%;
-    transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .borrego-related__card:hover .borrego-related__image {
-    transform: scale(1.05) translateY(-4px);
-  }
-
-  .borrego-related__content {
-    display: flex;
-    justify-content: space-between;
-    gap: 18px;
-    padding-top: 16px;
-  }
-
-  .borrego-related__content h3 {
-    margin: 0;
-    color: var(--text);
-    font-size: 12px;
-    line-height: 1.45;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .borrego-related__content span {
-    color: var(--muted);
-    font-size: 12px;
-    white-space: nowrap;
-  }
-
-  .borrego-product--animated .borrego-product__gallery,
-  .borrego-product--animated .borrego-product__info,
-  .borrego-product--animated .borrego-related {
-    opacity: 0;
-    transform: translateY(28px);
-    animation: borregoProductReveal 950ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .borrego-product--animated .borrego-product__info {
-    animation-delay: 120ms;
-  }
-
-  .borrego-product--animated .borrego-related {
-    animation-delay: 220ms;
-  }
-
-  @keyframes borregoProductReveal {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @media screen and (max-width: 989px) {
-    .borrego-product__inner {
-      grid-template-columns: 1fr;
-      gap: 44px;
-      padding: 0 28px;
+    .borrego-product__purchase-copy {
+      margin: 4px 0 18px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.65;
+      letter-spacing: 0.035em;
     }
 
-    .borrego-product__info {
-      position: static;
+    .borrego-product__purchase-copy p {
+      margin: 0;
     }
 
-    .borrego-product__media-main,
-    .borrego-product__image {
-      min-height: 520px;
+    .borrego-product__primary-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      width: 100%;
+      text-decoration: none;
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      cursor: pointer;
+      border: 1px solid var(--button-bg);
+      background: var(--button-bg);
+      color: var(--button-text);
+      transition:
+        background 520ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 520ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 520ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+        opacity 520ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .borrego-related__card {
-      width: 46vw;
-      min-width: 46vw;
-    }
-  }
-
-  @media screen and (max-width: 749px) {
-    .borrego-product {
-      padding-top: calc(var(--padding-top) * 0.72);
-      padding-bottom: calc(var(--padding-bottom) * 0.72);
+    .borrego-product__primary-cta:hover {
+      background: var(--button-hover-bg);
+      color: var(--button-hover-text);
+      border-color: var(--button-hover-bg);
+      transform: translateY(-2px);
     }
 
-    .borrego-product__inner {
-      padding: 0 16px;
-      gap: 34px;
+    .borrego-product__primary-cta.is-disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
     }
 
-    .borrego-product__media-main,
-    .borrego-product__image {
-      min-height: 400px;
-    }
-
-    .borrego-product__image {
-      padding: 6%;
-      transform: scale(1.03);
-    }
-
-    .borrego-product__gallery-arrow {
-      width: 34px;
-      height: 34px;
-      font-size: 22px;
-    }
-
-    .borrego-product__gallery-arrow--prev {
-      left: 18px;
-    }
-
-    .borrego-product__gallery-arrow--next {
-      right: 18px;
-    }
-
-    .borrego-product__thumb {
-      width: 84px;
-      height: 94px;
-      flex-basis: 84px;
-    }
-
-    .borrego-product__title {
-      font-size: 31px;
-      line-height: 1;
-    }
-
-    .borrego-product__price {
-      font-size: 16px;
+    .borrego-product__showroom-note {
+      margin: 16px 0 0;
+      color: var(--accent);
+      font-size: 10px;
+      line-height: 1.5;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
     }
 
     .borrego-product__benefits {
-      grid-template-columns: 1fr;
-      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px 18px;
+      margin-top: 34px;
+      padding-top: 30px;
+      border-top: 1px solid var(--border);
+    }
+
+    .borrego-product__benefit {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 9.5px;
+      font-weight: 800;
+      line-height: 1.45;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .borrego-product__benefit-icon {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      color: var(--accent);
+    }
+
+    .borrego-product__benefit-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      stroke: currentColor;
+      stroke-width: 1.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .borrego-product__description {
+      margin-top: 38px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      letter-spacing: 0.035em;
+    }
+
+    .borrego-product__story {
+      color: var(--text);
+      margin-bottom: 18px;
+    }
+
+    .borrego-product__rte p {
+      margin-top: 0;
+    }
+
+    .borrego-product__accordions {
+      margin-top: 34px;
+      border-top: 1px solid var(--border);
+    }
+
+    .borrego-product__accordion {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .borrego-product__accordion summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 19px 0;
+      cursor: pointer;
+      color: var(--text);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      transition: color 320ms ease;
+    }
+
+    .borrego-product__accordion summary:hover {
+      color: var(--accent);
+    }
+
+    .borrego-product__accordion summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .borrego-product__accordion summary span {
+      position: relative;
+      width: 13px;
+      height: 13px;
+      flex: 0 0 13px;
+    }
+
+    .borrego-product__accordion summary span::before,
+    .borrego-product__accordion summary span::after {
+      content: "";
+      position: absolute;
+      background: currentColor;
+      transition: transform 320ms ease;
+    }
+
+    .borrego-product__accordion summary span::before {
+      top: 6px;
+      left: 0;
+      width: 13px;
+      height: 1px;
+    }
+
+    .borrego-product__accordion summary span::after {
+      top: 0;
+      left: 6px;
+      width: 1px;
+      height: 13px;
+    }
+
+    .borrego-product__accordion[open] summary span::after {
+      transform: scaleY(0);
+    }
+
+    .borrego-product__accordion div {
+      padding: 0 0 21px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
     }
 
     .borrego-product__showroom {
-      padding: 22px;
+      margin-top: 36px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.2);
+    }
+
+    .borrego-product__showroom p {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    .borrego-product__showroom h3 {
+      margin: 0 0 12px;
+      color: var(--text);
+      font-size: 21px;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .borrego-product__showroom div {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
     }
 
     .borrego-related {
-      margin-top: 68px;
-      padding: 0 16px;
+      margin-top: 96px;
+      padding: 0 5vw;
+    }
+
+    .borrego-related h2 {
+      margin: 0 0 34px;
+      color: var(--text);
+      font-size: clamp(24px, 3vw, 42px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .borrego-related__slider {
+      display: flex;
+      gap: 22px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .borrego-related__slider::-webkit-scrollbar {
+      display: none;
     }
 
     .borrego-related__card {
-      width: 78vw;
-      min-width: 78vw;
+      width: min(32vw, 390px);
+      min-width: min(32vw, 390px);
+      text-decoration: none;
+      color: var(--text);
     }
 
     .borrego-related__media {
-      height: 340px;
+      height: 420px;
+      background: var(--card-bg);
+      overflow: hidden;
+    }
+
+    .borrego-related__image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 12%;
+      transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .borrego-related__card:hover .borrego-related__image {
+      transform: scale(1.05) translateY(-4px);
     }
 
     .borrego-related__content {
-      flex-direction: column;
-      gap: 8px;
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 16px;
     }
-  }
 
-  @media (prefers-reduced-motion: reduce) {
-    .borrego-product *,
-    .borrego-product *::before,
-    .borrego-product *::after {
-      animation: none !important;
-      transition: none !important;
+    .borrego-related__content h3 {
+      margin: 0;
+      color: var(--text);
+      font-size: 12px;
+      line-height: 1.45;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
-  }
+
+    .borrego-related__content span {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .borrego-product--animated .borrego-product__gallery,
+    .borrego-product--animated .borrego-product__info,
+    .borrego-product--animated .borrego-related {
+      opacity: 0;
+      transform: translateY(28px);
+      animation: borregoProductReveal 950ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .borrego-product--animated .borrego-product__info {
+      animation-delay: 120ms;
+    }
+
+    .borrego-product--animated .borrego-related {
+      animation-delay: 220ms;
+    }
+
+    @keyframes borregoProductReveal {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media screen and (max-width: 989px) {
+      .borrego-product__inner {
+        grid-template-columns: 1fr;
+        gap: 44px;
+        padding: 0 28px;
+      }
+
+      .borrego-product__info {
+        position: static;
+      }
+
+      .borrego-product__media-main,
+      .borrego-product__image {
+        min-height: 520px;
+      }
+
+      .borrego-related__card {
+        width: 46vw;
+        min-width: 46vw;
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      .borrego-product {
+        padding-top: calc(var(--padding-top) * 0.72);
+        padding-bottom: calc(var(--padding-bottom) * 0.72);
+      }
+
+      .borrego-product__inner {
+        padding: 0 16px;
+        gap: 34px;
+      }
+
+      .borrego-product__media-main,
+      .borrego-product__image {
+        min-height: 400px;
+      }
+
+      .borrego-product__image {
+        padding: 6%;
+        transform: scale(1.03);
+      }
+
+      .borrego-product__gallery-arrow {
+        width: 34px;
+        height: 34px;
+        font-size: 22px;
+      }
+
+      .borrego-product__gallery-arrow--prev {
+        left: 18px;
+      }
+
+      .borrego-product__gallery-arrow--next {
+        right: 18px;
+      }
+
+      .borrego-product__thumb {
+        width: 84px;
+        height: 94px;
+        flex-basis: 84px;
+      }
+
+      .borrego-product__title {
+        font-size: 31px;
+        line-height: 1;
+      }
+
+      .borrego-product__price {
+        font-size: 16px;
+      }
+
+      .borrego-product__benefits {
+        grid-template-columns: 1fr;
+        margin-top: 30px;
+      }
+
+      .borrego-product__showroom {
+        padding: 22px;
+      }
+
+      .borrego-related {
+        margin-top: 68px;
+        padding: 0 16px;
+      }
+
+      .borrego-related__card {
+        width: 78vw;
+        min-width: 78vw;
+      }
+
+      .borrego-related__media {
+        height: 340px;
+      }
+
+      .borrego-related__content {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .borrego-product *,
+      .borrego-product *::before,
+      .borrego-product *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
 </style>
 <script>
   (() => {
