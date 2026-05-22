@@ -1085,7 +1085,13 @@ if (!section) return;
       const selectedOptions = getSelectedOptions();
 
       return variants.some((variant) => {
-        if (!variant.available) return false;
+        const hasStock =
+  variant.available &&
+  (variant.inventory_management !== 'shopify' ||
+    variant.inventory_policy === 'continue' ||
+    variant.inventory_quantity > 0);
+
+if (!hasStock) return false;
 
         return variant.options.every((optionValue, index) => {
           if (index === position - 1) return optionValue === value;
