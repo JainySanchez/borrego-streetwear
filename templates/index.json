@@ -66,8 +66,8 @@
         "category_kg4Lnb": {
           "type": "category",
           "settings": {
-            "category_title": "SNEAKERS",
-            "subtitle": "DISCOVER THE DROP",
+            "category_title": "ZAPATILLAS",
+            "subtitle": "LOS ÚLTIMOS LANZAMIENTOS",
             "image": "shopify://shop_images/AJ5_5_30bb1deb-3569-4028-bbe3-5626fc1f013b.webp",
             "button_label": "SHOP NOW",
             "button_link": ""
@@ -76,8 +76,8 @@
         "category_EWM6h9": {
           "type": "category",
           "settings": {
-            "category_title": "APPAREL",
-            "subtitle": "CURATED STREETWEAR",
+            "category_title": "ROPA",
+            "subtitle": "STREETWEAR SELECCIONADO",
             "image": "shopify://shop_images/AJ5_9_bba6c3b0-ec67-4a36-8547-3b21537c7901.webp",
             "button_label": "SHOP NOW",
             "button_link": ""
@@ -86,8 +86,8 @@
         "category_fHptEk": {
           "type": "category",
           "settings": {
-            "category_title": "ACCESSORIES",
-            "subtitle": "PREMIUM ESSENTIALS",
+            "category_title": "ACCESORIOS",
+            "subtitle": "ESENCIALES PREMIUM",
             "image": "shopify://shop_images/KHM051460-504_0007.webp",
             "button_label": "SHOP NOW",
             "button_link": ""
