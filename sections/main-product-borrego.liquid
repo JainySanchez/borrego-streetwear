@@ -967,7 +967,6 @@
     }
   }
 </style>
-
 <script>
   (() => {
     const section = document.currentScript.closest('.borrego-product');
@@ -984,9 +983,11 @@
     const whatsappButton = section.querySelector('[data-borrego-whatsapp]');
     const mainGallery = section.querySelector('.borrego-product__media-main');
 
-    let currentIndex = 0;
-    let variants = [];
+    let currentIndex = mediaItems.findIndex((item) => item.classList.contains('is-active'));
     let touchStartX = 0;
+    let variants = [];
+
+    if (currentIndex < 0) currentIndex = 0;
 
     if (variantData) {
       try {
@@ -1008,6 +1009,7 @@
       if (!mediaItems.length) return;
 
       currentIndex = (index + mediaItems.length) % mediaItems.length;
+
       const activeItem = mediaItems[currentIndex];
       const activeId = activeItem.dataset.borregoMedia;
 
@@ -1032,15 +1034,17 @@
       return selected;
     };
 
-    const findSelectedVariant = () => {
-      const selectedOptions = getSelectedOptions();
-
+    const getVariantFromOptions = (options) => {
       return variants.find((variant) => {
-        return variant.options.every((option, index) => option === selectedOptions[index]);
+        return variant.options.every((option, index) => option === options[index]);
       });
     };
 
-    const optionExistsAndAvailable = (position, value) => {
+    const getSelectedVariant = () => {
+      return getVariantFromOptions(getSelectedOptions());
+    };
+
+    const optionCanBeSelected = (position, value) => {
       const selectedOptions = getSelectedOptions();
 
       return variants.some((variant) => {
@@ -1054,13 +1058,28 @@
       });
     };
 
-    const updateUnavailableOptions = () => {
+    const selectVariant = (variant) => {
+      if (!variant) return;
+
+      variant.options.forEach((optionValue, index) => {
+        const input = optionInputs.find((item) => {
+          return Number(item.dataset.optionPosition) === index + 1 && item.value === optionValue;
+        });
+
+        if (input && !input.disabled) {
+          input.checked = true;
+        }
+      });
+    };
+
+    const updateOptionStates = () => {
       optionInputs.forEach((input) => {
         const position = Number(input.dataset.optionPosition);
-        const available = optionExistsAndAvailable(position, input.value);
+        const available = optionCanBeSelected(position, input.value);
         const label = input.closest('.borrego-product__option-value');
 
         input.disabled = !available;
+        input.setAttribute('aria-disabled', String(!available));
         label?.classList.toggle('is-unavailable', !available);
 
         if (!available && input.checked) {
@@ -1068,31 +1087,35 @@
         }
       });
 
-      const selectedVariant = findSelectedVariant();
+      let selectedVariant = getSelectedVariant();
 
-      if (!selectedVariant) {
-        const firstAvailable = optionInputs.find((input) => !input.disabled);
-
-        if (firstAvailable) {
-          firstAvailable.checked = true;
-        }
+      if (!selectedVariant || !selectedVariant.available) {
+        const firstAvailableVariant = variants.find((variant) => variant.available);
+        selectVariant(firstAvailableVariant);
       }
+
+      optionInputs.forEach((input) => {
+        const position = Number(input.dataset.optionPosition);
+        const available = optionCanBeSelected(position, input.value);
+        const label = input.closest('.borrego-product__option-value');
+
+        input.disabled = !available;
+        input.setAttribute('aria-disabled', String(!available));
+        label?.classList.toggle('is-unavailable', !available);
+      });
     };
 
     const updateVariantUI = () => {
-      updateUnavailableOptions();
+      updateOptionStates();
 
-      const variant = findSelectedVariant();
+      const variant = getSelectedVariant();
 
-      if (!variant) {
+      if (!variant || !variant.available) {
         if (availabilityEl) {
           availabilityEl.textContent = 'Selecciona una talla disponible';
         }
 
-        if (whatsappButton) {
-          whatsappButton.classList.add('is-disabled');
-        }
-
+        whatsappButton?.classList.add('is-disabled');
         return;
       }
 
@@ -1103,18 +1126,22 @@
       }
 
       if (availabilityEl) {
-        availabilityEl.textContent = variant.available ? 'Disponible para compra personalizada' : 'Sin disponibilidad inmediata';
+        availabilityEl.textContent = 'Disponible para compra personalizada';
       }
 
       if (whatsappButton) {
-        whatsappButton.classList.toggle('is-disabled', !variant.available);
-
         const url = new URL(whatsappButton.href);
         const productUrl = `${window.location.origin}{{ product.url }}`;
         const message = `{{ section.settings.whatsapp_message }} Producto: {{ product.title }}. Talla seleccionada: ${variant.title}. Link: ${productUrl}`;
 
         url.searchParams.set('text', message);
         whatsappButton.href = url.toString();
+        whatsappButton.classList.remove('is-disabled');
+      }
+
+      if (variant.featured_media && variant.featured_media.id) {
+        const mediaIndex = mediaItems.findIndex((item) => item.dataset.borregoMedia === String(variant.featured_media.id));
+        if (mediaIndex >= 0) showMedia(mediaIndex);
       }
     };
 
@@ -1130,7 +1157,7 @@
     });
 
     whatsappButton?.addEventListener('click', (event) => {
-      const variant = findSelectedVariant();
+      const variant = getSelectedVariant();
 
       if (!variant || !variant.available) {
         event.preventDefault();
@@ -1155,6 +1182,7 @@
       }
     }, { passive: true });
 
+    showMedia(currentIndex);
     updateVariantUI();
   })();
 </script>
