@@ -15,14 +15,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h2"
+            "heading": "LO NUEVO EN BORREGO",
+            "heading_size": "h0"
           }
         },
         "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "Shop all",
+            "button_label_1": "Ver productos",
             "button_link_1": "shopify://collections/all",
             "button_style_secondary_1": true,
             "button_label_2": "",
@@ -228,6 +228,7 @@
     },
     "hanan_showroom_experience_VenpDh": {
       "type": "hanan-showroom-experience",
+      "disabled": true,
       "name": "HANAN Showroom",
       "settings": {
         "logo_image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
