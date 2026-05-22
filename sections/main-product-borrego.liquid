@@ -63,11 +63,11 @@
               <button class="borrego-product__thumb {% if forloop.first %}is-active{% endif %}" type="button" data-borrego-thumb="{{ media.id }}">
                 {{
                   media
-                  | image_url: width: 260
+                  | image_url: width: 280
                   | image_tag:
                     loading: 'lazy',
-                    widths: '140, 200, 260',
-                    sizes: '104px',
+                    widths: '140, 200, 280',
+                    sizes: '108px',
                     class: 'borrego-product__thumb-image'
                 }}
               </button>
@@ -250,21 +250,24 @@
   .borrego-product__inner {
     display: grid;
     grid-template-columns: minmax(0, 58%) minmax(360px, 42%);
-    gap: clamp(34px, 5vw, 86px);
+    gap: clamp(38px, 5vw, 88px);
     padding: 0 5vw;
     align-items: start;
   }
 
   .borrego-product__gallery {
     display: grid;
-    gap: 14px;
+    gap: 12px;
   }
 
   .borrego-product__media-main {
     position: relative;
-    background: var(--card-bg);
+    background:
+      radial-gradient(circle at 50% 30%, rgba(255,255,255,0.72), transparent 34%),
+      linear-gradient(145deg, var(--card-bg), #ffffff);
     overflow: hidden;
-    min-height: 640px;
+    min-height: 620px;
+    box-shadow: 0 24px 60px rgba(17, 17, 12, 0.055);
   }
 
   .borrego-product__media-item {
@@ -273,7 +276,7 @@
     inset: 0;
     opacity: 0;
     visibility: hidden;
-    transform: scale(1.01);
+    transform: translateX(10px) scale(1.01);
     transition:
       opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
       visibility 620ms ease,
@@ -283,40 +286,42 @@
   .borrego-product__media-item.is-active {
     opacity: 1;
     visibility: visible;
-    transform: scale(1);
+    transform: translateX(0) scale(1);
   }
 
   .borrego-product__image {
     width: 100%;
     height: 100%;
-    min-height: 640px;
+    min-height: 620px;
     object-fit: contain;
-    padding: 7%;
-    transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+    padding: 4.8%;
+    transform: scale(1.04);
+    transition: transform 1250ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .borrego-product__media-main:hover .borrego-product__media-item.is-active .borrego-product__image {
-    transform: scale(1.035);
+    transform: scale(1.075) translateY(-3px);
   }
 
   .borrego-product__gallery-arrow {
     position: absolute;
     top: 50%;
     z-index: 3;
-    width: 42px;
-    height: 42px;
-    border: 1px solid var(--border);
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(17,17,12,0.16);
     border-radius: 999px;
-    background: rgba(245, 241, 232, 0.74);
+    background: rgba(247, 247, 245, 0.82);
     color: var(--text);
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
+    font-size: 24px;
     line-height: 1;
     cursor: pointer;
     transform: translateY(-50%);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     transition:
       background 420ms cubic-bezier(0.16, 1, 0.3, 1),
       color 420ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -325,11 +330,11 @@
   }
 
   .borrego-product__gallery-arrow--prev {
-    left: 18px;
+    left: 28px;
   }
 
   .borrego-product__gallery-arrow--next {
-    right: 18px;
+    right: 28px;
   }
 
   .borrego-product__gallery-arrow:hover {
@@ -341,7 +346,7 @@
 
   .borrego-product__thumbs {
     display: flex;
-    gap: 9px;
+    gap: 8px;
     overflow-x: auto;
     scrollbar-width: none;
     padding-bottom: 2px;
@@ -352,29 +357,32 @@
   }
 
   .borrego-product__thumb {
-    width: 98px;
-    height: 112px;
-    flex: 0 0 98px;
-    padding: 9px;
-    border: 1px solid transparent;
-    background: var(--card-bg);
+    width: 104px;
+    height: 116px;
+    flex: 0 0 104px;
+    padding: 8px;
+    border: 1px solid rgba(17,17,12,0.08);
+    background:
+      linear-gradient(145deg, var(--card-bg), #ffffff);
     cursor: pointer;
-    opacity: 0.58;
+    opacity: 0.62;
     transition:
       opacity 420ms cubic-bezier(0.16, 1, 0.3, 1),
       border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+      transform 420ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 420ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .borrego-product__thumb.is-active {
     opacity: 1;
     border-color: var(--accent);
+    box-shadow: inset 0 0 0 1px var(--accent);
   }
 
   .borrego-product__thumb:hover {
     opacity: 1;
     transform: translateY(-2px);
-    border-color: var(--text);
+    border-color: rgba(17,17,12,0.24);
   }
 
   .borrego-product__thumb-image {
@@ -385,16 +393,16 @@
 
   .borrego-product__info {
     position: sticky;
-    top: 110px;
+    top: 108px;
   }
 
   .borrego-product__editorial-label,
   .borrego-product__vendor {
-    margin: 0 0 12px;
+    margin: 0 0 11px;
     color: var(--accent);
-    font-size: 9px;
+    font-size: 8.5px;
     font-weight: 850;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
   }
 
@@ -406,10 +414,10 @@
   .borrego-product__title {
     margin: 0;
     color: var(--text);
-    font-size: clamp(34px, 4vw, 66px);
-    line-height: 0.95;
+    font-size: clamp(31px, 3.55vw, 58px);
+    line-height: 0.98;
     font-weight: 900;
-    letter-spacing: 0.055em;
+    letter-spacing: 0.052em;
     text-transform: uppercase;
     font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
   }
@@ -418,7 +426,7 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    margin-top: 22px;
+    margin-top: 24px;
     color: var(--text);
     font-size: 17px;
     letter-spacing: 0.075em;
@@ -431,7 +439,7 @@
   }
 
   .borrego-product__availability {
-    margin: 13px 0 26px;
+    margin: 14px 0 28px;
     color: var(--muted);
     font-size: 10px;
     font-weight: 800;
@@ -441,8 +449,8 @@
 
   .borrego-product__variants {
     display: grid;
-    gap: 20px;
-    margin-bottom: 22px;
+    gap: 22px;
+    margin-bottom: 24px;
   }
 
   .borrego-product__option {
@@ -452,7 +460,7 @@
   }
 
   .borrego-product__option legend {
-    margin-bottom: 12px;
+    margin-bottom: 13px;
     color: var(--text);
     font-size: 9px;
     font-weight: 850;
@@ -480,7 +488,7 @@
     padding: 0 14px;
     border: 1px solid var(--border);
     color: var(--text);
-    background: rgba(255, 255, 255, 0.16);
+    background: rgba(255,255,255,0.18);
     font-size: 10px;
     font-weight: 780;
     letter-spacing: 0.13em;
@@ -505,7 +513,7 @@
   }
 
   .borrego-product__showroom-note {
-    margin: 0 0 16px;
+    margin: 2px 0 18px;
     color: var(--accent);
     font-size: 10px;
     line-height: 1.5;
@@ -563,9 +571,9 @@
   .borrego-product__benefits {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px 16px;
-    margin-top: 30px;
-    padding-top: 28px;
+    gap: 15px 18px;
+    margin-top: 34px;
+    padding-top: 30px;
     border-top: 1px solid var(--border);
   }
 
@@ -599,7 +607,7 @@
   }
 
   .borrego-product__description {
-    margin-top: 34px;
+    margin-top: 38px;
     color: var(--muted);
     font-size: 14px;
     line-height: 1.75;
@@ -616,7 +624,7 @@
   }
 
   .borrego-product__accordions {
-    margin-top: 30px;
+    margin-top: 34px;
     border-top: 1px solid var(--border);
   }
 
@@ -629,7 +637,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
-    padding: 18px 0;
+    padding: 19px 0;
     cursor: pointer;
     color: var(--text);
     font-size: 10px;
@@ -681,17 +689,17 @@
   }
 
   .borrego-product__accordion div {
-    padding: 0 0 20px;
+    padding: 0 0 21px;
     color: var(--muted);
     font-size: 13px;
     line-height: 1.7;
   }
 
   .borrego-product__showroom {
-    margin-top: 34px;
+    margin-top: 36px;
     padding: 24px;
     border: 1px solid var(--border);
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255,255,255,0.2);
   }
 
   .borrego-product__showroom p {
@@ -827,7 +835,7 @@
 
     .borrego-product__media-main,
     .borrego-product__image {
-      min-height: 540px;
+      min-height: 520px;
     }
 
     .borrego-related__card {
@@ -849,35 +857,37 @@
 
     .borrego-product__media-main,
     .borrego-product__image {
-      min-height: 420px;
+      min-height: 400px;
     }
 
     .borrego-product__image {
-      padding: 10%;
+      padding: 6%;
+      transform: scale(1.03);
     }
 
     .borrego-product__gallery-arrow {
-      width: 36px;
-      height: 36px;
-      font-size: 24px;
+      width: 34px;
+      height: 34px;
+      font-size: 22px;
     }
 
     .borrego-product__gallery-arrow--prev {
-      left: 12px;
+      left: 18px;
     }
 
     .borrego-product__gallery-arrow--next {
-      right: 12px;
+      right: 18px;
     }
 
     .borrego-product__thumb {
-      width: 82px;
+      width: 84px;
       height: 94px;
-      flex-basis: 82px;
+      flex-basis: 84px;
     }
 
     .borrego-product__title {
-      font-size: 34px;
+      font-size: 31px;
+      line-height: 1;
     }
 
     .borrego-product__price {
@@ -886,6 +896,7 @@
 
     .borrego-product__benefits {
       grid-template-columns: 1fr;
+      margin-top: 30px;
     }
 
     .borrego-product__showroom {
@@ -936,9 +947,11 @@
     const priceEl = section.querySelector('[data-borrego-price]');
     const availabilityEl = section.querySelector('[data-borrego-availability]');
     const whatsappLinks = section.querySelectorAll('[data-borrego-whatsapp], [data-borrego-showroom]');
+    const mainGallery = section.querySelector('.borrego-product__media-main');
 
     let currentIndex = 0;
     let variants = [];
+    let touchStartX = 0;
 
     if (variantData) {
       try {
@@ -949,21 +962,24 @@
     }
 
     const formatMoney = (cents) => {
-      return Shopify && Shopify.formatMoney
-        ? Shopify.formatMoney(cents, {{ shop.money_format | json }})
-        : (cents / 100).toFixed(2);
+      if (window.Shopify && Shopify.formatMoney) {
+        return Shopify.formatMoney(cents, {{ shop.money_format | json }});
+      }
+
+      return (cents / 100).toFixed(2);
     };
 
     const showMedia = (index) => {
       if (!mediaItems.length) return;
 
       currentIndex = (index + mediaItems.length) % mediaItems.length;
-      const activeId = mediaItems[currentIndex].dataset.borregoMedia;
+      const activeItem = mediaItems[currentIndex];
+      const activeId = activeItem.dataset.borregoMedia;
 
       mediaItems.forEach((item) => item.classList.remove('is-active'));
       thumbs.forEach((item) => item.classList.remove('is-active'));
 
-      mediaItems[currentIndex].classList.add('is-active');
+      activeItem.classList.add('is-active');
 
       const activeThumb = section.querySelector(`[data-borrego-thumb="${activeId}"]`);
       activeThumb?.classList.add('is-active');
@@ -1022,13 +1038,11 @@
       input.addEventListener('change', updateVariantUI);
     });
 
-    let touchStartX = 0;
-
-    section.querySelector('.borrego-product__media-main')?.addEventListener('touchstart', (event) => {
+    mainGallery?.addEventListener('touchstart', (event) => {
       touchStartX = event.touches[0].clientX;
     }, { passive: true });
 
-    section.querySelector('.borrego-product__media-main')?.addEventListener('touchend', (event) => {
+    mainGallery?.addEventListener('touchend', (event) => {
       const touchEndX = event.changedTouches[0].clientX;
       const diff = touchStartX - touchEndX;
 
@@ -1053,7 +1067,7 @@
       "type": "text",
       "id": "editorial_label",
       "label": "Etiqueta editorial",
-      "default": "SELECCIÓN CURADA"
+      "default": "CURATED SNEAKER"
     },
     {
       "type": "color",
@@ -1064,8 +1078,8 @@
     {
       "type": "color",
       "id": "card_background",
-      "label": "Color fondo imágenes",
-      "default": "#F2ECDD"
+      "label": "Color fondo galería",
+      "default": "#F7F7F5"
     },
     {
       "type": "color",
