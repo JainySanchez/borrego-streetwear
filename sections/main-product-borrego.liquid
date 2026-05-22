@@ -99,14 +99,14 @@
 
       <p class="borrego-product__availability" data-borrego-availability>
         {% if current_variant.available %}
-          Disponible para consulta
+          Disponible para compra personalizada
         {% else %}
           Sin disponibilidad inmediata
         {% endif %}
       </p>
 
       {% unless product.has_only_default_variant %}
-        <div class="borrego-product__variants">
+        <div class="borrego-product__variants" data-borrego-options>
           {% for option in product.options_with_values %}
             <fieldset class="borrego-product__option">
               <legend>{{ option.name }}</legend>
@@ -130,10 +130,10 @@
         </div>
       {% endunless %}
 
-      {% if section.settings.show_showroom_availability %}
-        <p class="borrego-product__showroom-note">
-          {{ section.settings.showroom_availability_text }}
-        </p>
+      {% if section.settings.purchase_microcopy != blank %}
+        <div class="borrego-product__purchase-copy">
+          {{ section.settings.purchase_microcopy }}
+        </div>
       {% endif %}
 
       {% if section.settings.whatsapp_phone != blank %}
@@ -142,10 +142,10 @@
         </a>
       {% endif %}
 
-      {% if section.settings.whatsapp_phone != blank and section.settings.showroom_button_label != blank %}
-        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" class="borrego-product__secondary-cta" data-borrego-showroom>
-          {{ section.settings.showroom_button_label }}
-        </a>
+      {% if section.settings.show_showroom_availability %}
+        <p class="borrego-product__showroom-note">
+          {{ section.settings.showroom_availability_text }}
+        </p>
       {% endif %}
 
       <div class="borrego-product__benefits">
@@ -450,7 +450,7 @@
   .borrego-product__variants {
     display: grid;
     gap: 22px;
-    margin-bottom: 24px;
+    margin-bottom: 22px;
   }
 
   .borrego-product__option {
@@ -512,18 +512,53 @@
     transform: translateY(-1px);
   }
 
-  .borrego-product__showroom-note {
-    margin: 2px 0 18px;
-    color: var(--accent);
-    font-size: 10px;
-    line-height: 1.5;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+  .borrego-product__option-value.is-unavailable {
+    pointer-events: none;
   }
 
-  .borrego-product__primary-cta,
-  .borrego-product__secondary-cta {
+  .borrego-product__option-value.is-unavailable input {
+    cursor: not-allowed;
+  }
+
+  .borrego-product__option-value.is-unavailable span {
+    position: relative;
+    opacity: 0.34;
+    cursor: not-allowed;
+    color: var(--muted);
+    background: transparent;
+    border-color: rgba(17, 17, 12, 0.12);
+  }
+
+  .borrego-product__option-value.is-unavailable span::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    top: 50%;
+    height: 1px;
+    background: currentColor;
+    transform: rotate(-18deg);
+    transform-origin: center;
+  }
+
+  .borrego-product__option-value.is-unavailable span:hover {
+    border-color: rgba(17, 17, 12, 0.12);
+    transform: none;
+  }
+
+  .borrego-product__purchase-copy {
+    margin: 4px 0 18px;
+    color: var(--muted);
+    font-size: 12.5px;
+    line-height: 1.65;
+    letter-spacing: 0.035em;
+  }
+
+  .borrego-product__purchase-copy p {
+    margin: 0;
+  }
+
+  .borrego-product__primary-cta {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -535,17 +570,15 @@
     letter-spacing: 0.24em;
     text-transform: uppercase;
     cursor: pointer;
+    border: 1px solid var(--button-bg);
+    background: var(--button-bg);
+    color: var(--button-text);
     transition:
       background 520ms cubic-bezier(0.16, 1, 0.3, 1),
       color 520ms cubic-bezier(0.16, 1, 0.3, 1),
       border-color 520ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .borrego-product__primary-cta {
-    border: 1px solid var(--button-bg);
-    background: var(--button-bg);
-    color: var(--button-text);
+      transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 520ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .borrego-product__primary-cta:hover {
@@ -555,17 +588,19 @@
     transform: translateY(-2px);
   }
 
-  .borrego-product__secondary-cta {
-    margin-top: 12px;
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
+  .borrego-product__primary-cta.is-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
   }
 
-  .borrego-product__secondary-cta:hover {
-    border-color: var(--accent);
+  .borrego-product__showroom-note {
+    margin: 16px 0 0;
     color: var(--accent);
-    transform: translateY(-2px);
+    font-size: 10px;
+    line-height: 1.5;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
   }
 
   .borrego-product__benefits {
@@ -946,7 +981,7 @@
     const optionInputs = [...section.querySelectorAll('[data-option-position]')];
     const priceEl = section.querySelector('[data-borrego-price]');
     const availabilityEl = section.querySelector('[data-borrego-availability]');
-    const whatsappLinks = section.querySelectorAll('[data-borrego-whatsapp], [data-borrego-showroom]');
+    const whatsappButton = section.querySelector('[data-borrego-whatsapp]');
     const mainGallery = section.querySelector('.borrego-product__media-main');
 
     let currentIndex = 0;
@@ -986,13 +1021,6 @@
       activeThumb?.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
     };
 
-    thumbs.forEach((thumb, index) => {
-      thumb.addEventListener('click', () => showMedia(index));
-    });
-
-    prevButton?.addEventListener('click', () => showMedia(currentIndex - 1));
-    nextButton?.addEventListener('click', () => showMedia(currentIndex + 1));
-
     const getSelectedOptions = () => {
       const selected = [];
 
@@ -1012,9 +1040,61 @@
       });
     };
 
+    const optionExistsAndAvailable = (position, value) => {
+      const selectedOptions = getSelectedOptions();
+
+      return variants.some((variant) => {
+        if (!variant.available) return false;
+
+        return variant.options.every((optionValue, index) => {
+          if (index === position - 1) return optionValue === value;
+          if (!selectedOptions[index]) return true;
+          return optionValue === selectedOptions[index];
+        });
+      });
+    };
+
+    const updateUnavailableOptions = () => {
+      optionInputs.forEach((input) => {
+        const position = Number(input.dataset.optionPosition);
+        const available = optionExistsAndAvailable(position, input.value);
+        const label = input.closest('.borrego-product__option-value');
+
+        input.disabled = !available;
+        label?.classList.toggle('is-unavailable', !available);
+
+        if (!available && input.checked) {
+          input.checked = false;
+        }
+      });
+
+      const selectedVariant = findSelectedVariant();
+
+      if (!selectedVariant) {
+        const firstAvailable = optionInputs.find((input) => !input.disabled);
+
+        if (firstAvailable) {
+          firstAvailable.checked = true;
+        }
+      }
+    };
+
     const updateVariantUI = () => {
+      updateUnavailableOptions();
+
       const variant = findSelectedVariant();
-      if (!variant) return;
+
+      if (!variant) {
+        if (availabilityEl) {
+          availabilityEl.textContent = 'Selecciona una talla disponible';
+        }
+
+        if (whatsappButton) {
+          whatsappButton.classList.add('is-disabled');
+        }
+
+        return;
+      }
 
       if (priceEl) {
         priceEl.innerHTML = variant.compare_at_price && variant.compare_at_price > variant.price
@@ -1023,19 +1103,39 @@
       }
 
       if (availabilityEl) {
-        availabilityEl.textContent = variant.available ? 'Disponible para consulta' : 'Sin disponibilidad inmediata';
+        availabilityEl.textContent = variant.available ? 'Disponible para compra personalizada' : 'Sin disponibilidad inmediata';
       }
 
-      whatsappLinks.forEach((link) => {
-        const url = new URL(link.href);
-        const message = `{{ section.settings.whatsapp_message }} {{ product.title }} - ${variant.title}`;
+      if (whatsappButton) {
+        whatsappButton.classList.toggle('is-disabled', !variant.available);
+
+        const url = new URL(whatsappButton.href);
+        const productUrl = `${window.location.origin}{{ product.url }}`;
+        const message = `{{ section.settings.whatsapp_message }} Producto: {{ product.title }}. Talla seleccionada: ${variant.title}. Link: ${productUrl}`;
+
         url.searchParams.set('text', message);
-        link.href = url.toString();
-      });
+        whatsappButton.href = url.toString();
+      }
     };
+
+    thumbs.forEach((thumb, index) => {
+      thumb.addEventListener('click', () => showMedia(index));
+    });
+
+    prevButton?.addEventListener('click', () => showMedia(currentIndex - 1));
+    nextButton?.addEventListener('click', () => showMedia(currentIndex + 1));
 
     optionInputs.forEach((input) => {
       input.addEventListener('change', updateVariantUI);
+    });
+
+    whatsappButton?.addEventListener('click', (event) => {
+      const variant = findSelectedVariant();
+
+      if (!variant || !variant.available) {
+        event.preventDefault();
+        alert('Selecciona una talla disponible para continuar por WhatsApp.');
+      }
     });
 
     mainGallery?.addEventListener('touchstart', (event) => {
@@ -1054,6 +1154,8 @@
         showMedia(currentIndex - 1);
       }
     }, { passive: true });
+
+    updateVariantUI();
   })();
 </script>
 
@@ -1133,7 +1235,13 @@
       "type": "text",
       "id": "primary_cta_label",
       "label": "Texto CTA principal",
-      "default": "CONSULTAR DISPONIBILIDAD →"
+      "default": "COMPRAR POR WHATSAPP →"
+    },
+    {
+      "type": "richtext",
+      "id": "purchase_microcopy",
+      "label": "Texto compra WhatsApp",
+      "default": "<p>Compra personalizada vía WhatsApp. Selecciona tu talla y continúa la compra con atención personalizada.</p>"
     },
     {
       "type": "text",
@@ -1145,13 +1253,7 @@
       "type": "text",
       "id": "whatsapp_message",
       "label": "Mensaje WhatsApp",
-      "default": "Hola, quiero consultar sobre este producto de BORREGO:"
-    },
-    {
-      "type": "text",
-      "id": "showroom_button_label",
-      "label": "Texto CTA showroom",
-      "default": "AGENDAR VISITA AL SHOWROOM →"
+      "default": "Hola, quiero comprar este producto de BORREGO."
     },
     {
       "type": "checkbox",
@@ -1306,65 +1408,7 @@
   ],
   "presets": [
     {
-      "name": "BORREGO Product Page",
-      "blocks": [
-        {
-          "type": "benefit",
-          "settings": {
-            "icon": "authentic",
-            "title": "PRODUCTO 100% AUTÉNTICO"
-          }
-        },
-        {
-          "type": "benefit",
-          "settings": {
-            "icon": "shipping",
-            "title": "ENVÍOS A TODO EL PERÚ"
-          }
-        },
-        {
-          "type": "benefit",
-          "settings": {
-            "icon": "payment",
-            "title": "PAGOS CON YAPE, PLIN Y TARJETAS"
-          }
-        },
-        {
-          "type": "benefit",
-          "settings": {
-            "icon": "support",
-            "title": "ATENCIÓN PERSONALIZADA"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "GUÍA DE TALLAS",
-            "content": "<p>Si tienes dudas sobre tu talla, escríbenos por WhatsApp para ayudarte a elegir la opción ideal.</p>"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "ENVÍOS Y ENTREGAS",
-            "content": "<p>Realizamos envíos a Lima y provincias. Los tiempos pueden variar según destino y disponibilidad.</p>"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "CAMBIOS Y DEVOLUCIONES",
-            "content": "<p>Los cambios están sujetos a disponibilidad, estado del producto y políticas vigentes de la boutique.</p>"
-          }
-        },
-        {
-          "type": "accordion",
-          "settings": {
-            "title": "AUTENTICIDAD",
-            "content": "<p>Seleccionamos productos auténticos de marcas premium streetwear y sneaker culture.</p>"
-          }
-        }
-      ]
+      "name": "BORREGO Product Page"
     }
   ]
 }
