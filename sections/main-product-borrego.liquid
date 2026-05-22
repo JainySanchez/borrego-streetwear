@@ -1002,8 +1002,12 @@
 </style>
 <script>
   (() => {
-    const section = document.currentScript.closest('.borrego-product');
-    if (!section) return;
+    const script = document.currentScript;
+const section =
+  script.closest('.shopify-section')?.querySelector('.borrego-product') ||
+  document.querySelector('.borrego-product');
+
+if (!section) return;
 
     const thumbs = [...section.querySelectorAll('[data-borrego-thumb]')];
     const mediaItems = [...section.querySelectorAll('[data-borrego-media]')];
