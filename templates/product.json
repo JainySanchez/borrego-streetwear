@@ -170,10 +170,10 @@
         "showroom_heading": "¿QUIERES VERLO ANTES DE COMPRAR?",
         "showroom_text": "<p>Agenda una visita a nuestro showroom o consulta disponibilidad por WhatsApp.</p>",
         "show_related": true,
-        "related_collection": "",
+        "related_collection": "adidsa",
         "related_heading": "TAMBIÉN TE PUEDE GUSTAR",
         "related_limit": 6,
-        "padding_top": 96,
+        "padding_top": 52,
         "padding_bottom": 120,
         "enable_animation": true
       }
