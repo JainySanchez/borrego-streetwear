@@ -26,22 +26,53 @@
   }
 
   .borrego-header {
-    position: {% if section.settings.enable_sticky %}sticky{% else %}relative{% endif %};
-    top: 0;
-    z-index: 50;
-    background: var(--header-bg);
-    color: var(--header-text);
-    border-bottom: 1px solid var(--divider-color);
-    transition: background 360ms ease, color 360ms ease, box-shadow 360ms ease, backdrop-filter 360ms ease, border-color 360ms ease;
+  position: {% if section.settings.enable_sticky %}sticky{% else %}relative{% endif %};
+  top: 0;
+  z-index: 50;
+  transition:
+    background 360ms ease,
+    color 360ms ease,
+    box-shadow 360ms ease,
+    backdrop-filter 360ms ease,
+    border-color 360ms ease;
+}
+
+{% if section.settings.enable_transparent_header %}
+  .template-index .borrego-header:not(.is-scrolled):not(.is-mobile-open) {
+    background: transparent;
+    color: var(--header-transparent-text);
+    border-bottom: 1px solid transparent;
+    box-shadow: none;
   }
 
-  {% if section.settings.enable_transparent_header %}
-    .borrego-header {
-      background: transparent;
-      color: var(--header-transparent-text);
-      border-bottom-color: transparent;
-    }
+  .template-index .borrego-header:not(.is-scrolled):not(.is-mobile-open) .borrego-header__icon,
+  .template-index .borrego-header:not(.is-scrolled):not(.is-mobile-open) .borrego-header__mobile-toggle,
+  .template-index .borrego-header:not(.is-scrolled):not(.is-mobile-open) .borrego-header__mobile-close {
+    color: var(--header-transparent-icon);
+  }
+{% endif %}
+
+.borrego-header.is-scrolled,
+.borrego-header.is-mobile-open {
+  background: var(--header-sticky-bg);
+  color: var(--header-text);
+  border-bottom: 1px solid var(--divider-color);
+  box-shadow: 0 10px 34px rgba(17, 17, 12, 0.08);
+
+  {% if section.settings.enable_blur %}
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
   {% endif %}
+}
+
+.borrego-header.is-scrolled .borrego-header__icon,
+.borrego-header.is-scrolled .borrego-header__mobile-toggle,
+.borrego-header.is-scrolled .borrego-header__mobile-close,
+.borrego-header.is-mobile-open .borrego-header__icon,
+.borrego-header.is-mobile-open .borrego-header__mobile-toggle,
+.borrego-header.is-mobile-open .borrego-header__mobile-close {
+  color: var(--header-icon);
+}
 
   .borrego-header.is-scrolled,
   .borrego-header.is-mobile-open {
