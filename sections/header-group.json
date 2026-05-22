@@ -40,7 +40,7 @@
         "menu": "menu_new",
         "show_account_icon": false,
         "enable_transparent_header": false,
-        "header_background": "#f5f1e8",
+        "header_background": "#8a6634",
         "header_sticky_background": "#11110c",
         "header_text_color": "#11110c",
         "header_icon_color": "#11110c",
