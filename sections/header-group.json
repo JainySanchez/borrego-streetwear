@@ -42,7 +42,7 @@
         "show_wishlist_icon": false,
         "wishlist_link": "",
         "transparent_on_home": true,
-        "header_background": "#ffffff",
+        "header_background": "#f5f1e8",
         "header_scrolled_background": "#ffffff",
         "header_text_color": "#11110c",
         "transparent_text_color": "#ffffff",
