@@ -31,7 +31,7 @@
           "type": "variant_picker",
           "settings": {
             "picker_type": "button",
-            "swatch_shape": "circle"
+            "swatch_shape": "square"
           }
         },
         "quantity_selector": {
@@ -164,7 +164,7 @@
         "whatsapp_message": "Hola, quiero consultar sobre este producto de BORREGO:",
         "show_showroom_availability": false,
         "showroom_availability_text": "Disponible para visita en showroom privado.",
-        "story_text": "<p>Una pieza seleccionada para quienes buscan elevar su rotación diaria con autenticidad y estilo.</p>",
+        "story_text": "",
         "show_showroom": true,
         "showroom_label": "PRIVATE SHOWROOM",
         "showroom_heading": "¿QUIERES VERLO ANTES DE COMPRAR?",
