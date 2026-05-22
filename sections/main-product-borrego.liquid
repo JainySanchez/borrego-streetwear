@@ -1,0 +1,1061 @@
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign whatsapp_phone = section.settings.whatsapp_phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+  assign whatsapp_message = section.settings.whatsapp_message | append: ' ' | append: product.title | url_encode
+  assign whatsapp_url = 'https://wa.me/' | append: whatsapp_phone | append: '?text=' | append: whatsapp_message
+%}
+
+<section
+  class="borrego-product {% if section.settings.enable_animation %}borrego-product--animated{% endif %}"
+  style="
+    --bg: {{ section.settings.background_color }};
+    --card-bg: {{ section.settings.card_background }};
+    --text: {{ section.settings.text_color }};
+    --muted: {{ section.settings.muted_text_color }};
+    --accent: {{ section.settings.accent_color }};
+    --button-bg: {{ section.settings.button_background }};
+    --button-text: {{ section.settings.button_text }};
+    --button-hover-bg: {{ section.settings.button_hover_background }};
+    --button-hover-text: {{ section.settings.button_hover_text }};
+    --border: {{ section.settings.border_color }};
+    --padding-top: {{ section.settings.padding_top }}px;
+    --padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  <div class="borrego-product__inner">
+    <div class="borrego-product__gallery">
+      <div class="borrego-product__media-main">
+        {% for media in product.media %}
+          {% if media.media_type == 'image' %}
+            <div class="borrego-product__media-item {% if forloop.first %}is-active{% endif %}" data-borrego-media="{{ media.id }}">
+              {{
+                media
+                | image_url: width: 1800
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '700, 900, 1200, 1500, 1800',
+                  sizes: '(max-width: 749px) 100vw, 58vw',
+                  class: 'borrego-product__image'
+              }}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if product.media.size > 1 %}
+        <div class="borrego-product__thumbs">
+          {% for media in product.media %}
+            {% if media.media_type == 'image' %}
+              <button class="borrego-product__thumb {% if forloop.first %}is-active{% endif %}" type="button" data-borrego-thumb="{{ media.id }}">
+                {{
+                  media
+                  | image_url: width: 240
+                  | image_tag:
+                    loading: 'lazy',
+                    widths: '120, 180, 240',
+                    sizes: '90px',
+                    class: 'borrego-product__thumb-image'
+                }}
+              </button>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="borrego-product__info">
+      {% if product.vendor != blank %}
+        <p class="borrego-product__vendor">{{ product.vendor }}</p>
+      {% endif %}
+
+      <h1 class="borrego-product__title">{{ product.title }}</h1>
+
+      <div class="borrego-product__price">
+        {{ current_variant.price | money }}
+        {% if current_variant.compare_at_price > current_variant.price %}
+          <span>{{ current_variant.compare_at_price | money }}</span>
+        {% endif %}
+      </div>
+
+      <p class="borrego-product__availability">
+        {% if current_variant.available %}
+          Disponible
+        {% else %}
+          Agotado
+        {% endif %}
+      </p>
+
+      {% form 'product', product, class: 'borrego-product__form' %}
+        <input type="hidden" name="id" value="{{ current_variant.id }}">
+
+        {% unless product.has_only_default_variant %}
+          <div class="borrego-product__variants">
+            {% for option in product.options_with_values %}
+              <fieldset class="borrego-product__option">
+                <legend>{{ option.name }}</legend>
+
+                <div class="borrego-product__option-values">
+                  {% for value in option.values %}
+                    <label class="borrego-product__option-value">
+                      <input
+                        type="radio"
+                        name="options[{{ option.name | escape }}]"
+                        value="{{ value | escape }}"
+                        {% if option.selected_value == value %}checked{% endif %}
+                      >
+                      <span>{{ value }}</span>
+                    </label>
+                  {% endfor %}
+                </div>
+              </fieldset>
+            {% endfor %}
+          </div>
+        {% endunless %}
+
+        <button
+          type="submit"
+          name="add"
+          class="borrego-product__add"
+          {% unless current_variant.available %}disabled{% endunless %}
+        >
+          {% if current_variant.available %}
+            {{ section.settings.add_to_cart_label }}
+          {% else %}
+            Agotado
+          {% endif %}
+        </button>
+
+        {% if section.settings.enable_dynamic_checkout %}
+          {{ form | payment_button }}
+        {% endif %}
+      {% endform %}
+
+      {% if section.settings.whatsapp_phone != blank %}
+        <a href="{{ whatsapp_url }}" target="_blank" rel="noopener" class="borrego-product__whatsapp">
+          {{ section.settings.whatsapp_label }}
+        </a>
+      {% endif %}
+
+      <div class="borrego-product__benefits">
+        {% for block in section.blocks %}
+          {% if block.type == 'benefit' %}
+            <div class="borrego-product__benefit" {{ block.shopify_attributes }}>
+              <span>{{ block.settings.title }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="borrego-product__description">
+        {% if section.settings.story_text != blank %}
+          <div class="borrego-product__story">{{ section.settings.story_text }}</div>
+        {% endif %}
+
+        {% if product.description != blank %}
+          <div class="borrego-product__rte">{{ product.description }}</div>
+        {% endif %}
+      </div>
+
+      <div class="borrego-product__accordions">
+        {% for block in section.blocks %}
+          {% if block.type == 'accordion' %}
+            <details class="borrego-product__accordion" {{ block.shopify_attributes }}>
+              <summary>
+                {{ block.settings.title }}
+                <span>+</span>
+              </summary>
+              <div>{{ block.settings.content }}</div>
+            </details>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.show_showroom %}
+        <div class="borrego-product__showroom">
+          <p>{{ section.settings.showroom_label }}</p>
+          <h3>{{ section.settings.showroom_heading }}</h3>
+          <div>{{ section.settings.showroom_text }}</div>
+          {% if section.settings.whatsapp_phone != blank %}
+            <a href="{{ whatsapp_url }}" target="_blank" rel="noopener">
+              {{ section.settings.showroom_button_label }}
+            </a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if section.settings.show_related and section.settings.related_collection != blank %}
+    <div class="borrego-related">
+      <h2>{{ section.settings.related_heading }}</h2>
+
+      <div class="borrego-related__slider">
+        {% for related_product in section.settings.related_collection.products limit: section.settings.related_limit %}
+          {% unless related_product.id == product.id %}
+            <a href="{{ related_product.url }}" class="borrego-related__card">
+              <div class="borrego-related__media">
+                {% if related_product.featured_image %}
+                  {{
+                    related_product.featured_image
+                    | image_url: width: 900
+                    | image_tag:
+                      loading: 'lazy',
+                      widths: '400, 600, 800, 900',
+                      sizes: '(max-width: 749px) 75vw, 25vw',
+                      class: 'borrego-related__image'
+                  }}
+                {% endif %}
+              </div>
+
+              <div class="borrego-related__content">
+                <h3>{{ related_product.title }}</h3>
+                <span>{{ related_product.price | money }}</span>
+              </div>
+            </a>
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+<style>
+  .borrego-product {
+    background: var(--bg);
+    color: var(--text);
+    padding-top: var(--padding-top);
+    padding-bottom: var(--padding-bottom);
+    overflow: hidden;
+  }
+
+  .borrego-product__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 58%) minmax(360px, 42%);
+    gap: clamp(34px, 5vw, 86px);
+    padding: 0 5vw;
+    align-items: start;
+  }
+
+  .borrego-product__gallery {
+    display: grid;
+    gap: 18px;
+  }
+
+  .borrego-product__media-main {
+    position: relative;
+    background: var(--card-bg);
+    overflow: hidden;
+    min-height: 680px;
+  }
+
+  .borrego-product__media-item {
+    display: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  .borrego-product__media-item.is-active {
+    display: block;
+  }
+
+  .borrego-product__image {
+    width: 100%;
+    height: 100%;
+    min-height: 680px;
+    object-fit: contain;
+    padding: 7%;
+    transition: transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .borrego-product__media-main:hover .borrego-product__image {
+    transform: scale(1.035);
+  }
+
+  .borrego-product__thumbs {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .borrego-product__thumbs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .borrego-product__thumb {
+    width: 86px;
+    height: 100px;
+    flex: 0 0 86px;
+    padding: 8px;
+    border: 1px solid transparent;
+    background: var(--card-bg);
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 400ms ease, border-color 400ms ease;
+  }
+
+  .borrego-product__thumb.is-active,
+  .borrego-product__thumb:hover {
+    opacity: 1;
+    border-color: var(--accent);
+  }
+
+  .borrego-product__thumb-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .borrego-product__info {
+    position: sticky;
+    top: 110px;
+  }
+
+  .borrego-product__vendor {
+    margin: 0 0 14px;
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__title {
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(34px, 4vw, 68px);
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .borrego-product__price {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 24px;
+    color: var(--text);
+    font-size: 18px;
+    letter-spacing: 0.08em;
+  }
+
+  .borrego-product__price span {
+    color: var(--muted);
+    text-decoration: line-through;
+    font-size: 14px;
+  }
+
+  .borrego-product__availability {
+    margin: 14px 0 30px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__form {
+    display: grid;
+    gap: 24px;
+  }
+
+  .borrego-product__option {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .borrego-product__option legend {
+    margin-bottom: 12px;
+    color: var(--text);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__option-values {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .borrego-product__option-value input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .borrego-product__option-value span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 48px;
+    height: 40px;
+    padding: 0 15px;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 750;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 400ms ease, color 400ms ease, border-color 400ms ease;
+  }
+
+  .borrego-product__option-value input:checked + span,
+  .borrego-product__option-value span:hover {
+    background: var(--text);
+    color: var(--bg);
+    border-color: var(--text);
+  }
+
+  .borrego-product__add,
+  .borrego-product__whatsapp,
+  .borrego-product__showroom a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    width: 100%;
+    border: 1px solid var(--button-bg);
+    background: var(--button-bg);
+    color: var(--button-text);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 500ms cubic-bezier(0.16, 1, 0.3, 1), color 500ms cubic-bezier(0.16, 1, 0.3, 1), border-color 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .borrego-product__add:hover {
+    background: var(--button-hover-bg);
+    color: var(--button-hover-text);
+    border-color: var(--button-hover-bg);
+    transform: translateY(-2px);
+  }
+
+  .borrego-product__add:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
+  .borrego-product__whatsapp {
+    margin-top: 12px;
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .borrego-product__whatsapp:hover,
+  .borrego-product__showroom a:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-2px);
+  }
+
+  .borrego-product__benefits {
+    display: grid;
+    gap: 12px;
+    margin-top: 30px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+  }
+
+  .borrego-product__benefit {
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__description {
+    margin-top: 34px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.75;
+    letter-spacing: 0.035em;
+  }
+
+  .borrego-product__story {
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+
+  .borrego-product__rte p {
+    margin-top: 0;
+  }
+
+  .borrego-product__accordions {
+    margin-top: 30px;
+    border-top: 1px solid var(--border);
+  }
+
+  .borrego-product__accordion {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .borrego-product__accordion summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    cursor: pointer;
+    color: var(--text);
+    font-size: 10px;
+    font-weight: 850;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__accordion summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .borrego-product__accordion[open] summary span {
+    transform: rotate(45deg);
+  }
+
+  .borrego-product__accordion summary span {
+    transition: transform 300ms ease;
+  }
+
+  .borrego-product__accordion div {
+    padding: 0 0 20px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+
+  .borrego-product__showroom {
+    margin-top: 34px;
+    padding: 26px;
+    border: 1px solid var(--border);
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .borrego-product__showroom p {
+    margin: 0 0 12px;
+    color: var(--accent);
+    font-size: 9px;
+    font-weight: 850;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__showroom h3 {
+    margin: 0 0 12px;
+    color: var(--text);
+    font-size: 22px;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .borrego-product__showroom div {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .borrego-product__showroom a {
+    width: fit-content;
+    margin-top: 20px;
+    padding: 0 22px;
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .borrego-related {
+    margin-top: 100px;
+    padding: 0 5vw;
+  }
+
+  .borrego-related h2 {
+    margin: 0 0 34px;
+    color: var(--text);
+    font-size: clamp(24px, 3vw, 42px);
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .borrego-related__slider {
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .borrego-related__slider::-webkit-scrollbar {
+    display: none;
+  }
+
+  .borrego-related__card {
+    width: min(32vw, 390px);
+    min-width: min(32vw, 390px);
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .borrego-related__media {
+    height: 420px;
+    background: var(--card-bg);
+    overflow: hidden;
+  }
+
+  .borrego-related__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 12%;
+    transition: transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .borrego-related__card:hover .borrego-related__image {
+    transform: scale(1.05) translateY(-4px);
+  }
+
+  .borrego-related__content {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding-top: 16px;
+  }
+
+  .borrego-related__content h3 {
+    margin: 0;
+    color: var(--text);
+    font-size: 12px;
+    line-height: 1.45;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .borrego-related__content span {
+    color: var(--muted);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .borrego-product--animated .borrego-product__gallery,
+  .borrego-product--animated .borrego-product__info,
+  .borrego-product--animated .borrego-related {
+    opacity: 0;
+    transform: translateY(28px);
+    animation: borregoProductReveal 950ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .borrego-product--animated .borrego-product__info {
+    animation-delay: 120ms;
+  }
+
+  .borrego-product--animated .borrego-related {
+    animation-delay: 220ms;
+  }
+
+  @keyframes borregoProductReveal {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .borrego-product__inner {
+      grid-template-columns: 1fr;
+      gap: 44px;
+      padding: 0 28px;
+    }
+
+    .borrego-product__info {
+      position: static;
+    }
+
+    .borrego-product__media-main,
+    .borrego-product__image {
+      min-height: 560px;
+    }
+
+    .borrego-related__card {
+      width: 46vw;
+      min-width: 46vw;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .borrego-product {
+      padding-top: calc(var(--padding-top) * 0.72);
+      padding-bottom: calc(var(--padding-bottom) * 0.72);
+    }
+
+    .borrego-product__inner {
+      padding: 0 16px;
+      gap: 34px;
+    }
+
+    .borrego-product__media-main,
+    .borrego-product__image {
+      min-height: 430px;
+    }
+
+    .borrego-product__image {
+      padding: 10%;
+    }
+
+    .borrego-product__thumb {
+      width: 74px;
+      height: 86px;
+      flex-basis: 74px;
+    }
+
+    .borrego-product__title {
+      font-size: 34px;
+    }
+
+    .borrego-product__price {
+      font-size: 16px;
+    }
+
+    .borrego-product__showroom {
+      padding: 22px;
+    }
+
+    .borrego-related {
+      margin-top: 68px;
+      padding: 0 16px;
+    }
+
+    .borrego-related__card {
+      width: 78vw;
+      min-width: 78vw;
+    }
+
+    .borrego-related__media {
+      height: 340px;
+    }
+
+    .borrego-related__content {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .borrego-product *,
+    .borrego-product *::before,
+    .borrego-product *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const section = document.currentScript.closest('.borrego-product');
+    if (!section) return;
+
+    const thumbs = section.querySelectorAll('[data-borrego-thumb]');
+    const mediaItems = section.querySelectorAll('[data-borrego-media]');
+
+    thumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const id = thumb.dataset.borregoThumb;
+
+        thumbs.forEach((item) => item.classList.remove('is-active'));
+        mediaItems.forEach((item) => item.classList.remove('is-active'));
+
+        thumb.classList.add('is-active');
+
+        const activeMedia = section.querySelector(`[data-borrego-media="${id}"]`);
+        activeMedia?.classList.add('is-active');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "BORREGO Product Page",
+  "tag": "section",
+  "class": "section-borrego-product",
+  "settings": [
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Color de fondo",
+      "default": "#F5F1E8"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Color fondo imágenes",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Color texto principal",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Color texto secundario",
+      "default": "rgba(17,17,12,0.64)"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Color acento",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Color bordes",
+      "default": "rgba(17,17,12,0.14)"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Fondo botón principal",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "button_text",
+      "label": "Texto botón principal",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Fondo hover botón",
+      "default": "#D9B26F"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text",
+      "label": "Texto hover botón",
+      "default": "#11110C"
+    },
+    {
+      "type": "text",
+      "id": "add_to_cart_label",
+      "label": "Texto agregar al carrito",
+      "default": "AGREGAR AL CARRITO"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_dynamic_checkout",
+      "label": "Mostrar botón comprar ahora",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_phone",
+      "label": "Número de WhatsApp",
+      "default": "51999999999"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_message",
+      "label": "Mensaje WhatsApp",
+      "default": "Hola, quiero consultar sobre este producto de BORREGO:"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_label",
+      "label": "Texto botón WhatsApp",
+      "default": "CONSULTAR POR WHATSAPP →"
+    },
+    {
+      "type": "richtext",
+      "id": "story_text",
+      "label": "Texto editorial",
+      "default": "<p>Una pieza seleccionada para quienes buscan elevar su rotación diaria con autenticidad y estilo.</p>"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_showroom",
+      "label": "Mostrar bloque showroom",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "showroom_label",
+      "label": "Etiqueta showroom",
+      "default": "PRIVATE SHOWROOM"
+    },
+    {
+      "type": "text",
+      "id": "showroom_heading",
+      "label": "Título showroom",
+      "default": "¿QUIERES VERLO ANTES DE COMPRAR?"
+    },
+    {
+      "type": "richtext",
+      "id": "showroom_text",
+      "label": "Texto showroom",
+      "default": "<p>Agenda una visita a nuestro showroom o consulta disponibilidad por WhatsApp.</p>"
+    },
+    {
+      "type": "text",
+      "id": "showroom_button_label",
+      "label": "Botón showroom",
+      "default": "AGENDAR VISITA →"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "Mostrar relacionados",
+      "default": true
+    },
+    {
+      "type": "collection",
+      "id": "related_collection",
+      "label": "Colección relacionados"
+    },
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "Título relacionados",
+      "default": "TAMBIÉN TE PUEDE GUSTAR"
+    },
+    {
+      "type": "range",
+      "id": "related_limit",
+      "label": "Cantidad relacionados",
+      "min": 3,
+      "max": 12,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Espaciado superior",
+      "min": 40,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Espaciado inferior",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 120
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_animation",
+      "label": "Activar animaciones",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Beneficio",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Texto",
+          "default": "PRODUCTO 100% AUTÉNTICO"
+        }
+      ]
+    },
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Título",
+          "default": "GUÍA DE TALLAS"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Contenido",
+          "default": "<p>Consulta la disponibilidad de tallas antes de comprar.</p>"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "BORREGO Product Page",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "PRODUCTO 100% AUTÉNTICO"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "ENVÍOS A TODO EL PERÚ"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "PAGOS CON YAPE, PLIN Y TARJETAS"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "title": "ATENCIÓN PERSONALIZADA"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "GUÍA DE TALLAS",
+            "content": "<p>Si tienes dudas sobre tu talla, escríbenos por WhatsApp para ayudarte a elegir la opción ideal.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "ENVÍOS Y ENTREGAS",
+            "content": "<p>Realizamos envíos a Lima y provincias. Los tiempos pueden variar según destino y disponibilidad.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "CAMBIOS Y DEVOLUCIONES",
+            "content": "<p>Los cambios están sujetos a disponibilidad, estado del producto y políticas vigentes de la boutique.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "title": "AUTENTICIDAD",
+            "content": "<p>Seleccionamos productos auténticos de marcas premium streetwear y sneaker culture.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
