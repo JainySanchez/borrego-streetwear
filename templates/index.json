@@ -222,11 +222,13 @@
         "image_overlay_opacity": 20,
         "image_position": "left",
         "button_text": "Solicitar cotización",
+        "whatsapp_phone": "51999999999",
+        "whatsapp_message": "Hola BORREGO, quisiera solicitar una cotización para un pedido especial.",
         "button_link": "",
-        "background_color": "#F2ECDD",
-        "text_color": "#11110C",
-        "padding_desktop": 96,
-        "padding_mobile": 64
+        "background_color": "#f5f1e8",
+        "text_color": "#11110c",
+        "padding_desktop": 40,
+        "padding_mobile": 28
       }
     },
     "hanan_editorial_split_banner_XErHCe": {
