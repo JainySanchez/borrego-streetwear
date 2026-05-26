@@ -1,0 +1,495 @@
+{%- liquid
+  assign section_id = 'hanan-dev-special-orders-' | append: section.id
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image
+  assign image_alt = section.settings.desktop_image_alt | default: section.settings.heading | escape
+  assign mobile_alt = section.settings.mobile_image_alt | default: image_alt | escape
+  assign whatsapp_number = section.settings.whatsapp_phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+  assign whatsapp_message = section.settings.whatsapp_message | url_encode
+
+  if whatsapp_number != blank
+    assign button_href = 'https://wa.me/' | append: whatsapp_number
+    if section.settings.whatsapp_message != blank
+      assign button_href = button_href | append: '?text=' | append: whatsapp_message
+    endif
+  else
+    assign button_href = section.settings.button_link | default: '#'
+  endif
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="hanan-dev-special-orders hanan-dev-special-orders--image-{{ section.settings.image_position }}"
+  style="
+    --hanan-dev-bg: {{ section.settings.background_color }};
+    --hanan-dev-text: {{ section.settings.text_color }};
+    --hanan-dev-overlay-opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+    --hanan-dev-padding-desktop: {{ section.settings.padding_desktop }}px;
+    --hanan-dev-padding-mobile: {{ section.settings.padding_mobile }}px;
+  "
+  aria-labelledby="{{ section_id }}-heading"
+>
+  <div class="hanan-dev-special-orders__inner">
+    <div class="hanan-dev-special-orders__media">
+      {%- if desktop_image != blank -%}
+        <picture>
+          {%- if mobile_image != blank -%}
+            <source
+              media="(max-width: 749px)"
+              srcset="
+                {{ mobile_image | image_url: width: 600 }} 600w,
+                {{ mobile_image | image_url: width: 900 }} 900w,
+                {{ mobile_image | image_url: width: 1200 }} 1200w
+              "
+              sizes="100vw"
+            >
+          {%- endif -%}
+
+          <img
+            src="{{ desktop_image | image_url: width: 1200 }}"
+            srcset="
+              {{ desktop_image | image_url: width: 700 }} 700w,
+              {{ desktop_image | image_url: width: 1000 }} 1000w,
+              {{ desktop_image | image_url: width: 1400 }} 1400w,
+              {{ desktop_image | image_url: width: 1800 }} 1800w
+            "
+            sizes="(min-width: 990px) 50vw, 100vw"
+            alt="{{ image_alt }}"
+            width="{{ desktop_image.width }}"
+            height="{{ desktop_image.height }}"
+            loading="lazy"
+            class="hanan-dev-special-orders__image"
+          >
+        </picture>
+      {%- elsif mobile_image != blank -%}
+        <img
+          src="{{ mobile_image | image_url: width: 900 }}"
+          srcset="
+            {{ mobile_image | image_url: width: 600 }} 600w,
+            {{ mobile_image | image_url: width: 900 }} 900w,
+            {{ mobile_image | image_url: width: 1200 }} 1200w
+          "
+          sizes="100vw"
+          alt="{{ mobile_alt }}"
+          width="{{ mobile_image.width }}"
+          height="{{ mobile_image.height }}"
+          loading="lazy"
+          class="hanan-dev-special-orders__image"
+        >
+      {%- else -%}
+        <div class="hanan-dev-special-orders__placeholder" aria-hidden="true">
+          <span>Special Orders</span>
+        </div>
+      {%- endif -%}
+
+      <div class="hanan-dev-special-orders__overlay" aria-hidden="true"></div>
+    </div>
+
+    <div class="hanan-dev-special-orders__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="hanan-dev-special-orders__eyebrow">
+          {{ section.settings.eyebrow }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 id="{{ section_id }}-heading" class="hanan-dev-special-orders__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="hanan-dev-special-orders__description">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.button_text != blank -%}
+        <div class="hanan-dev-special-orders__actions">
+          <a
+            class="hanan-dev-special-orders__button"
+            href="{{ button_href }}"
+            aria-label="{{ section.settings.button_text | escape }}"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {{ section.settings.button_text }}
+          </a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    background: var(--hanan-dev-bg);
+    color: var(--hanan-dev-text);
+    padding-top: var(--hanan-dev-padding-desktop);
+    padding-bottom: var(--hanan-dev-padding-desktop);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__inner {
+    width: min(100% - 40px, 1240px);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    align-items: stretch;
+    gap: clamp(36px, 5vw, 84px);
+  }
+
+  #{{ section_id }}.hanan-dev-special-orders--image-right .hanan-dev-special-orders__media {
+    order: 2;
+  }
+
+  #{{ section_id }}.hanan-dev-special-orders--image-right .hanan-dev-special-orders__content {
+    order: 1;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__media {
+    position: relative;
+    min-height: clamp(480px, 52vw, 720px);
+    border-radius: 28px;
+    overflow: hidden;
+    background: #1a1712;
+    isolation: isolate;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: clamp(480px, 52vw, 720px);
+    object-fit: cover;
+    transform: scale(1.01);
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__overlay {
+    position: absolute;
+    inset: 0;
+    background: #000000;
+    opacity: var(--hanan-dev-overlay-opacity);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__placeholder {
+    position: relative;
+    display: flex;
+    min-height: clamp(480px, 52vw, 720px);
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(135deg, rgba(242, 236, 221, 0.08), rgba(168, 115, 61, 0.26)),
+      #11110c;
+    color: rgba(242, 236, 221, 0.76);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    max-width: 560px;
+    padding: clamp(18px, 2.5vw, 42px) 0;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__eyebrow {
+    margin: 0 0 clamp(22px, 2vw, 30px);
+    font-size: clamp(11px, 1vw, 13px);
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: #a8733d;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__heading {
+    margin: 0;
+    max-width: 680px;
+    color: currentColor;
+    font-size: clamp(42px, 6.2vw, 92px);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__description {
+    margin-top: clamp(28px, 3vw, 42px);
+    max-width: 520px;
+    color: currentColor;
+    opacity: 0.82;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.72;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__description p {
+    margin: 0;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__actions {
+    display: flex;
+    margin-top: clamp(34px, 3.8vw, 54px);
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 54px;
+    padding: 16px 28px;
+    border-radius: 999px;
+    background: #a8733d;
+    border: 1px solid #a8733d;
+    color: #f2ecdd;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-decoration: none;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__button:hover {
+    transform: translateY(-2px);
+    background: #11110c;
+    border-color: #11110c;
+    color: #f2ecdd;
+  }
+
+  #{{ section_id }} .hanan-dev-special-orders__button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  @media screen and (max-width: 989px) {
+    #{{ section_id }} .hanan-dev-special-orders__inner {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+
+    #{{ section_id }}.hanan-dev-special-orders--image-right .hanan-dev-special-orders__media,
+    #{{ section_id }}.hanan-dev-special-orders--image-right .hanan-dev-special-orders__content {
+      order: initial;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__content {
+      max-width: 680px;
+      padding: 0;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} {
+      padding-top: var(--hanan-dev-padding-mobile);
+      padding-bottom: var(--hanan-dev-padding-mobile);
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__inner {
+      width: min(100% - 32px, 100%);
+      gap: 30px;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__media,
+    #{{ section_id }} .hanan-dev-special-orders__image,
+    #{{ section_id }} .hanan-dev-special-orders__placeholder {
+      min-height: 360px;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__media {
+      border-radius: 22px;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__eyebrow {
+      margin-bottom: 20px;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__heading {
+      font-size: clamp(38px, 14vw, 58px);
+      line-height: 0.94;
+      letter-spacing: -0.05em;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__description {
+      margin-top: 26px;
+      max-width: 100%;
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__actions {
+      margin-top: 34px;
+    }
+
+    #{{ section_id }} .hanan-dev-special-orders__button {
+      width: 100%;
+      min-height: 54px;
+      padding: 16px 22px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hanan Dev Special Orders",
+  "tag": "section",
+  "class": "section-hanan-dev-special-orders",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Hanan ACCESS"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "PEDIDOS ESPECIALES"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>¿Buscas una pieza específica? En BORREGO podemos ayudarte a traer sneakers, perfumes, coleccionables, figuras y productos exclusivos bajo pedido.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Imagen"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop image"
+    },
+    {
+      "type": "text",
+      "id": "desktop_image_alt",
+      "label": "Desktop image alt text",
+      "default": "Productos exclusivos bajo pedido BORREGO"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "mobile_image_alt",
+      "label": "Mobile image alt text",
+      "default": "Pedidos especiales BORREGO"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 20
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "Image position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Botón principal"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Solicitar cotización"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_phone",
+      "label": "WhatsApp phone number",
+      "info": "Ingresa el número con código de país. Ejemplo: 51999999999",
+      "default": "51999999999"
+    },
+    {
+      "type": "textarea",
+      "id": "whatsapp_message",
+      "label": "Optional pre-filled WhatsApp message",
+      "default": "Hola BORREGO, quisiera solicitar una cotización para un pedido especial."
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Fallback button link",
+      "info": "Se usará solo si no configuras un número de WhatsApp."
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#11110C"
+    },
+    {
+      "type": "header",
+      "content": "Espaciado"
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Section padding desktop",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Section padding mobile",
+      "min": 28,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hanan Dev Special Orders"
+    }
+  ]
+}
+{% endschema %}
