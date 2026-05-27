@@ -33,6 +33,25 @@
     },
     "borrego_header_RCABMN": {
       "type": "borrego-header",
+      "blocks": {
+        "mega_menu_XBa46V": {
+          "type": "mega_menu",
+          "settings": {
+            "menu_item": "",
+            "title": "Featured",
+            "links": "",
+            "image_1_text": "Latest rotation",
+            "image_1_link": "",
+            "image_2_text": "",
+            "image_2_link": "",
+            "image_3_text": "",
+            "image_3_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "mega_menu_XBa46V"
+      ],
       "name": "BORREGO Clean Header",
       "settings": {
         "logo_width_desktop": 170,
