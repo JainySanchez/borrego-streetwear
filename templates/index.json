@@ -241,6 +241,7 @@
             "reel_title": "Exclusive Drop",
             "reel_subtitle": "Sneaker culture",
             "reel_url": "https://www.tiktok.com/@borregostreetwear/video/7573914821687627028?is_from_webapp=1&sender_device=pc&web_id=7640140879843870228",
+            "tiktok_embed_url": "",
             "alt_text": "Contenido social BORREGO"
           }
         },
@@ -250,6 +251,7 @@
             "reel_title": "Exclusive Drop",
             "reel_subtitle": "Sneaker culture",
             "reel_url": "",
+            "tiktok_embed_url": "",
             "alt_text": "Contenido social BORREGO"
           }
         },
@@ -259,6 +261,7 @@
             "reel_title": "Exclusive Drop",
             "reel_subtitle": "Sneaker culture",
             "reel_url": "",
+            "tiktok_embed_url": "",
             "alt_text": "Contenido social BORREGO"
           }
         },
@@ -268,6 +271,7 @@
             "reel_title": "Exclusive Drop",
             "reel_subtitle": "Sneaker culture",
             "reel_url": "",
+            "tiktok_embed_url": "",
             "alt_text": "Contenido social BORREGO"
           }
         }
@@ -284,12 +288,12 @@
         "heading": "SÍGUENOS EN TIKTOK",
         "description": "<p>Descubre lanzamientos, pedidos especiales y cultura streetwear a través de nuestros reels y contenido exclusivo.</p>",
         "button_text": "Ver TikTok",
-        "button_link": "",
+        "button_link": "https://www.tiktok.com/@borregostreetwear",
         "enable_autoplay": false,
         "slider_speed": 4,
         "show_play_icon": true,
-        "background_color": "#F2ECDD",
-        "text_color": "#11110C",
+        "background_color": "#f2ecdd",
+        "text_color": "#11110c",
         "section_max_width": 1240,
         "padding_desktop": 96,
         "padding_mobile": 64
