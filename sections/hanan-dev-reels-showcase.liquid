@@ -66,18 +66,16 @@
           -%}
 
           <article class="hanan-dev-reel-card" {{ block.shopify_attributes }}>
-            {%- if block.settings.reel_url != blank -%}
-              <a
-                href="{{ block.settings.reel_url }}"
-                class="hanan-dev-reel-card__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="{{ block.settings.reel_title | default: 'Ver reel BORREGO' | escape }}"
-              >
-            {%- else -%}
-              <div class="hanan-dev-reel-card__link" role="group" aria-label="{{ block.settings.reel_title | default: 'Reel BORREGO' | escape }}">
-            {%- endif -%}
-
+            <button
+              type="button"
+              class="hanan-dev-reel-card__trigger"
+              data-hanan-dev-modal-open
+              data-video-embed="{{ block.settings.tiktok_embed_url | escape }}"
+              data-video-url="{{ block.settings.reel_url | escape }}"
+              data-video-title="{{ block.settings.reel_title | escape }}"
+              data-video-subtitle="{{ block.settings.reel_subtitle | escape }}"
+              aria-label="{{ block.settings.reel_title | default: 'Ver reel BORREGO' | escape }}"
+            >
               <div class="hanan-dev-reel-card__media">
                 {%- if reel_image != blank -%}
                   <picture>
@@ -156,12 +154,7 @@
                   {%- endif -%}
                 </div>
               {%- endif -%}
-
-            {%- if block.settings.reel_url != blank -%}
-              </a>
-            {%- else -%}
-              </div>
-            {%- endif -%}
+            </button>
           </article>
         {%- endfor -%}
       </div>
@@ -169,7 +162,7 @@
       <div class="hanan-dev-social-slider hanan-dev-social-slider--empty">
         {%- for index in (1..4) -%}
           <article class="hanan-dev-reel-card">
-            <div class="hanan-dev-reel-card__link" role="group" aria-label="Reel BORREGO">
+            <div class="hanan-dev-reel-card__trigger" role="group" aria-label="Reel BORREGO">
               <div class="hanan-dev-reel-card__media">
                 <div class="hanan-dev-reel-card__placeholder" aria-hidden="true">
                   <span>REEL</span>
@@ -200,6 +193,43 @@
         {{ section.settings.button_text }}
       </a>
     {%- endif -%}
+  </div>
+
+  <div class="hanan-dev-reels-modal" data-hanan-dev-modal aria-hidden="true">
+    <div class="hanan-dev-reels-modal__backdrop" data-hanan-dev-modal-close></div>
+
+    <div
+      class="hanan-dev-reels-modal__dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="{{ section_id }}-modal-title"
+      tabindex="-1"
+    >
+      <button
+        type="button"
+        class="hanan-dev-reels-modal__close"
+        data-hanan-dev-modal-close
+        aria-label="Cerrar video"
+      >
+        ×
+      </button>
+
+      <div class="hanan-dev-reels-modal__video" data-hanan-dev-modal-video></div>
+
+      <div class="hanan-dev-reels-modal__info">
+        <p id="{{ section_id }}-modal-title" class="hanan-dev-reels-modal__title" data-hanan-dev-modal-title></p>
+        <p class="hanan-dev-reels-modal__subtitle" data-hanan-dev-modal-subtitle></p>
+        <a
+          href="#"
+          class="hanan-dev-reels-modal__external"
+          data-hanan-dev-modal-link
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Ver en TikTok
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -297,10 +327,16 @@
     scroll-snap-align: start;
   }
 
-  #{{ section_id }} .hanan-dev-reel-card__link {
+  #{{ section_id }} .hanan-dev-reel-card__trigger {
     display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: transparent;
     color: currentColor;
-    text-decoration: none;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
   }
 
   #{{ section_id }} .hanan-dev-reel-card__media {
@@ -397,16 +433,16 @@
     line-height: 1.45;
   }
 
-  #{{ section_id }} .hanan-dev-reel-card__link:hover .hanan-dev-reel-card__image {
+  #{{ section_id }} .hanan-dev-reel-card__trigger:hover .hanan-dev-reel-card__image {
     transform: scale(1.06);
   }
 
-  #{{ section_id }} .hanan-dev-reel-card__link:hover .hanan-dev-reel-card__play {
+  #{{ section_id }} .hanan-dev-reel-card__trigger:hover .hanan-dev-reel-card__play {
     transform: translate(-50%, -50%) scale(1.06);
     background: #f2ecdd;
   }
 
-  #{{ section_id }} .hanan-dev-reel-card__link:focus-visible {
+  #{{ section_id }} .hanan-dev-reel-card__trigger:focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 6px;
     border-radius: 28px;
@@ -446,6 +482,131 @@
 
   #{{ section_id }} .hanan-dev-reels-section__button--mobile {
     display: none;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal.is-open {
+    display: flex;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(17, 17, 12, 0.82);
+    backdrop-filter: blur(8px);
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__dialog {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 430px);
+    max-height: calc(100vh - 48px);
+    overflow: auto;
+    background: #11110c;
+    color: #f2ecdd;
+    border: 1px solid rgba(242, 236, 221, 0.16);
+    border-radius: 30px;
+    box-shadow: 0 32px 90px rgba(0, 0, 0, 0.38);
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 3;
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(242, 236, 221, 0.2);
+    border-radius: 999px;
+    background: rgba(17, 17, 12, 0.72);
+    color: #f2ecdd;
+    font-size: 26px;
+    line-height: 1;
+    cursor: pointer;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__close:hover {
+    background: #f2ecdd;
+    color: #11110c;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #000;
+    border-radius: 30px 30px 0 0;
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__video iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__fallback {
+    display: flex;
+    min-height: 420px;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    text-align: center;
+    color: rgba(242, 236, 221, 0.78);
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__info {
+    padding: 20px 22px 24px;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__title {
+    margin: 0;
+    color: #f2ecdd;
+    font-size: 16px;
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__subtitle {
+    margin: 8px 0 0;
+    color: rgba(242, 236, 221, 0.7);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__external {
+    display: inline-flex;
+    margin-top: 18px;
+    color: #a8733d;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-modal__external:hover {
+    color: #f2ecdd;
+  }
+
+  body.hanan-dev-reels-modal-open {
+    overflow: hidden;
   }
 
   @media screen and (min-width: 990px) {
@@ -530,65 +691,163 @@
       width: 100%;
       margin-top: 28px;
     }
+
+    #{{ section_id }} .hanan-dev-reels-modal {
+      padding: 16px;
+      align-items: center;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-modal__dialog {
+      width: min(100%, 390px);
+      max-height: calc(100vh - 32px);
+      border-radius: 24px;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-modal__video {
+      border-radius: 24px 24px 0 0;
+    }
   }
 </style>
 
-{%- if autoplay_enabled and section.blocks.size > 1 -%}
-  <script>
-    (() => {
-      const section = document.getElementById('{{ section_id }}');
+<script>
+  (() => {
+    const section = document.getElementById('{{ section_id }}');
 
-      if (!section) return;
+    if (!section) return;
 
-      const slider = section.querySelector('[data-hanan-dev-reels-slider]');
-      const shouldAutoplay = slider && slider.dataset.autoplay === 'true';
-      const speed = Number(slider.dataset.speed) || 4000;
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const slider = section.querySelector('[data-hanan-dev-reels-slider]');
+    const modal = section.querySelector('[data-hanan-dev-modal]');
+    const modalDialog = section.querySelector('.hanan-dev-reels-modal__dialog');
+    const modalVideo = section.querySelector('[data-hanan-dev-modal-video]');
+    const modalTitle = section.querySelector('[data-hanan-dev-modal-title]');
+    const modalSubtitle = section.querySelector('[data-hanan-dev-modal-subtitle]');
+    const modalLink = section.querySelector('[data-hanan-dev-modal-link]');
+    const modalTriggers = section.querySelectorAll('[data-hanan-dev-modal-open]');
+    const modalCloseButtons = section.querySelectorAll('[data-hanan-dev-modal-close]');
+    const shouldAutoplay = slider && slider.dataset.autoplay === 'true';
+    const speed = slider ? Number(slider.dataset.speed) || 4000 : 4000;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    let interval;
+    let lastFocusedElement;
+
+    const getScrollAmount = () => {
+      const card = slider.querySelector('.hanan-dev-reel-card');
+      const gap = parseFloat(window.getComputedStyle(slider).columnGap) || 0;
+      return card ? card.offsetWidth + gap : 260;
+    };
+
+    const moveNext = () => {
+      const maxScroll = slider.scrollWidth - slider.clientWidth;
+      const nextPosition = slider.scrollLeft + getScrollAmount();
+
+      if (nextPosition >= maxScroll - 8) {
+        slider.scrollTo({ left: 0, behavior: 'smooth' });
+        return;
+      }
+
+      slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+    };
+
+    const startAutoplay = () => {
       if (!slider || !shouldAutoplay || reduceMotion) return;
+      stopAutoplay();
+      interval = window.setInterval(moveNext, speed);
+    };
 
-      let interval;
+    const stopAutoplay = () => {
+      if (interval) window.clearInterval(interval);
+    };
 
-      const getScrollAmount = () => {
-        const card = slider.querySelector('.hanan-dev-reel-card');
-        const gap = parseFloat(window.getComputedStyle(slider).columnGap) || 0;
-        return card ? card.offsetWidth + gap : 260;
-      };
+    const openModal = trigger => {
+      const embedUrl = trigger.dataset.videoEmbed;
+      const videoUrl = trigger.dataset.videoUrl;
+      const title = trigger.dataset.videoTitle;
+      const subtitle = trigger.dataset.videoSubtitle;
 
-      const moveNext = () => {
-        const maxScroll = slider.scrollWidth - slider.clientWidth;
-        const nextPosition = slider.scrollLeft + getScrollAmount();
+      lastFocusedElement = document.activeElement;
 
-        if (nextPosition >= maxScroll - 8) {
-          slider.scrollTo({ left: 0, behavior: 'smooth' });
-          return;
-        }
+      modalVideo.innerHTML = '';
 
-        slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-      };
+      if (embedUrl) {
+        const iframe = document.createElement('iframe');
+        iframe.src = embedUrl;
+        iframe.title = title || 'Video BORREGO';
+        iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.loading = 'lazy';
+        modalVideo.appendChild(iframe);
+      } else {
+        const fallback = document.createElement('div');
+        fallback.className = 'hanan-dev-reels-modal__fallback';
+        fallback.textContent = 'Configura el TikTok embed URL para mostrar el video dentro del popup.';
+        modalVideo.appendChild(fallback);
+      }
 
-      const start = () => {
-        stop();
-        interval = window.setInterval(moveNext, speed);
-      };
+      modalTitle.textContent = title || '';
+      modalSubtitle.textContent = subtitle || '';
 
-      const stop = () => {
-        if (interval) window.clearInterval(interval);
-      };
+      if (videoUrl) {
+        modalLink.href = videoUrl;
+        modalLink.style.display = 'inline-flex';
+      } else {
+        modalLink.href = '#';
+        modalLink.style.display = 'none';
+      }
 
-      slider.addEventListener('mouseenter', stop);
-      slider.addEventListener('mouseleave', start);
-      slider.addEventListener('focusin', stop);
-      slider.addEventListener('focusout', start);
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('hanan-dev-reels-modal-open');
+      stopAutoplay();
 
-      start();
+      window.setTimeout(() => {
+        modalDialog.focus();
+      }, 50);
+    };
 
-      document.addEventListener('shopify:section:unload', event => {
-        if (event.detail.sectionId === '{{ section.id }}') stop();
-      });
-    })();
-  </script>
-{%- endif -%}
+    const closeModal = () => {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('hanan-dev-reels-modal-open');
+      modalVideo.innerHTML = '';
+      startAutoplay();
+
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    };
+
+    modalTriggers.forEach(trigger => {
+      trigger.addEventListener('click', () => openModal(trigger));
+    });
+
+    modalCloseButtons.forEach(button => {
+      button.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && modal.classList.contains('is-open')) {
+        closeModal();
+      }
+    });
+
+    if (slider) {
+      slider.addEventListener('mouseenter', stopAutoplay);
+      slider.addEventListener('mouseleave', startAutoplay);
+      slider.addEventListener('focusin', stopAutoplay);
+      slider.addEventListener('focusout', startAutoplay);
+    }
+
+    startAutoplay();
+
+    document.addEventListener('shopify:section:unload', event => {
+      if (event.detail.sectionId === '{{ section.id }}') {
+        stopAutoplay();
+        document.body.classList.remove('hanan-dev-reels-modal-open');
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -740,7 +999,13 @@
         {
           "type": "url",
           "id": "reel_url",
-          "label": "Reel URL"
+          "label": "TikTok or Instagram public URL"
+        },
+        {
+          "type": "url",
+          "id": "tiktok_embed_url",
+          "label": "TikTok embed URL",
+          "info": "Ejemplo: https://www.tiktok.com/embed/v2/1234567890123456789"
         },
         {
           "type": "text",
