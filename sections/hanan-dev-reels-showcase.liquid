@@ -1,0 +1,774 @@
+{%- liquid
+  assign section_id = 'hanan-dev-reels-section-' | append: section.id
+  assign autoplay_enabled = section.settings.enable_autoplay
+  assign show_play_icon = section.settings.show_play_icon
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="hanan-dev-reels-section"
+  style="
+    --hanan-dev-reels-bg: {{ section.settings.background_color }};
+    --hanan-dev-reels-text: {{ section.settings.text_color }};
+    --hanan-dev-reels-max-width: {{ section.settings.section_max_width }}px;
+    --hanan-dev-reels-padding-desktop: {{ section.settings.padding_desktop }}px;
+    --hanan-dev-reels-padding-mobile: {{ section.settings.padding_mobile }}px;
+  "
+  aria-labelledby="{{ section_id }}-heading"
+>
+  <div class="hanan-dev-reels-section__inner">
+    <div class="hanan-dev-reels-section__header">
+      <div class="hanan-dev-reels-section__header-content">
+        {%- if section.settings.eyebrow != blank -%}
+          <p class="hanan-dev-reels-section__eyebrow">
+            {{ section.settings.eyebrow }}
+          </p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 id="{{ section_id }}-heading" class="hanan-dev-reels-section__heading">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <div class="hanan-dev-reels-section__description">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+        <a
+          href="{{ section.settings.button_link }}"
+          class="hanan-dev-reels-section__button hanan-dev-reels-section__button--desktop"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="{{ section.settings.button_text | escape }}"
+        >
+          {{ section.settings.button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div
+        class="hanan-dev-social-slider"
+        data-hanan-dev-reels-slider
+        data-autoplay="{{ autoplay_enabled }}"
+        data-speed="{{ section.settings.slider_speed | times: 1000 }}"
+      >
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign reel_image = block.settings.thumbnail
+            assign reel_mobile_image = block.settings.mobile_thumbnail
+            assign reel_alt = block.settings.alt_text | default: block.settings.reel_title | default: section.settings.heading | escape
+          -%}
+
+          <article class="hanan-dev-reel-card" {{ block.shopify_attributes }}>
+            {%- if block.settings.reel_url != blank -%}
+              <a
+                href="{{ block.settings.reel_url }}"
+                class="hanan-dev-reel-card__link"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{{ block.settings.reel_title | default: 'Ver reel BORREGO' | escape }}"
+              >
+            {%- else -%}
+              <div class="hanan-dev-reel-card__link" role="group" aria-label="{{ block.settings.reel_title | default: 'Reel BORREGO' | escape }}">
+            {%- endif -%}
+
+              <div class="hanan-dev-reel-card__media">
+                {%- if reel_image != blank -%}
+                  <picture>
+                    {%- if reel_mobile_image != blank -%}
+                      <source
+                        media="(max-width: 749px)"
+                        srcset="
+                          {{ reel_mobile_image | image_url: width: 360 }} 360w,
+                          {{ reel_mobile_image | image_url: width: 520 }} 520w,
+                          {{ reel_mobile_image | image_url: width: 720 }} 720w
+                        "
+                        sizes="72vw"
+                      >
+                    {%- endif -%}
+
+                    <img
+                      src="{{ reel_image | image_url: width: 520 }}"
+                      srcset="
+                        {{ reel_image | image_url: width: 360 }} 360w,
+                        {{ reel_image | image_url: width: 520 }} 520w,
+                        {{ reel_image | image_url: width: 720 }} 720w,
+                        {{ reel_image | image_url: width: 900 }} 900w
+                      "
+                      sizes="(max-width: 749px) 72vw, (max-width: 989px) 34vw, 22vw"
+                      alt="{{ reel_alt }}"
+                      width="{{ reel_image.width }}"
+                      height="{{ reel_image.height }}"
+                      loading="lazy"
+                      class="hanan-dev-reel-card__image"
+                    >
+                  </picture>
+                {%- elsif reel_mobile_image != blank -%}
+                  <img
+                    src="{{ reel_mobile_image | image_url: width: 520 }}"
+                    srcset="
+                      {{ reel_mobile_image | image_url: width: 360 }} 360w,
+                      {{ reel_mobile_image | image_url: width: 520 }} 520w,
+                      {{ reel_mobile_image | image_url: width: 720 }} 720w
+                    "
+                    sizes="72vw"
+                    alt="{{ reel_alt }}"
+                    width="{{ reel_mobile_image.width }}"
+                    height="{{ reel_mobile_image.height }}"
+                    loading="lazy"
+                    class="hanan-dev-reel-card__image"
+                  >
+                {%- else -%}
+                  <div class="hanan-dev-reel-card__placeholder" aria-hidden="true">
+                    <span>REEL</span>
+                  </div>
+                {%- endif -%}
+
+                <div class="hanan-dev-reel-card__overlay" aria-hidden="true"></div>
+
+                {%- if show_play_icon -%}
+                  <span class="hanan-dev-reel-card__play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+                    </svg>
+                  </span>
+                {%- endif -%}
+              </div>
+
+              {%- if block.settings.reel_title != blank or block.settings.reel_subtitle != blank -%}
+                <div class="hanan-dev-reel-card__content">
+                  {%- if block.settings.reel_title != blank -%}
+                    <h3 class="hanan-dev-reel-card__title">
+                      {{ block.settings.reel_title }}
+                    </h3>
+                  {%- endif -%}
+
+                  {%- if block.settings.reel_subtitle != blank -%}
+                    <p class="hanan-dev-reel-card__subtitle">
+                      {{ block.settings.reel_subtitle }}
+                    </p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+
+            {%- if block.settings.reel_url != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="hanan-dev-social-slider hanan-dev-social-slider--empty">
+        {%- for index in (1..4) -%}
+          <article class="hanan-dev-reel-card">
+            <div class="hanan-dev-reel-card__link" role="group" aria-label="Reel BORREGO">
+              <div class="hanan-dev-reel-card__media">
+                <div class="hanan-dev-reel-card__placeholder" aria-hidden="true">
+                  <span>REEL</span>
+                </div>
+                <div class="hanan-dev-reel-card__overlay" aria-hidden="true"></div>
+                {%- if show_play_icon -%}
+                  <span class="hanan-dev-reel-card__play" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M8 5.5v13l11-6.5-11-6.5z"></path>
+                    </svg>
+                  </span>
+                {%- endif -%}
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.button_text != blank and section.settings.button_link != blank -%}
+      <a
+        href="{{ section.settings.button_link }}"
+        class="hanan-dev-reels-section__button hanan-dev-reels-section__button--mobile"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="{{ section.settings.button_text | escape }}"
+      >
+        {{ section.settings.button_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    background: var(--hanan-dev-reels-bg);
+    color: var(--hanan-dev-reels-text);
+    padding-top: var(--hanan-dev-reels-padding-desktop);
+    padding-bottom: var(--hanan-dev-reels-padding-desktop);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__inner {
+    width: min(100% - 40px, var(--hanan-dev-reels-max-width));
+    margin: 0 auto;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: clamp(32px, 4vw, 54px);
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__header-content {
+    max-width: 760px;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__eyebrow {
+    margin: 0 0 16px;
+    color: #a8733d;
+    font-size: clamp(11px, 1vw, 13px);
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__heading {
+    margin: 0;
+    max-width: 760px;
+    color: currentColor;
+    font-size: clamp(38px, 5.8vw, 84px);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__description {
+    margin-top: clamp(20px, 2.5vw, 30px);
+    max-width: 580px;
+    color: currentColor;
+    opacity: 0.76;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.7;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__description p {
+    margin: 0;
+  }
+
+  #{{ section_id }} .hanan-dev-social-slider {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(220px, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: clamp(14px, 2vw, 24px);
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2px;
+    padding: 2px 2px 14px;
+    scrollbar-width: thin;
+  }
+
+  #{{ section_id }} .hanan-dev-social-slider::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  #{{ section_id }} .hanan-dev-social-slider::-webkit-scrollbar-track {
+    background: rgba(17, 17, 12, 0.08);
+    border-radius: 999px;
+  }
+
+  #{{ section_id }} .hanan-dev-social-slider::-webkit-scrollbar-thumb {
+    background: rgba(17, 17, 12, 0.28);
+    border-radius: 999px;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__link {
+    display: block;
+    color: currentColor;
+    text-decoration: none;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__media {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    border-radius: 26px;
+    background: #11110c;
+    isolation: isolate;
+    box-shadow: 0 22px 48px rgba(17, 17, 12, 0.12);
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.01);
+    transition: transform 400ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__placeholder {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(135deg, rgba(242, 236, 221, 0.12), rgba(168, 115, 61, 0.26)),
+      #11110c;
+    color: rgba(242, 236, 221, 0.82);
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__placeholder span {
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+      linear-gradient(to top, rgba(17, 17, 12, 0.54), rgba(17, 17, 12, 0.04) 58%),
+      linear-gradient(to bottom, rgba(17, 17, 12, 0.18), rgba(17, 17, 12, 0));
+    pointer-events: none;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__play {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    width: 54px;
+    height: 54px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(242, 236, 221, 0.88);
+    color: #11110c;
+    transform: translate(-50%, -50%);
+    transition: transform 260ms ease, background-color 260ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__play svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+    margin-left: 2px;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__content {
+    padding: 16px 4px 0;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__title {
+    margin: 0;
+    color: currentColor;
+    font-size: clamp(14px, 1.1vw, 16px);
+    line-height: 1.25;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__subtitle {
+    margin: 8px 0 0;
+    color: currentColor;
+    opacity: 0.64;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__link:hover .hanan-dev-reel-card__image {
+    transform: scale(1.06);
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__link:hover .hanan-dev-reel-card__play {
+    transform: translate(-50%, -50%) scale(1.06);
+    background: #f2ecdd;
+  }
+
+  #{{ section_id }} .hanan-dev-reel-card__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 6px;
+    border-radius: 28px;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 15px 24px;
+    border-radius: 999px;
+    background: #a8733d;
+    border: 1px solid #a8733d;
+    color: #f2ecdd;
+    font-size: 12px;
+    line-height: 1;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 900;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__button:hover {
+    transform: translateY(-2px);
+    background: #11110c;
+    border-color: #11110c;
+    color: #f2ecdd;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__button:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
+  }
+
+  #{{ section_id }} .hanan-dev-reels-section__button--mobile {
+    display: none;
+  }
+
+  @media screen and (min-width: 990px) {
+    #{{ section_id }} .hanan-dev-social-slider {
+      overflow-x: hidden;
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    #{{ section_id }} .hanan-dev-reels-section__header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__button--desktop {
+      display: none;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__button--mobile {
+      display: inline-flex;
+      margin-top: 28px;
+    }
+
+    #{{ section_id }} .hanan-dev-social-slider {
+      grid-template-columns: none;
+      grid-auto-columns: minmax(230px, 34vw);
+      overflow-x: auto;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} {
+      padding-top: var(--hanan-dev-reels-padding-mobile);
+      padding-bottom: var(--hanan-dev-reels-padding-mobile);
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__inner {
+      width: min(100% - 32px, 100%);
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__header {
+      gap: 0;
+      margin-bottom: 30px;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__heading {
+      font-size: clamp(36px, 12vw, 56px);
+      line-height: 0.96;
+      letter-spacing: -0.048em;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__description {
+      margin-top: 22px;
+      max-width: 100%;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    #{{ section_id }} .hanan-dev-social-slider {
+      width: calc(100% + 32px);
+      margin-left: -16px;
+      padding-left: 16px;
+      padding-right: 16px;
+      grid-auto-columns: minmax(230px, 74vw);
+      gap: 14px;
+    }
+
+    #{{ section_id }} .hanan-dev-reel-card__media {
+      border-radius: 22px;
+    }
+
+    #{{ section_id }} .hanan-dev-reel-card__play {
+      width: 50px;
+      height: 50px;
+    }
+
+    #{{ section_id }} .hanan-dev-reels-section__button--mobile {
+      width: 100%;
+      margin-top: 28px;
+    }
+  }
+</style>
+
+{%- if autoplay_enabled and section.blocks.size > 1 -%}
+  <script>
+    (() => {
+      const section = document.getElementById('{{ section_id }}');
+
+      if (!section) return;
+
+      const slider = section.querySelector('[data-hanan-dev-reels-slider]');
+      const shouldAutoplay = slider && slider.dataset.autoplay === 'true';
+      const speed = Number(slider.dataset.speed) || 4000;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (!slider || !shouldAutoplay || reduceMotion) return;
+
+      let interval;
+
+      const getScrollAmount = () => {
+        const card = slider.querySelector('.hanan-dev-reel-card');
+        const gap = parseFloat(window.getComputedStyle(slider).columnGap) || 0;
+        return card ? card.offsetWidth + gap : 260;
+      };
+
+      const moveNext = () => {
+        const maxScroll = slider.scrollWidth - slider.clientWidth;
+        const nextPosition = slider.scrollLeft + getScrollAmount();
+
+        if (nextPosition >= maxScroll - 8) {
+          slider.scrollTo({ left: 0, behavior: 'smooth' });
+          return;
+        }
+
+        slider.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+      };
+
+      const start = () => {
+        stop();
+        interval = window.setInterval(moveNext, speed);
+      };
+
+      const stop = () => {
+        if (interval) window.clearInterval(interval);
+      };
+
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+      slider.addEventListener('focusin', stop);
+      slider.addEventListener('focusout', start);
+
+      start();
+
+      document.addEventListener('shopify:section:unload', event => {
+        if (event.detail.sectionId === '{{ section.id }}') stop();
+      });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hanan Dev Reels Showcase",
+  "tag": "section",
+  "class": "section-hanan-dev-reels-showcase",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "BORREGO SOCIAL"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "SÍGUENOS EN TIKTOK"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Descubre lanzamientos, pedidos especiales y cultura streetwear a través de nuestros reels y contenido exclusivo.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Botón"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Ver TikTok"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_autoplay",
+      "label": "Enable slider autoplay",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "slider_speed",
+      "label": "Slider speed",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "unit": "s",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "show_play_icon",
+      "label": "Show play icon",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#11110C"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "label": "Section max width",
+      "min": 960,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1240
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Desktop padding",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Mobile padding",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "reel",
+      "name": "Reel",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "thumbnail",
+          "label": "Reel thumbnail image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_thumbnail",
+          "label": "Mobile thumbnail image"
+        },
+        {
+          "type": "text",
+          "id": "reel_title",
+          "label": "Reel title",
+          "default": "Exclusive Drop"
+        },
+        {
+          "type": "text",
+          "id": "reel_subtitle",
+          "label": "Reel subtitle",
+          "default": "Sneaker culture"
+        },
+        {
+          "type": "url",
+          "id": "reel_url",
+          "label": "Reel URL"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text",
+          "default": "Contenido social BORREGO"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hanan Dev Reels Showcase",
+      "blocks": [
+        {
+          "type": "reel"
+        },
+        {
+          "type": "reel"
+        },
+        {
+          "type": "reel"
+        },
+        {
+          "type": "reel"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
