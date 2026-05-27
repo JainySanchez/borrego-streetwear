@@ -31,16 +31,70 @@
         "image_width": 240,
         "image_border_radius": 0,
         "image_position": "left",
-        "background_color": "#11110c",
-        "text_color": "#f2ecdd",
+        "background_color": "#ffffff",
+        "text_color": "#121212",
         "section_max_width": 1180,
         "padding_desktop": 40,
         "padding_mobile": 56
+      }
+    },
+    "hanan_boutique_benefits_4xRFaY": {
+      "type": "hanan-boutique-benefits",
+      "blocks": {
+        "benefit_RFa8Uy": {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "PRODUCTOS AUTÉNTICOS",
+            "description": "<p>Todos nuestros productos son 100% auténticos y cuidadosamente seleccionados de marcas premium de streetwear y sneaker culture.</p>"
+          }
+        },
+        "benefit_7V9xK4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "support",
+            "title": "ATENCIÓN PERSONALIZADA",
+            "description": "<p>Brindamos una experiencia de compra cercana y personalizada para ayudarte a encontrar las piezas ideales para tu estilo.</p>"
+          }
+        },
+        "benefit_3QkRNU": {
+          "type": "benefit",
+          "settings": {
+            "icon": "drops",
+            "title": "PAGOS FLEXIBLES Y SEGUROS",
+            "description": "<p>Compra fácilmente con Yape, Plin y distintos métodos de pago disponibles para una experiencia rápida y segura.</p>"
+          }
+        },
+        "benefit_jje676": {
+          "type": "benefit",
+          "settings": {
+            "icon": "shipping",
+            "title": "ENVÍOS A TODO EL PERÚ",
+            "description": "<p>Realizamos envíos seguros y rápidos a todo el Perú para que recibas tus productos donde estés.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_RFa8Uy",
+        "benefit_7V9xK4",
+        "benefit_3QkRNU",
+        "benefit_jje676"
+      ],
+      "name": "HANAN Boutique Benefits",
+      "settings": {
+        "background_color": "#f9f8f6",
+        "title_color": "#121212",
+        "description_color": "#8a6634",
+        "icon_size": 34,
+        "enable_animation": true,
+        "padding_top": 32,
+        "padding_bottom": 96
       }
     }
   },
   "order": [
     "main",
-    "hanan_dev_about_borrego_nLWXYh"
+    "hanan_dev_about_borrego_nLWXYh",
+    "hanan_boutique_benefits_4xRFaY"
   ]
 }
