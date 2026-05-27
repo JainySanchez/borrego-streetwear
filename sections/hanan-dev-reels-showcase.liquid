@@ -63,6 +63,8 @@
             assign reel_image = block.settings.thumbnail
             assign reel_mobile_image = block.settings.mobile_thumbnail
             assign reel_alt = block.settings.alt_text | default: block.settings.reel_title | default: section.settings.heading | escape
+            assign tiktok_id = block.settings.tiktok_video_id | strip
+            assign tiktok_url = block.settings.reel_url
           -%}
 
           <article class="hanan-dev-reel-card" {{ block.shopify_attributes }}>
@@ -70,8 +72,8 @@
               type="button"
               class="hanan-dev-reel-card__trigger"
               data-hanan-dev-modal-open
-              data-video-embed="{{ block.settings.tiktok_embed_url | escape }}"
-              data-video-url="{{ block.settings.reel_url | escape }}"
+              data-video-id="{{ tiktok_id | escape }}"
+              data-video-url="{{ tiktok_url | escape }}"
               data-video-title="{{ block.settings.reel_title | escape }}"
               data-video-subtitle="{{ block.settings.reel_subtitle | escape }}"
               aria-label="{{ block.settings.reel_title | default: 'Ver reel BORREGO' | escape }}"
@@ -759,28 +761,37 @@
       if (interval) window.clearInterval(interval);
     };
 
+    const getPlayerUrl = videoId => {
+      const cleanVideoId = String(videoId || '').trim();
+
+      if (!cleanVideoId) return '';
+
+      return `https://www.tiktok.com/player/v1/${cleanVideoId}?autoplay=1&loop=1&rel=0&music_info=0&timestamp=0&controls=1&closed_caption=0&description=0&mute=0`;
+    };
+
     const openModal = trigger => {
-      const embedUrl = trigger.dataset.videoEmbed;
+      const videoId = trigger.dataset.videoId;
       const videoUrl = trigger.dataset.videoUrl;
       const title = trigger.dataset.videoTitle;
       const subtitle = trigger.dataset.videoSubtitle;
+      const playerUrl = getPlayerUrl(videoId);
 
       lastFocusedElement = document.activeElement;
-
       modalVideo.innerHTML = '';
 
-      if (embedUrl) {
+      if (playerUrl) {
         const iframe = document.createElement('iframe');
-        iframe.src = embedUrl;
+        iframe.src = playerUrl;
         iframe.title = title || 'Video BORREGO';
         iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
         iframe.allowFullscreen = true;
+        iframe.setAttribute('playsinline', '');
         iframe.loading = 'lazy';
         modalVideo.appendChild(iframe);
       } else {
         const fallback = document.createElement('div');
         fallback.className = 'hanan-dev-reels-modal__fallback';
-        fallback.textContent = 'Configura el TikTok embed URL para mostrar el video dentro del popup.';
+        fallback.textContent = 'Configura el TikTok Video ID para mostrar el video dentro del popup.';
         modalVideo.appendChild(fallback);
       }
 
@@ -997,15 +1008,15 @@
           "default": "Sneaker culture"
         },
         {
-          "type": "url",
-          "id": "reel_url",
-          "label": "TikTok or Instagram public URL"
+          "type": "text",
+          "id": "tiktok_video_id",
+          "label": "TikTok Video ID",
+          "info": "Pega solo el ID numérico del video. Ejemplo: 7641852670025764117"
         },
         {
           "type": "url",
-          "id": "tiktok_embed_url",
-          "label": "TikTok embed URL",
-          "info": "Ejemplo: https://www.tiktok.com/embed/v2/1234567890123456789"
+          "id": "reel_url",
+          "label": "TikTok or Instagram public URL"
         },
         {
           "type": "text",
