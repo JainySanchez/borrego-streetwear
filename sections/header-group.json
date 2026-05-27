@@ -33,42 +33,25 @@
     },
     "borrego_header_RCABMN": {
       "type": "borrego-header",
-      "blocks": {
-        "mega_menu_XBa46V": {
-          "type": "mega_menu",
-          "settings": {
-            "menu_item": "",
-            "title": "Featured",
-            "links": "",
-            "image_1_text": "Latest rotation",
-            "image_1_link": "",
-            "image_2_text": "",
-            "image_2_link": "",
-            "image_3_text": "",
-            "image_3_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "mega_menu_XBa46V"
-      ],
       "name": "BORREGO Clean Header",
       "settings": {
         "logo_width_desktop": 170,
         "logo_width_mobile": 112,
         "menu": "menu_new",
+        "mobile_menu": "",
         "show_account_icon": false,
         "show_wishlist_icon": false,
         "wishlist_link": "",
+        "mobile_brand_text": "<p>BORREGO STREETWEAR<br/>Lima, Peru</p>",
+        "instagram_link": "https://www.instagram.com/borregostreetwear/",
+        "tiktok_link": "https://www.instagram.com/borregostreetwear/",
+        "whatsapp_link": "https://api.whatsapp.com/send?phone=51983544460",
         "transparent_on_home": true,
         "header_background": "#f5f1e8",
         "header_scrolled_background": "#ffffff",
         "header_text_color": "#11110c",
         "transparent_text_color": "#ffffff",
-        "header_hover_color": "#8a6634",
-        "mega_menu_theme": "light",
-        "mega_menu_background": "#f2ecdd",
-        "mega_menu_text_color": "#11110c"
+        "header_hover_color": "#8a6634"
       }
     }
   },
