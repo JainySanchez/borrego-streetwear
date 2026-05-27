@@ -1,0 +1,206 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "square"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "vendor",
+        "title",
+        "price",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "description",
+        "share"
+      ],
+      "disabled": true,
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "large",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "stacked",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 12
+      }
+    },
+    "main_product_borrego_tkpGxk": {
+      "type": "main-product-borrego",
+      "blocks": {
+        "benefit_7XYpPc": {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "PRODUCTO 100% AUTÉNTICO"
+          }
+        },
+        "benefit_kMURje": {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "ENVÍOS A TODO EL PERÚ"
+          }
+        },
+        "benefit_MgPiXQ": {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "PAGOS CON YAPE, PLIN Y TARJETAS"
+          }
+        },
+        "benefit_DxpzBh": {
+          "type": "benefit",
+          "settings": {
+            "icon": "authentic",
+            "title": "ATENCIÓN PERSONALIZADA"
+          }
+        },
+        "accordion_bkfEmY": {
+          "type": "accordion",
+          "settings": {
+            "title": "GUÍA DE TALLAS",
+            "content": "<p>Si tienes dudas sobre tu talla, escríbenos por WhatsApp para ayudarte a elegir la opción ideal.</p>"
+          }
+        },
+        "accordion_hzUiUU": {
+          "type": "accordion",
+          "settings": {
+            "title": "ENVÍOS Y ENTREGAS",
+            "content": "<p>Realizamos envíos a Lima y provincias. Los tiempos pueden variar según destino y disponibilidad.</p>"
+          }
+        },
+        "accordion_CVtqTk": {
+          "type": "accordion",
+          "settings": {
+            "title": "AUTENTICIDAD",
+            "content": "<p>Seleccionamos productos auténticos de marcas premium streetwear y sneaker culture.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "benefit_7XYpPc",
+        "benefit_kMURje",
+        "benefit_MgPiXQ",
+        "benefit_DxpzBh",
+        "accordion_bkfEmY",
+        "accordion_hzUiUU",
+        "accordion_CVtqTk"
+      ],
+      "name": "BORREGO Product Page",
+      "settings": {
+        "editorial_label": "",
+        "background_color": "#ffffff",
+        "card_background": "#f2ecdd",
+        "text_color": "#11110c",
+        "muted_text_color": "#11110ca3",
+        "accent_color": "#d9b26f",
+        "border_color": "#11110c24",
+        "button_background": "#11110c",
+        "button_text": "#f2ecdd",
+        "button_hover_background": "#d9b26f",
+        "button_hover_text": "#11110c",
+        "primary_cta_label": "Seguir comprando →",
+        "purchase_microcopy": "<p>Compra personalizada vía WhatsApp. Selecciona tu talla y continúa la compra con atención personalizada.</p>",
+        "whatsapp_phone": "51999999999",
+        "whatsapp_message": "Hola, Borrego. Quiero consultar sobre este producto:",
+        "show_showroom_availability": false,
+        "showroom_availability_text": "Disponible para visita en showroom privado.",
+        "story_text": "",
+        "show_showroom": true,
+        "showroom_label": "PRIVATE SHOWROOM",
+        "showroom_heading": "¿QUIERES VERLO ANTES DE COMPRAR?",
+        "showroom_text": "<p>Agenda una visita a nuestro showroom o consulta disponibilidad por WhatsApp.</p>",
+        "show_related": true,
+        "related_collection": "adidsa",
+        "related_heading": "TAMBIÉN TE PUEDE GUSTAR",
+        "related_limit": 6,
+        "padding_top": 52,
+        "padding_bottom": 120,
+        "enable_animation": true
+      }
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    }
+  },
+  "order": [
+    "main",
+    "main_product_borrego_tkpGxk",
+    "related-products"
+  ]
+}
