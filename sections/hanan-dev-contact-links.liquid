@@ -1,0 +1,621 @@
+{%- liquid
+  assign section_id = 'hanan-dev-contact-links-' | append: section.id
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="hanan-dev-contact-links"
+  style="
+    --hanan-dev-contact-bg: {{ section.settings.background_color }};
+    --hanan-dev-contact-text: {{ section.settings.text_color }};
+    --hanan-dev-contact-max-width: {{ section.settings.section_max_width }}px;
+    --hanan-dev-contact-padding-desktop: {{ section.settings.padding_desktop }}px;
+    --hanan-dev-contact-padding-mobile: {{ section.settings.padding_mobile }}px;
+  "
+  aria-labelledby="{{ section_id }}-heading"
+>
+  <div class="hanan-dev-contact-links__inner">
+    {%- if section.settings.show_heading_area -%}
+      <div class="hanan-dev-contact-links__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 id="{{ section_id }}-heading" class="hanan-dev-contact-links__heading">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+
+        {%- if section.settings.description != blank -%}
+          <div class="hanan-dev-contact-links__description">
+            {{ section.settings.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    <div class="hanan-dev-contact-links__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.show_card -%}
+          {%- liquid
+            assign card_title = block.settings.card_title
+            assign card_description = block.settings.card_description
+            assign card_link = block.settings.card_link
+            assign icon_type = block.settings.icon_type
+            assign custom_icon = block.settings.custom_icon
+          -%}
+
+          <article
+            class="hanan-dev-contact-links__item"
+            style="
+              --hanan-dev-card-bg: {{ block.settings.card_background_color }};
+              --hanan-dev-card-text: {{ block.settings.card_text_color }};
+              --hanan-dev-card-border: {{ block.settings.card_border_color }};
+            "
+            {{ block.shopify_attributes }}
+          >
+            {%- if card_link != blank -%}
+              <a
+                href="{{ card_link }}"
+                class="hanan-dev-contact-links__card"
+                {% if block.settings.open_new_tab %}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                {% endif %}
+                aria-label="{{ card_title | default: 'Contacto BORREGO' | escape }}"
+              >
+            {%- else -%}
+              <div
+                class="hanan-dev-contact-links__card"
+                role="group"
+                aria-label="{{ card_title | default: 'Contacto BORREGO' | escape }}"
+              >
+            {%- endif -%}
+
+              <div class="hanan-dev-contact-links__card-top">
+                <span class="hanan-dev-contact-links__icon" aria-hidden="true">
+                  {%- case icon_type -%}
+                    {%- when 'whatsapp' -%}
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M12.04 2C6.58 2 2.13 6.42 2.13 11.86c0 1.74.46 3.43 1.34 4.93L2 22l5.35-1.4a9.95 9.95 0 0 0 4.69 1.19h.01c5.46 0 9.91-4.42 9.91-9.86C21.96 6.45 17.51 2 12.04 2Zm.01 18.12h-.01a8.25 8.25 0 0 1-4.2-1.15l-.3-.18-3.18.83.85-3.09-.2-.32a8.13 8.13 0 0 1-1.25-4.35c0-4.51 3.72-8.18 8.3-8.18 2.21 0 4.29.86 5.85 2.4a8.08 8.08 0 0 1 2.43 5.78c0 4.51-3.72 8.26-8.29 8.26Zm4.55-6.18c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.12-.17.25-.65.8-.79.97-.15.17-.29.19-.54.06-.25-.12-1.05-.38-2-1.22-.74-.66-1.24-1.47-1.38-1.72-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.77-1.84-.2-.48-.41-.42-.56-.42h-.48c-.17 0-.43.06-.66.31-.23.25-.87.85-.87 2.08s.89 2.41 1.02 2.58c.12.17 1.76 2.68 4.27 3.76.6.26 1.06.41 1.42.52.6.19 1.15.16 1.58.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.29Z"></path>
+                      </svg>
+                    {%- when 'instagram' -%}
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M7.8 2h8.4A5.81 5.81 0 0 1 22 7.8v8.4a5.81 5.81 0 0 1-5.8 5.8H7.8A5.81 5.81 0 0 1 2 16.2V7.8A5.81 5.81 0 0 1 7.8 2Zm0 2A3.8 3.8 0 0 0 4 7.8v8.4A3.8 3.8 0 0 0 7.8 20h8.4a3.8 3.8 0 0 0 3.8-3.8V7.8A3.8 3.8 0 0 0 16.2 4H7.8Zm4.2 3.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2Zm0 2A2.8 2.8 0 1 0 14.8 12 2.8 2.8 0 0 0 12 9.2Zm5.05-2.35a1.1 1.1 0 1 1-1.1 1.1 1.1 1.1 0 0 1 1.1-1.1Z"></path>
+                      </svg>
+                    {%- when 'tiktok' -%}
+                      <svg viewBox="0 0 24 24" focusable="false">
+                        <path d="M16.6 2c.28 2.42 1.63 3.86 3.98 4.02v3.02a7.1 7.1 0 0 1-3.9-1.16v6.89c0 3.48-2.12 6.23-5.75 6.23-3.2 0-5.51-2.17-5.51-5.24 0-3.57 2.98-5.55 6.32-5.19v3.1c-1.54-.23-3.15.5-3.15 2.02 0 1.24.97 2.08 2.24 2.08 1.48 0 2.42-.88 2.42-2.9V2h3.35Z"></path>
+                      </svg>
+                    {%- else -%}
+                      {%- if custom_icon != blank -%}
+                        <span class="hanan-dev-contact-links__custom-icon">
+                          {{ custom_icon }}
+                        </span>
+                      {%- else -%}
+                        <svg viewBox="0 0 24 24" focusable="false">
+                          <path d="M12 2a10 10 0 1 0 10 10A10.01 10.01 0 0 0 12 2Zm1 14.93V13h3.93A5.02 5.02 0 0 1 13 16.93ZM16.93 11H13V7.07A5.02 5.02 0 0 1 16.93 11ZM11 7.07V11H7.07A5.02 5.02 0 0 1 11 7.07ZM7.07 13H11v3.93A5.02 5.02 0 0 1 7.07 13Z"></path>
+                        </svg>
+                      {%- endif -%}
+                  {%- endcase -%}
+                </span>
+
+                <span class="hanan-dev-contact-links__arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </div>
+
+              <div class="hanan-dev-contact-links__card-content">
+                {%- if card_title != blank -%}
+                  <h3 class="hanan-dev-contact-links__card-title">
+                    {{ card_title }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if card_description != blank -%}
+                  <p class="hanan-dev-contact-links__card-description">
+                    {{ card_description }}
+                  </p>
+                {%- endif -%}
+              </div>
+
+            {%- if card_link != blank -%}
+              </a>
+            {%- else -%}
+              </div>
+            {%- endif -%}
+          </article>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.show_final_cta and section.settings.final_cta_text != blank -%}
+      <div class="hanan-dev-contact-links__final">
+        <p>
+          {{ section.settings.final_cta_text }}
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    background: var(--hanan-dev-contact-bg);
+    color: var(--hanan-dev-contact-text);
+    padding-top: var(--hanan-dev-contact-padding-desktop);
+    padding-bottom: var(--hanan-dev-contact-padding-desktop);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__inner {
+    width: min(100% - 40px, var(--hanan-dev-contact-max-width));
+    margin: 0 auto;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__header {
+    max-width: 760px;
+    margin: 0 auto clamp(34px, 4vw, 56px);
+    text-align: center;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__heading {
+    margin: 0;
+    color: currentColor;
+    font-size: clamp(38px, 5.8vw, 84px);
+    line-height: 0.92;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__description {
+    max-width: 620px;
+    margin: clamp(20px, 2.4vw, 30px) auto 0;
+    color: currentColor;
+    opacity: 0.74;
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.7;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__description p {
+    margin: 0;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(14px, 2vw, 24px);
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__item {
+    min-width: 0;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card {
+    position: relative;
+    display: flex;
+    min-height: 300px;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(24px, 3vw, 34px);
+    background: var(--hanan-dev-card-bg);
+    color: var(--hanan-dev-card-text);
+    border: 1px solid var(--hanan-dev-card-border);
+    border-radius: 28px;
+    text-decoration: none;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at top right, rgba(168, 115, 61, 0.22), transparent 34%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 42%);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(168, 115, 61, 0.8);
+    box-shadow: 0 26px 54px rgba(17, 17, 12, 0.12);
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card:hover::before {
+    opacity: 1;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 5px;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__icon {
+    display: inline-flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    opacity: 0.95;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__icon svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__custom-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__arrow {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    background: rgba(168, 115, 61, 0.14);
+    color: currentColor;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 220ms ease, background-color 220ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card:hover .hanan-dev-contact-links__arrow {
+    transform: translate(3px, -3px);
+    background: rgba(168, 115, 61, 0.24);
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card-content {
+    margin-top: clamp(42px, 5vw, 72px);
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card-title {
+    margin: 0;
+    color: currentColor;
+    font-size: clamp(26px, 3.2vw, 46px);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__card-description {
+    max-width: 340px;
+    margin: 18px 0 0;
+    color: currentColor;
+    opacity: 0.72;
+    font-size: 14px;
+    line-height: 1.62;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__final {
+    max-width: 720px;
+    margin: clamp(36px, 5vw, 64px) auto 0;
+    text-align: center;
+  }
+
+  #{{ section_id }} .hanan-dev-contact-links__final p {
+    margin: 0;
+    color: currentColor;
+    font-size: clamp(20px, 2.4vw, 34px);
+    line-height: 1.18;
+    letter-spacing: -0.04em;
+    font-weight: 800;
+  }
+
+  @media screen and (max-width: 989px) {
+    #{{ section_id }} .hanan-dev-contact-links__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__card {
+      min-height: 280px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} {
+      padding-top: var(--hanan-dev-contact-padding-mobile);
+      padding-bottom: var(--hanan-dev-contact-padding-mobile);
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__inner {
+      width: min(100% - 32px, 100%);
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__header {
+      margin-bottom: 30px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__heading {
+      font-size: clamp(34px, 11vw, 56px);
+      line-height: 0.96;
+      letter-spacing: -0.048em;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__description {
+      margin-top: 20px;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__card {
+      min-height: 230px;
+      padding: 24px;
+      border-radius: 24px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__card-content {
+      margin-top: 42px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__card-title {
+      font-size: clamp(28px, 9vw, 40px);
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__card-description {
+      max-width: 100%;
+      font-size: 14px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__final {
+      margin-top: 34px;
+    }
+
+    #{{ section_id }} .hanan-dev-contact-links__final p {
+      font-size: clamp(20px, 7vw, 28px);
+      line-height: 1.22;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hanan Dev Contact Links",
+  "tag": "section",
+  "class": "section-hanan-dev-contact-links",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido superior"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_heading_area",
+      "label": "Show heading area",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "CONTACTO BORREGO"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description text",
+      "default": "<p>Conecta con nosotros para pedidos especiales, novedades y contenido exclusivo de BORREGO STREETWEAR.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Texto final"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_final_cta",
+      "label": "Show final CTA text",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "final_cta_text",
+      "label": "Final CTA text",
+      "default": "¿Buscas una pieza específica? Escríbenos y te ayudamos."
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Section background color",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#11110C"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "label": "Section max width",
+      "min": 960,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1240
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Desktop padding",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Mobile padding",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "contact_card",
+      "name": "Contact card",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_card",
+          "label": "Show card",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Card title",
+          "default": "WhatsApp"
+        },
+        {
+          "type": "textarea",
+          "id": "card_description",
+          "label": "Card description",
+          "default": "Solicita cotizaciones, pedidos especiales o atención personalizada."
+        },
+        {
+          "type": "url",
+          "id": "card_link",
+          "label": "Card link"
+        },
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon type",
+          "options": [
+            {
+              "value": "whatsapp",
+              "label": "WhatsApp"
+            },
+            {
+              "value": "instagram",
+              "label": "Instagram"
+            },
+            {
+              "value": "tiktok",
+              "label": "TikTok"
+            },
+            {
+              "value": "custom",
+              "label": "Custom"
+            }
+          ],
+          "default": "whatsapp"
+        },
+        {
+          "type": "text",
+          "id": "custom_icon",
+          "label": "Custom icon SVG/text option",
+          "info": "Puedes colocar un carácter, emoji o texto corto. Para SVG completo, pegar markup simple."
+        },
+        {
+          "type": "checkbox",
+          "id": "open_new_tab",
+          "label": "Open link in new tab",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "card_background_color",
+          "label": "Card background color",
+          "default": "#11110C"
+        },
+        {
+          "type": "color",
+          "id": "card_text_color",
+          "label": "Card text color",
+          "default": "#F2ECDD"
+        },
+        {
+          "type": "color",
+          "id": "card_border_color",
+          "label": "Card border color",
+          "default": "#2A261E"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hanan Dev Contact Links",
+      "blocks": [
+        {
+          "type": "contact_card",
+          "settings": {
+            "card_title": "WhatsApp",
+            "card_description": "Solicita cotizaciones, pedidos especiales o atención personalizada.",
+            "icon_type": "whatsapp"
+          }
+        },
+        {
+          "type": "contact_card",
+          "settings": {
+            "card_title": "Instagram",
+            "card_description": "Revisa novedades, lanzamientos y piezas disponibles.",
+            "icon_type": "instagram"
+          }
+        },
+        {
+          "type": "contact_card",
+          "settings": {
+            "card_title": "TikTok",
+            "card_description": "Mira reels, drops y contenido de BORREGO.",
+            "icon_type": "tiktok"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
