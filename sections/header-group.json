@@ -38,7 +38,7 @@
         "logo_width_desktop": 170,
         "logo_width_mobile": 112,
         "menu": "menu_new",
-        "mobile_menu": "",
+        "mobile_menu": "menumobile",
         "show_account_icon": false,
         "show_wishlist_icon": false,
         "wishlist_link": "",
