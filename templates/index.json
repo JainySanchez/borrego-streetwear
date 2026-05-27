@@ -231,6 +231,70 @@
         "padding_mobile": 28
       }
     },
+    "hanan_dev_reels_showcase_AnB4BM": {
+      "type": "hanan-dev-reels-showcase",
+      "blocks": {
+        "reel_DpjgGx": {
+          "type": "reel",
+          "settings": {
+            "thumbnail": "shopify://shop_images/AJ5_2_a790732c-88bd-4d53-b355-5736bd0ea095.webp",
+            "reel_title": "Exclusive Drop",
+            "reel_subtitle": "Sneaker culture",
+            "reel_url": "https://www.tiktok.com/@borregostreetwear/video/7573914821687627028?is_from_webapp=1&sender_device=pc&web_id=7640140879843870228",
+            "alt_text": "Contenido social BORREGO"
+          }
+        },
+        "reel_4wy9zm": {
+          "type": "reel",
+          "settings": {
+            "reel_title": "Exclusive Drop",
+            "reel_subtitle": "Sneaker culture",
+            "reel_url": "",
+            "alt_text": "Contenido social BORREGO"
+          }
+        },
+        "reel_zhnm8m": {
+          "type": "reel",
+          "settings": {
+            "reel_title": "Exclusive Drop",
+            "reel_subtitle": "Sneaker culture",
+            "reel_url": "",
+            "alt_text": "Contenido social BORREGO"
+          }
+        },
+        "reel_RRCmTM": {
+          "type": "reel",
+          "settings": {
+            "reel_title": "Exclusive Drop",
+            "reel_subtitle": "Sneaker culture",
+            "reel_url": "",
+            "alt_text": "Contenido social BORREGO"
+          }
+        }
+      },
+      "block_order": [
+        "reel_DpjgGx",
+        "reel_4wy9zm",
+        "reel_zhnm8m",
+        "reel_RRCmTM"
+      ],
+      "name": "Hanan Dev Reels Showcase",
+      "settings": {
+        "eyebrow": "BORREGO SOCIAL",
+        "heading": "SÍGUENOS EN TIKTOK",
+        "description": "<p>Descubre lanzamientos, pedidos especiales y cultura streetwear a través de nuestros reels y contenido exclusivo.</p>",
+        "button_text": "Ver TikTok",
+        "button_link": "",
+        "enable_autoplay": false,
+        "slider_speed": 4,
+        "show_play_icon": true,
+        "background_color": "#F2ECDD",
+        "text_color": "#11110C",
+        "section_max_width": 1240,
+        "padding_desktop": 96,
+        "padding_mobile": 64
+      }
+    },
     "hanan_editorial_split_banner_XErHCe": {
       "type": "hanan-editorial-split-banner",
       "disabled": true,
@@ -408,6 +472,7 @@
     "featured_collection",
     "hanan_editorial_collection_jMXkix",
     "hanan_dev_special_orders_FJeriz",
+    "hanan_dev_reels_showcase_AnB4BM",
     "hanan_editorial_split_banner_XErHCe",
     "hanan_showroom_experience_VenpDh",
     "hanan_showroom_location_Qgjk3r",
