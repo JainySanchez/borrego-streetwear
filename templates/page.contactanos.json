@@ -17,74 +17,6 @@
         "padding_bottom": 28
       }
     },
-    "hanan_dev_contact_links_YjdJdp": {
-      "type": "hanan-dev-contact-links",
-      "blocks": {
-        "contact_card_3yp3fh": {
-          "type": "contact_card",
-          "settings": {
-            "show_card": true,
-            "card_title": "WhatsApp",
-            "card_description": "Solicita cotizaciones, pedidos especiales o atención personalizada.",
-            "card_link": "",
-            "icon_type": "whatsapp",
-            "custom_icon": "",
-            "open_new_tab": true,
-            "card_background_color": "#11110C",
-            "card_text_color": "#F2ECDD",
-            "card_border_color": "#2A261E"
-          }
-        },
-        "contact_card_9re7Nf": {
-          "type": "contact_card",
-          "settings": {
-            "show_card": true,
-            "card_title": "Instagram",
-            "card_description": "Revisa novedades, lanzamientos y piezas disponibles.",
-            "card_link": "",
-            "icon_type": "instagram",
-            "custom_icon": "",
-            "open_new_tab": true,
-            "card_background_color": "#11110C",
-            "card_text_color": "#F2ECDD",
-            "card_border_color": "#2A261E"
-          }
-        },
-        "contact_card_4r6FnL": {
-          "type": "contact_card",
-          "settings": {
-            "show_card": true,
-            "card_title": "TikTok",
-            "card_description": "Mira reels, drops y contenido de BORREGO.",
-            "card_link": "",
-            "icon_type": "tiktok",
-            "custom_icon": "",
-            "open_new_tab": true,
-            "card_background_color": "#11110C",
-            "card_text_color": "#F2ECDD",
-            "card_border_color": "#2A261E"
-          }
-        }
-      },
-      "block_order": [
-        "contact_card_3yp3fh",
-        "contact_card_9re7Nf",
-        "contact_card_4r6FnL"
-      ],
-      "name": "Hanan Dev Contact Links",
-      "settings": {
-        "show_heading_area": true,
-        "heading": "C O N T Á C T A N O S",
-        "description": "<p>Conecta con nosotros para pedidos especiales, novedades y contenido exclusivo de BORREGO STREETWEAR.</p>",
-        "show_final_cta": true,
-        "final_cta_text": "¿Buscas una pieza específica? Escríbenos y te ayudamos.",
-        "background_color": "#f3f3f3",
-        "text_color": "#11110C",
-        "section_max_width": 1240,
-        "padding_desktop": 96,
-        "padding_mobile": 64
-      }
-    },
     "hanan_dev_about_borrego_nLWXYh": {
       "type": "hanan-dev-about-borrego",
       "name": "Hanan Dev About BORREGO",
@@ -104,6 +36,74 @@
         "section_max_width": 1180,
         "padding_desktop": 40,
         "padding_mobile": 56
+      }
+    },
+    "hanan_dev_contact_links_YjdJdp": {
+      "type": "hanan-dev-contact-links",
+      "blocks": {
+        "contact_card_3yp3fh": {
+          "type": "contact_card",
+          "settings": {
+            "show_card": true,
+            "card_title": "WhatsApp",
+            "card_description": "Solicita cotizaciones, pedidos especiales o atención personalizada.",
+            "card_link": "",
+            "icon_type": "whatsapp",
+            "custom_icon": "",
+            "open_new_tab": true,
+            "card_background_color": "#fffdf8",
+            "card_text_color": "#242833",
+            "card_border_color": "#b88a44"
+          }
+        },
+        "contact_card_9re7Nf": {
+          "type": "contact_card",
+          "settings": {
+            "show_card": true,
+            "card_title": "Instagram",
+            "card_description": "Revisa novedades, lanzamientos y piezas disponibles.",
+            "card_link": "",
+            "icon_type": "instagram",
+            "custom_icon": "",
+            "open_new_tab": true,
+            "card_background_color": "#fffdf8",
+            "card_text_color": "#2a261e",
+            "card_border_color": "#b88a44"
+          }
+        },
+        "contact_card_4r6FnL": {
+          "type": "contact_card",
+          "settings": {
+            "show_card": true,
+            "card_title": "TikTok",
+            "card_description": "Mira reels, drops y contenido de BORREGO.",
+            "card_link": "",
+            "icon_type": "tiktok",
+            "custom_icon": "",
+            "open_new_tab": true,
+            "card_background_color": "#fffdf8",
+            "card_text_color": "#121212",
+            "card_border_color": "#b88a44"
+          }
+        }
+      },
+      "block_order": [
+        "contact_card_3yp3fh",
+        "contact_card_9re7Nf",
+        "contact_card_4r6FnL"
+      ],
+      "name": "Hanan Dev Contact Links",
+      "settings": {
+        "show_heading_area": true,
+        "heading": "C O N T Á C T A N O S",
+        "description": "<p>Conecta con nosotros para pedidos especiales, novedades y contenido exclusivo de BORREGO STREETWEAR.</p>",
+        "show_final_cta": true,
+        "final_cta_text": "¿Buscas una pieza específica? Escríbenos y te ayudamos.",
+        "background_color": "#f5f1e8",
+        "text_color": "#11110c",
+        "section_max_width": 1240,
+        "padding_desktop": 96,
+        "padding_mobile": 64
       }
     },
     "hanan_boutique_benefits_4xRFaY": {
