@@ -112,6 +112,13 @@
     "hanan_featured_brands_REEXKn": {
       "type": "hanan-featured-brands",
       "blocks": {
+        "brand_jbHKXM": {
+          "type": "brand",
+          "disabled": true,
+          "settings": {
+            "brand_link": ""
+          }
+        },
         "brand_q8AMTe": {
           "type": "brand",
           "settings": {
@@ -149,6 +156,7 @@
         }
       },
       "block_order": [
+        "brand_jbHKXM",
         "brand_q8AMTe",
         "brand_zcttmP",
         "brand_7df86B",
@@ -160,7 +168,7 @@
         "section_title": "",
         "background_color": "#fffefc",
         "logo_color": "#121212",
-        "scrolling_speed": 42,
+        "scrolling_speed": 22,
         "logo_opacity": 80,
         "autoplay": true,
         "padding_top": 44,
