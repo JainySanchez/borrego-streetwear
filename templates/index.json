@@ -403,6 +403,7 @@
     },
     "hanan_dev_about_borrego_TmzUqr": {
       "type": "hanan-dev-about-borrego",
+      "disabled": true,
       "name": "Hanan Dev About BORREGO",
       "settings": {
         "eyebrow": "BORREGO STREETWEAR",
@@ -420,6 +421,69 @@
         "section_max_width": 1180,
         "padding_desktop": 40,
         "padding_mobile": 56
+      }
+    },
+    "hanan_dev_how_it_works_atn8AU": {
+      "type": "hanan-dev-how-it-works",
+      "blocks": {
+        "step_XbdNJQ": {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Elige tu pieza",
+            "step_description": "<p>Explora nuestra selección de sneakers, apparel y productos exclusivos.</p>",
+            "icon": "✦"
+          }
+        },
+        "step_F7cTqK": {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Escríbenos",
+            "step_description": "<p>Contáctanos por WhatsApp para consultar disponibilidad, preventas o pedidos especiales.</p>",
+            "icon": "↗"
+          }
+        },
+        "step_GjhiLG": {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Confirma tu pedido",
+            "step_description": "<p>Coordinamos talla, stock, pago y todos los detalles de tu compra.</p>",
+            "icon": "+"
+          }
+        },
+        "step_iTR4TD": {
+          "type": "step",
+          "settings": {
+            "step_number": "04",
+            "step_title": "Recíbelo",
+            "step_description": "<p>Enviamos tu pedido de forma segura a cualquier parte del Perú.</p>",
+            "icon": "✓"
+          }
+        }
+      },
+      "block_order": [
+        "step_XbdNJQ",
+        "step_F7cTqK",
+        "step_GjhiLG",
+        "step_iTR4TD"
+      ],
+      "name": "Hanan Dev How It Works",
+      "settings": {
+        "eyebrow": "BORREGO EXPERIENCE",
+        "heading": "¿CÓMO COMPRAR?",
+        "description": "<p>Un proceso simple para conseguir sneakers, ropa, gorras y piezas exclusivas.</p>",
+        "show_button": false,
+        "button_text": "Solicitar información",
+        "button_link": "",
+        "open_new_tab": false,
+        "background_color": "#F2ECDD",
+        "text_color": "#11110C",
+        "accent_color": "#A8733D",
+        "section_max_width": 1240,
+        "padding_desktop": 96,
+        "padding_mobile": 64
       }
     },
     "hanan_boutique_benefits_MhWUfG": {
@@ -489,6 +553,7 @@
     "hanan_showroom_experience_VenpDh",
     "hanan_showroom_location_Qgjk3r",
     "hanan_dev_about_borrego_TmzUqr",
+    "hanan_dev_how_it_works_atn8AU",
     "hanan_boutique_benefits_MhWUfG"
   ]
 }
