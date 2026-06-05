@@ -75,6 +75,55 @@
         "image_width": 46,
         "image_border_radius": 28,
         "background_color": "#ffffff",
+        "text_color": "#11110c",
+        "accent_color": "#a8733d",
+        "section_max_width": 1240,
+        "padding_desktop": 96,
+        "padding_mobile": 64
+      }
+    },
+    "hanan_dev_how_borrego_works_MeQXJW": {
+      "type": "hanan-dev-how-borrego-works",
+      "blocks": {
+        "process_step_6MYNWX": {
+          "type": "process_step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Nos escribes",
+            "step_description": "<p>Nos escribes para ayudarte con tu pedido. Si no contamos con tu talla o artículo, nos mandas un mensaje para cotizarlo.</p>",
+            "alt_text": "Proceso de compra BORREGO"
+          }
+        },
+        "process_step_zJqFdC": {
+          "type": "process_step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Cotizamos tu producto",
+            "step_description": "<p>Si no contamos con el artículo o talla que buscas, te brindamos la cotización utilizando plataformas como GOAT, StockX, eBay y otros proveedores, velando siempre por la autenticidad del producto.</p>",
+            "alt_text": "Proceso de compra BORREGO"
+          }
+        },
+        "process_step_HHLcNL": {
+          "type": "process_step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Coordinamos la entrega",
+            "step_description": "<p>Una vez tu producto llegue a Lima, coordinamos la entrega. Si está disponible en stock, se alista el envío mediante nuestro equipo de confianza o agencias asociadas como Olva y Shalom.</p>",
+            "alt_text": "Proceso de compra BORREGO"
+          }
+        }
+      },
+      "block_order": [
+        "process_step_6MYNWX",
+        "process_step_zJqFdC",
+        "process_step_HHLcNL"
+      ],
+      "name": "Hanan How BORREGO Works",
+      "settings": {
+        "eyebrow": "BORREGO EXPERIENCE",
+        "heading": "¿CÓMO FUNCIONA BORREGO?",
+        "description": "<p>Te acompañamos desde la búsqueda del producto hasta la entrega final.</p>",
+        "background_color": "#F2ECDD",
         "text_color": "#11110C",
         "accent_color": "#A8733D",
         "section_max_width": 1240,
@@ -85,6 +134,7 @@
   },
   "order": [
     "main",
-    "hanan_dev_founder_story_DNW7Xe"
+    "hanan_dev_founder_story_DNW7Xe",
+    "hanan_dev_how_borrego_works_MeQXJW"
   ]
 }
