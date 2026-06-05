@@ -1,0 +1,511 @@
+{%- liquid
+  assign section_id = 'hanan-dev-how-borrego-works-' | append: section.id
+-%}
+
+<section
+  id="{{ section_id }}"
+  class="hanan-dev-how-borrego-works"
+  style="
+    --hanan-dev-hbw-bg: {{ section.settings.background_color }};
+    --hanan-dev-hbw-text: {{ section.settings.text_color }};
+    --hanan-dev-hbw-accent: {{ section.settings.accent_color }};
+    --hanan-dev-hbw-max-width: {{ section.settings.section_max_width }}px;
+    --hanan-dev-hbw-padding-desktop: {{ section.settings.padding_desktop }}px;
+    --hanan-dev-hbw-padding-mobile: {{ section.settings.padding_mobile }}px;
+  "
+  aria-labelledby="{{ section_id }}-heading"
+>
+  <div class="hanan-dev-how-borrego-works__inner">
+    <header class="hanan-dev-how-borrego-works__header">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="hanan-dev-how-borrego-works__eyebrow">
+          {{ section.settings.eyebrow }}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.heading != blank -%}
+        <h2 id="{{ section_id }}-heading" class="hanan-dev-how-borrego-works__heading">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <div class="hanan-dev-how-borrego-works__description">
+          {{ section.settings.description }}
+        </div>
+      {%- endif -%}
+    </header>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="hanan-dev-how-borrego-works__grid">
+        {%- for block in section.blocks -%}
+          {%- liquid
+            assign desktop_image = block.settings.desktop_image
+            assign mobile_image = block.settings.mobile_image
+            assign rendered_image = desktop_image | default: mobile_image
+            assign image_alt = block.settings.alt_text | default: block.settings.step_title | escape
+          -%}
+
+          <article class="hanan-dev-process-card" {{ block.shopify_attributes }}>
+            {%- if rendered_image != blank -%}
+              <div class="hanan-dev-step-image">
+                <picture>
+                  {%- if mobile_image != blank -%}
+                    <source
+                      media="(max-width: 749px)"
+                      srcset="
+                        {{ mobile_image | image_url: width: 500 }} 500w,
+                        {{ mobile_image | image_url: width: 800 }} 800w,
+                        {{ mobile_image | image_url: width: 1100 }} 1100w
+                      "
+                      sizes="100vw"
+                    >
+                  {%- endif -%}
+
+                  <img
+                    src="{{ rendered_image | image_url: width: 900 }}"
+                    srcset="
+                      {{ rendered_image | image_url: width: 500 }} 500w,
+                      {{ rendered_image | image_url: width: 800 }} 800w,
+                      {{ rendered_image | image_url: width: 1100 }} 1100w,
+                      {{ rendered_image | image_url: width: 1400 }} 1400w
+                    "
+                    sizes="(max-width: 749px) 100vw, (max-width: 989px) 50vw, 33vw"
+                    alt="{{ image_alt }}"
+                    width="{{ rendered_image.width }}"
+                    height="{{ rendered_image.height }}"
+                    loading="lazy"
+                    class="hanan-dev-step-image__img"
+                  >
+                </picture>
+              </div>
+            {%- endif -%}
+
+            <div class="hanan-dev-process-card__body">
+              <div class="hanan-dev-process-card__top">
+                {%- if block.settings.step_number != blank -%}
+                  <span class="hanan-dev-process-step">
+                    {{ block.settings.step_number }}
+                  </span>
+                {%- endif -%}
+              </div>
+
+              <div class="hanan-dev-process-card__content">
+                {%- if block.settings.step_title != blank -%}
+                  <h3 class="hanan-dev-process-card__title">
+                    {{ block.settings.step_title }}
+                  </h3>
+                {%- endif -%}
+
+                {%- if block.settings.step_description != blank -%}
+                  <div class="hanan-dev-process-card__description">
+                    {{ block.settings.step_description }}
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          </article>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  #{{ section_id }} {
+    background: var(--hanan-dev-hbw-bg);
+    color: var(--hanan-dev-hbw-text);
+    padding-top: var(--hanan-dev-hbw-padding-desktop);
+    padding-bottom: var(--hanan-dev-hbw-padding-desktop);
+    overflow: hidden;
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__inner {
+    width: min(100% - 40px, var(--hanan-dev-hbw-max-width));
+    margin: 0 auto;
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__header {
+    max-width: 860px;
+    margin: 0 0 clamp(34px, 5vw, 68px);
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__eyebrow {
+    margin: 0 0 18px;
+    color: var(--hanan-dev-hbw-accent);
+    font-size: clamp(11px, 1vw, 13px);
+    line-height: 1.2;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__heading {
+    margin: 0;
+    max-width: 840px;
+    color: currentColor;
+    font-size: clamp(40px, 6vw, 88px);
+    line-height: 0.92;
+    letter-spacing: -0.06em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__description {
+    margin-top: clamp(22px, 2.8vw, 34px);
+    max-width: 580px;
+    color: currentColor;
+    opacity: 0.76;
+    font-size: clamp(15px, 1.2vw, 18px);
+    line-height: 1.7;
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__description p {
+    margin: 0;
+  }
+
+  #{{ section_id }} .hanan-dev-how-borrego-works__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(16px, 2vw, 26px);
+  }
+
+  #{{ section_id }} .hanan-dev-process-card {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    min-height: 100%;
+    flex-direction: column;
+    border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+    border-radius: 30px;
+    background: color-mix(in srgb, var(--hanan-dev-hbw-bg) 88%, var(--hanan-dev-hbw-text) 12%);
+    color: currentColor;
+    overflow: hidden;
+    isolation: isolate;
+    transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-process-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at top right, color-mix(in srgb, var(--hanan-dev-hbw-accent) 24%, transparent), transparent 36%),
+      linear-gradient(135deg, color-mix(in srgb, currentColor 5%, transparent), transparent 44%);
+    opacity: 0;
+    transition: opacity 220ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-process-card:hover {
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--hanan-dev-hbw-accent) 72%, transparent);
+    box-shadow: 0 28px 58px rgba(17, 17, 12, 0.12);
+  }
+
+  #{{ section_id }} .hanan-dev-process-card:hover::before {
+    opacity: 1;
+  }
+
+  #{{ section_id }} .hanan-dev-step-image {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--hanan-dev-hbw-bg) 78%, var(--hanan-dev-hbw-text) 22%);
+  }
+
+  #{{ section_id }} .hanan-dev-step-image__img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.01);
+    transition: transform 380ms ease;
+  }
+
+  #{{ section_id }} .hanan-dev-process-card:hover .hanan-dev-step-image__img {
+    transform: scale(1.055);
+  }
+
+  #{{ section_id }} .hanan-dev-process-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(24px, 3vw, 34px);
+  }
+
+  #{{ section_id }} .hanan-dev-process-card__top {
+    margin-bottom: clamp(44px, 5vw, 72px);
+  }
+
+  #{{ section_id }} .hanan-dev-process-step {
+    display: block;
+    color: var(--hanan-dev-hbw-accent);
+    font-size: clamp(54px, 6vw, 92px);
+    line-height: 0.82;
+    letter-spacing: -0.08em;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-process-card__title {
+    margin: 0;
+    color: currentColor;
+    font-size: clamp(24px, 2.5vw, 38px);
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    font-weight: 900;
+  }
+
+  #{{ section_id }} .hanan-dev-process-card__description {
+    margin-top: 20px;
+    color: currentColor;
+    opacity: 0.72;
+    font-size: 14px;
+    line-height: 1.64;
+  }
+
+  #{{ section_id }} .hanan-dev-process-card__description p {
+    margin: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    #{{ section_id }} .hanan-dev-how-borrego-works__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #{{ section_id }} .hanan-dev-process-card__top {
+      margin-bottom: 52px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    #{{ section_id }} {
+      padding-top: var(--hanan-dev-hbw-padding-mobile);
+      padding-bottom: var(--hanan-dev-hbw-padding-mobile);
+    }
+
+    #{{ section_id }} .hanan-dev-how-borrego-works__inner {
+      width: min(100% - 32px, 100%);
+    }
+
+    #{{ section_id }} .hanan-dev-how-borrego-works__header {
+      margin-bottom: 30px;
+    }
+
+    #{{ section_id }} .hanan-dev-how-borrego-works__eyebrow {
+      margin-bottom: 16px;
+    }
+
+    #{{ section_id }} .hanan-dev-how-borrego-works__heading {
+      font-size: clamp(36px, 11.5vw, 56px);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+
+    #{{ section_id }} .hanan-dev-how-borrego-works__description {
+      margin-top: 22px;
+      max-width: 100%;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    #{{ section_id }} .hanan-dev-how-borrego-works__grid {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+
+    #{{ section_id }} .hanan-dev-process-card {
+      border-radius: 24px;
+    }
+
+    #{{ section_id }} .hanan-dev-step-image {
+      aspect-ratio: 16 / 11;
+    }
+
+    #{{ section_id }} .hanan-dev-process-card__body {
+      padding: 24px;
+    }
+
+    #{{ section_id }} .hanan-dev-process-card__top {
+      margin-bottom: 46px;
+    }
+
+    #{{ section_id }} .hanan-dev-process-step {
+      font-size: clamp(52px, 16vw, 74px);
+    }
+
+    #{{ section_id }} .hanan-dev-process-card__title {
+      font-size: clamp(25px, 8vw, 36px);
+    }
+
+    #{{ section_id }} .hanan-dev-process-card__description {
+      margin-top: 18px;
+      font-size: 14px;
+      line-height: 1.64;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hanan How BORREGO Works",
+  "tag": "section",
+  "class": "section-hanan-dev-how-borrego-works",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Contenido superior"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "BORREGO EXPERIENCE"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "¿CÓMO FUNCIONA BORREGO?"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Te acompañamos desde la búsqueda del producto hasta la entrega final.</p>"
+    },
+    {
+      "type": "header",
+      "content": "Colores"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F2ECDD"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#11110C"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#A8733D"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "range",
+      "id": "section_max_width",
+      "label": "Section max width",
+      "min": 960,
+      "max": 1500,
+      "step": 20,
+      "unit": "px",
+      "default": 1240
+    },
+    {
+      "type": "range",
+      "id": "padding_desktop",
+      "label": "Desktop padding",
+      "min": 40,
+      "max": 180,
+      "step": 4,
+      "unit": "px",
+      "default": 96
+    },
+    {
+      "type": "range",
+      "id": "padding_mobile",
+      "label": "Mobile padding",
+      "min": 32,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "process_step",
+      "name": "Process step",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "step_title",
+          "label": "Step title",
+          "default": "Nos escribes"
+        },
+        {
+          "type": "richtext",
+          "id": "step_description",
+          "label": "Step description",
+          "default": "<p>Nos escribes para ayudarte con tu pedido. Si no contamos con tu talla o artículo, nos mandas un mensaje para cotizarlo.</p>"
+        },
+        {
+          "type": "image_picker",
+          "id": "desktop_image",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile image"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt text",
+          "default": "Proceso de compra BORREGO"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hanan How BORREGO Works",
+      "blocks": [
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "01",
+            "step_title": "Nos escribes",
+            "step_description": "<p>Nos escribes para ayudarte con tu pedido. Si no contamos con tu talla o artículo, nos mandas un mensaje para cotizarlo.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "02",
+            "step_title": "Cotizamos tu producto",
+            "step_description": "<p>Si no contamos con el artículo o talla que buscas, te brindamos la cotización utilizando plataformas como GOAT, StockX, eBay y otros proveedores, velando siempre por la autenticidad del producto.</p>"
+          }
+        },
+        {
+          "type": "process_step",
+          "settings": {
+            "step_number": "03",
+            "step_title": "Coordinamos la entrega",
+            "step_description": "<p>Una vez tu producto llegue a Lima, coordinamos la entrega. Si está disponible en stock, se alista el envío mediante nuestro equipo de confianza o agencias asociadas como Olva y Shalom.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
