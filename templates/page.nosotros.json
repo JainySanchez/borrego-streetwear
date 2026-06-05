@@ -11,13 +11,101 @@
   "sections": {
     "main": {
       "type": "main-page",
+      "disabled": true,
       "settings": {
         "padding_top": 28,
         "padding_bottom": 28
       }
+    },
+    "hanan_dev_about_borrego_xV7pdT": {
+      "type": "hanan-dev-about-borrego",
+      "disabled": true,
+      "name": "Hanan Dev About BORREGO",
+      "settings": {
+        "eyebrow": "BORREGO STREETWEAR",
+        "heading": "CULTURA STREETWEAR CURADA",
+        "description": "<p>BORREGO nace de la cultura sneaker y streetwear, seleccionando piezas auténticas, exclusivas y difíciles de encontrar.</p>",
+        "metadata": "Lima, Perú · Authentic Products",
+        "content_alignment": "left",
+        "desktop_image": "shopify://shop_images/USM028PD-437_1.avif",
+        "image_alt": "Logo BORREGO Streetwear",
+        "image_width": 180,
+        "image_border_radius": 0,
+        "image_position": "left",
+        "background_color": "#11110C",
+        "text_color": "#F2ECDD",
+        "section_max_width": 1180,
+        "padding_desktop": 72,
+        "padding_mobile": 56
+      }
+    },
+    "hanan_editorial_split_banner_p3efUT": {
+      "type": "hanan-editorial-split-banner",
+      "disabled": true,
+      "name": "HANAN Split Banner",
+      "settings": {
+        "image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
+        "reverse_layout": false,
+        "heading": "NUESTRA HISTORIA",
+        "text": "<p>A premium selection of sneakers, apparel, and essentials from the world’s most influential streetwear brands.</p>",
+        "button_label": "",
+        "button_link": "",
+        "background_color": "#F5F1E8",
+        "text_color": "#11110c",
+        "accent_color": "#D9B26F",
+        "overlay_opacity": 30,
+        "padding_top": 72,
+        "padding_bottom": 72
+      }
+    },
+    "hanan_dev_about_borrego_47E38P": {
+      "type": "hanan-dev-about-borrego",
+      "disabled": true,
+      "name": "Hanan Dev About BORREGO",
+      "settings": {
+        "eyebrow": "BORREGO STREETWEAR",
+        "heading": "CULTURA STREETWEAR CURADA",
+        "description": "<p>BORREGO nace de la cultura sneaker y streetwear, seleccionando piezas auténticas, exclusivas y difíciles de encontrar.</p>",
+        "metadata": "Lima, Perú · Authentic Products",
+        "content_alignment": "left",
+        "image_alt": "Logo BORREGO Streetwear",
+        "image_width": 180,
+        "image_border_radius": 0,
+        "image_position": "left",
+        "background_color": "#11110C",
+        "text_color": "#F2ECDD",
+        "section_max_width": 1180,
+        "padding_desktop": 72,
+        "padding_mobile": 56
+      }
+    },
+    "hanan_dev_about_borrego_R7kHJX": {
+      "type": "hanan-dev-about-borrego",
+      "name": "Hanan Dev About BORREGO",
+      "settings": {
+        "eyebrow": "BORREGO STREETWEAR",
+        "heading": "SOMOS MÁS QUE STREETWEAR",
+        "description": "<p>BORREGO nace de la cultura sneaker y streetwear, seleccionando piezas auténticas, exclusivas y difíciles de encontrar.</p>",
+        "metadata": "Lima, Perú · Authentic Products",
+        "content_alignment": "left",
+        "desktop_image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
+        "image_alt": "Logo BORREGO Streetwear",
+        "image_width": 240,
+        "image_border_radius": 0,
+        "image_position": "left",
+        "background_color": "#11110c",
+        "text_color": "#f2ecdd",
+        "section_max_width": 1180,
+        "padding_desktop": 40,
+        "padding_mobile": 56
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "hanan_dev_about_borrego_xV7pdT",
+    "hanan_editorial_split_banner_p3efUT",
+    "hanan_dev_about_borrego_47E38P",
+    "hanan_dev_about_borrego_R7kHJX"
   ]
 }
