@@ -141,6 +141,13 @@
             "caption": "BORREGO moment"
           }
         },
+        "community_image_NTEyPn": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
         "community_image_6aeifH": {
           "type": "community_image",
           "settings": {
@@ -185,6 +192,7 @@
         },
         "community_image_KHFXJV": {
           "type": "community_image",
+          "disabled": true,
           "settings": {
             "alt_text": "Momento de la comunidad BORREGO",
             "caption": "BORREGO moment"
@@ -193,6 +201,7 @@
       },
       "block_order": [
         "community_image_U6nKki",
+        "community_image_NTEyPn",
         "community_image_6aeifH",
         "community_image_QnXzQn",
         "community_image_PBNhKG",
