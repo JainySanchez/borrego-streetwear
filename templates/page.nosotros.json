@@ -123,6 +123,100 @@
         "eyebrow": "BORREGO EXPERIENCE",
         "heading": "¿CÓMO FUNCIONA BORREGO?",
         "description": "<p>Te acompañamos desde la búsqueda del producto hasta la entrega final.</p>",
+        "background_color": "#f2ecdd",
+        "text_color": "#11110c",
+        "accent_color": "#a8733d",
+        "section_max_width": 1240,
+        "padding_desktop": 96,
+        "padding_mobile": 64
+      }
+    },
+    "hanan_dev_community_gallery_rYCPjw": {
+      "type": "hanan-dev-community-gallery",
+      "blocks": {
+        "community_image_U6nKki": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_6aeifH": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_QnXzQn": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_PBNhKG": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_8tJaBp": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_DfjytK": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_hhiEM3": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        },
+        "community_image_KHFXJV": {
+          "type": "community_image",
+          "settings": {
+            "alt_text": "Momento de la comunidad BORREGO",
+            "caption": "BORREGO moment"
+          }
+        }
+      },
+      "block_order": [
+        "community_image_U6nKki",
+        "community_image_6aeifH",
+        "community_image_QnXzQn",
+        "community_image_PBNhKG",
+        "community_image_8tJaBp",
+        "community_image_DfjytK",
+        "community_image_hhiEM3",
+        "community_image_KHFXJV"
+      ],
+      "name": "Hanan Community Gallery",
+      "settings": {
+        "eyebrow": "BORREGO COMMUNITY",
+        "heading": "COMUNIDAD BORREGO",
+        "description": "<p>Nuestra comunidad comparte la pasión por los sneakers, el streetwear y las piezas auténticas.</p>",
+        "header_alignment": "left",
+        "show_cta": true,
+        "button_text": "Únete a la comunidad",
+        "whatsapp_phone": "51999999999",
+        "whatsapp_message": "Hola BORREGO, quiero unirme a la comunidad y recibir más información.",
+        "image_aspect_ratio": "portrait",
+        "image_border_radius": 22,
+        "desktop_columns": 4,
+        "tablet_columns": 3,
+        "mobile_columns": 2,
+        "image_gap": 16,
         "background_color": "#F2ECDD",
         "text_color": "#11110C",
         "accent_color": "#A8733D",
@@ -135,6 +229,7 @@
   "order": [
     "main",
     "hanan_dev_founder_story_DNW7Xe",
-    "hanan_dev_how_borrego_works_MeQXJW"
+    "hanan_dev_how_borrego_works_MeQXJW",
+    "hanan_dev_community_gallery_rYCPjw"
   ]
 }
