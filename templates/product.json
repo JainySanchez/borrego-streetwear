@@ -116,6 +116,7 @@
         },
         "accordion_bkfEmY": {
           "type": "accordion",
+          "disabled": true,
           "settings": {
             "title": "GUÍA DE TALLAS",
             "content": "<p>Si tienes dudas sobre tu talla, escríbenos por WhatsApp para ayudarte a elegir la opción ideal.</p>"
