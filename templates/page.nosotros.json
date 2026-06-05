@@ -217,7 +217,7 @@
         "tablet_columns": 3,
         "mobile_columns": 2,
         "image_gap": 16,
-        "background_color": "#F2ECDD",
+        "background_color": "#ffffff",
         "text_color": "#11110C",
         "accent_color": "#A8733D",
         "section_max_width": 1240,
