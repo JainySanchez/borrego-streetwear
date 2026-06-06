@@ -4,7 +4,28 @@
   assign base_whatsapp_message = section.settings.whatsapp_message | append: ' ' | append: product.title
   assign whatsapp_message = base_whatsapp_message | url_encode
   assign whatsapp_url = 'https://wa.me/' | append: whatsapp_phone | append: '?text=' | append: whatsapp_message
+
+  assign special_request_phone = section.settings.special_request_whatsapp_phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
+  assign special_request_message = section.settings.special_request_whatsapp_message | url_encode
+  assign special_request_url = 'https://wa.me/' | append: special_request_phone
+
+  if section.settings.special_request_whatsapp_message != blank
+    assign special_request_url = special_request_url | append: '?text=' | append: special_request_message
+  endif
+
   assign size_guide_image = section.settings.size_guide_image
+
+  if product.metafields.custom.size_guide_image != blank
+    assign size_guide_image = product.metafields.custom.size_guide_image.value
+  endif
+
+  assign has_size_guide = false
+
+  if section.settings.show_size_guide and size_guide_image != blank
+    assign has_size_guide = true
+  endif
+
+  assign size_guide_rendered = false
 %}
 
 <section
@@ -129,8 +150,33 @@
       {% unless product.has_only_default_variant %}
         <div class="borrego-product__variants" data-borrego-options>
           {% for option in product.options_with_values %}
+            {% liquid
+              assign option_name_downcase = option.name | downcase
+              assign show_size_guide_here = false
+
+              if has_size_guide and size_guide_rendered == false
+                if option_name_downcase contains 'talla' or option_name_downcase contains 'size' or option_name_downcase contains 'calzado' or forloop.first
+                  assign show_size_guide_here = true
+                  assign size_guide_rendered = true
+                endif
+              endif
+            %}
+
             <fieldset class="borrego-product__option">
-              <legend>{{ option.name }}</legend>
+              <legend class="borrego-product__option-legend">
+                <span>{{ option.name }}</span>
+
+                {% if show_size_guide_here %}
+                  <button
+                    type="button"
+                    class="hanan-dev-size-guide-link"
+                    data-hanan-dev-size-guide-open
+                    aria-label="{{ section.settings.size_guide_button_text | escape }}"
+                  >
+                    {{ section.settings.size_guide_button_text }}
+                  </button>
+                {% endif %}
+              </legend>
 
               <div class="borrego-product__option-values">
                 {% for value in option.values %}
@@ -171,15 +217,16 @@
         </a>
       {% endif %}
 
-      {% if section.settings.show_size_guide and section.settings.size_guide_button_text != blank %}
-        <button
-          type="button"
-          class="hanan-dev-size-guide-button"
-          data-hanan-dev-size-guide-open
-          aria-label="{{ section.settings.size_guide_button_text | escape }}"
+      {% if section.settings.show_special_request_cta and section.settings.special_request_cta_text != blank and special_request_phone != blank %}
+        <a
+          href="{{ special_request_url }}"
+          target="_blank"
+          rel="noopener"
+          class="hanan-dev-special-size-cta"
+          data-hanan-dev-product-whatsapp-request
         >
-          {{ section.settings.size_guide_button_text }}
-        </button>
+          {{ section.settings.special_request_cta_text }}
+        </a>
       {% endif %}
 
       {% if section.settings.show_showroom_availability %}
@@ -252,41 +299,41 @@
     </div>
   </div>
 
-  <div
-    class="hanan-dev-size-guide-modal"
-    data-hanan-dev-size-guide-modal
-    aria-hidden="true"
-  >
-    <div class="hanan-dev-size-guide-overlay" data-hanan-dev-size-guide-close></div>
-
+  {% if has_size_guide %}
     <div
-      class="hanan-dev-size-guide-dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="hanan-dev-size-guide-title-{{ section.id }}"
-      tabindex="-1"
+      class="hanan-dev-size-guide-modal"
+      data-hanan-dev-size-guide-modal
+      aria-hidden="true"
     >
-      <button
-        type="button"
-        class="hanan-dev-size-guide-close"
-        data-hanan-dev-size-guide-close
-        aria-label="Cerrar guía de tallas"
+      <div class="hanan-dev-size-guide-overlay" data-hanan-dev-size-guide-close></div>
+
+      <div
+        class="hanan-dev-size-guide-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="hanan-dev-size-guide-title-{{ section.id }}"
+        tabindex="-1"
       >
-        ×
-      </button>
+        <button
+          type="button"
+          class="hanan-dev-size-guide-close"
+          data-hanan-dev-size-guide-close
+          aria-label="Cerrar guía de tallas"
+        >
+          ×
+        </button>
 
-      {% if section.settings.size_guide_modal_title != blank %}
-        <h2 id="hanan-dev-size-guide-title-{{ section.id }}" class="hanan-dev-size-guide-title">
-          {{ section.settings.size_guide_modal_title }}
-        </h2>
-      {% else %}
-        <h2 id="hanan-dev-size-guide-title-{{ section.id }}" class="hanan-dev-size-guide-title visually-hidden">
-          Guía de tallas
-        </h2>
-      {% endif %}
+        {% if section.settings.size_guide_modal_title != blank %}
+          <h2 id="hanan-dev-size-guide-title-{{ section.id }}" class="hanan-dev-size-guide-title">
+            {{ section.settings.size_guide_modal_title }}
+          </h2>
+        {% else %}
+          <h2 id="hanan-dev-size-guide-title-{{ section.id }}" class="hanan-dev-size-guide-title visually-hidden">
+            Guía de tallas
+          </h2>
+        {% endif %}
 
-      <div class="hanan-dev-size-guide-content">
-        {% if size_guide_image != blank %}
+        <div class="hanan-dev-size-guide-content">
           <img
             src="{{ size_guide_image | image_url: width: 1200 }}"
             srcset="
@@ -302,14 +349,10 @@
             loading="lazy"
             class="hanan-dev-size-guide-image"
           >
-        {% else %}
-          <div class="hanan-dev-size-guide-fallback">
-            Configura una imagen de guía de tallas desde el editor del tema.
-          </div>
-        {% endif %}
+        </div>
       </div>
     </div>
-  </div>
+  {% endif %}
 
   {% if section.settings.show_related and section.settings.related_collection != blank %}
     <div class="borrego-related">
@@ -567,13 +610,51 @@
       border: 0;
     }
 
-    .borrego-product__option legend {
+    .borrego-product__option-legend {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
       margin-bottom: 13px;
       color: var(--text);
       font-size: 9px;
       font-weight: 850;
       letter-spacing: 0.24em;
       text-transform: uppercase;
+    }
+
+    .borrego-product__option-legend span {
+      min-width: 0;
+    }
+
+    .borrego-product .hanan-dev-size-guide-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font-size: 9px;
+      line-height: 1.2;
+      font-weight: 850;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 280ms ease, opacity 280ms ease;
+    }
+
+    .borrego-product .hanan-dev-size-guide-link:hover {
+      color: var(--text);
+    }
+
+    .borrego-product .hanan-dev-size-guide-link:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
     }
 
     .borrego-product__option-values {
@@ -666,7 +747,8 @@
       margin: 0;
     }
 
-    .borrego-product__primary-cta {
+    .borrego-product__primary-cta,
+    .borrego-product .hanan-dev-special-size-cta {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -678,15 +760,18 @@
       letter-spacing: 0.24em;
       text-transform: uppercase;
       cursor: pointer;
-      border: 1px solid var(--button-bg);
-      background: var(--button-bg);
-      color: var(--button-text);
       transition:
         background 520ms cubic-bezier(0.16, 1, 0.3, 1),
         color 520ms cubic-bezier(0.16, 1, 0.3, 1),
         border-color 520ms cubic-bezier(0.16, 1, 0.3, 1),
         transform 520ms cubic-bezier(0.16, 1, 0.3, 1),
         opacity 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .borrego-product__primary-cta {
+      border: 1px solid var(--button-bg);
+      background: var(--button-bg);
+      color: var(--button-text);
     }
 
     .borrego-product__primary-cta:hover {
@@ -701,37 +786,21 @@
       cursor: not-allowed;
     }
 
-    .borrego-product .hanan-dev-size-guide-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      width: 100%;
+    .borrego-product .hanan-dev-special-size-cta {
       margin-top: 10px;
-      padding: 0 18px;
       border: 1px solid var(--border);
       background: transparent;
       color: var(--text);
-      font-size: 10px;
-      font-weight: 850;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition:
-        background 420ms cubic-bezier(0.16, 1, 0.3, 1),
-        color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-        border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
-        transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .borrego-product .hanan-dev-size-guide-button:hover {
+    .borrego-product .hanan-dev-special-size-cta:hover {
       background: var(--text);
       color: var(--bg);
       border-color: var(--text);
       transform: translateY(-2px);
     }
 
-    .borrego-product .hanan-dev-size-guide-button:focus-visible {
+    .borrego-product .hanan-dev-special-size-cta:focus-visible {
       outline: 2px solid var(--accent);
       outline-offset: 4px;
     }
@@ -815,6 +884,18 @@
       text-transform: uppercase;
     }
 
+    .borrego-product .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .borrego-product .hanan-dev-size-guide-content {
       display: flex;
       justify-content: center;
@@ -826,20 +907,6 @@
       max-width: 100%;
       max-height: calc(100vh - 190px);
       object-fit: contain;
-    }
-
-    .borrego-product .hanan-dev-size-guide-fallback {
-      width: 100%;
-      min-height: 260px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 28px;
-      text-align: center;
-      color: var(--muted);
-      border: 1px dashed var(--border);
-      font-size: 13px;
-      line-height: 1.6;
     }
 
     body.hanan-dev-size-guide-open {
@@ -1177,6 +1244,17 @@
         font-size: 16px;
       }
 
+      .borrego-product__option-legend {
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .borrego-product .hanan-dev-size-guide-link {
+        font-size: 8.5px;
+        letter-spacing: 0.14em;
+        min-height: 28px;
+      }
+
       .borrego-product .hanan-dev-size-guide-modal {
         padding: 14px;
       }
@@ -1262,8 +1340,9 @@
     const priceEl = section.querySelector('[data-borrego-price]');
     const availabilityEl = section.querySelector('[data-borrego-availability]');
     const whatsappButton = section.querySelector('[data-borrego-whatsapp]');
+    const specialRequestButton = section.querySelector('[data-hanan-dev-product-whatsapp-request]');
     const mainGallery = section.querySelector('.borrego-product__media-main');
-    const sizeGuideOpen = section.querySelector('[data-hanan-dev-size-guide-open]');
+    const sizeGuideOpenButtons = [...section.querySelectorAll('[data-hanan-dev-size-guide-open]')];
     const sizeGuideModal = section.querySelector('[data-hanan-dev-size-guide-modal]');
     const sizeGuideDialog = section.querySelector('.hanan-dev-size-guide-dialog');
     const sizeGuideCloseButtons = [...section.querySelectorAll('[data-hanan-dev-size-guide-close]')];
@@ -1282,6 +1361,11 @@
         variants = [];
       }
     }
+
+    const productTitle = {{ product.title | json }};
+    const productUrl = `${window.location.origin}{{ product.url }}`;
+    const mainWhatsappMessage = {{ section.settings.whatsapp_message | json }};
+    const specialRequestMessage = {{ section.settings.special_request_whatsapp_message | json }};
 
     const formatMoney = (cents) => {
       if (window.Shopify && Shopify.formatMoney) {
@@ -1320,6 +1404,10 @@
       return selected;
     };
 
+    const getSelectedOptionText = () => {
+      return getSelectedOptions().filter(Boolean).join(' / ');
+    };
+
     const getVariantFromOptions = (options) => {
       return variants.find((variant) => {
         return variant.options.every((option, index) => option === options[index]);
@@ -1356,6 +1444,33 @@
           input.checked = true;
         }
       });
+    };
+
+    const buildWhatsappMessage = (baseMessage, variantText) => {
+      const parts = [];
+
+      if (baseMessage) parts.push(baseMessage);
+      parts.push(`Producto: ${productTitle}.`);
+
+      if (variantText) {
+        parts.push(`Talla/variante seleccionada: ${variantText}.`);
+      }
+
+      parts.push(`Link: ${productUrl}`);
+
+      return parts.join(' ');
+    };
+
+    const updateSpecialRequestUrl = () => {
+      if (!specialRequestButton) return;
+
+      const variant = getSelectedVariant();
+      const selectedText = variant?.title || getSelectedOptionText();
+      const url = new URL(specialRequestButton.href);
+      const message = buildWhatsappMessage(specialRequestMessage, selectedText);
+
+      url.searchParams.set('text', message);
+      specialRequestButton.href = url.toString();
     };
 
     const updateOptionStates = () => {
@@ -1402,6 +1517,7 @@
         }
 
         whatsappButton?.classList.add('is-disabled');
+        updateSpecialRequestUrl();
         return;
       }
 
@@ -1417,13 +1533,14 @@
 
       if (whatsappButton) {
         const url = new URL(whatsappButton.href);
-        const productUrl = `${window.location.origin}{{ product.url }}`;
-        const message = `{{ section.settings.whatsapp_message }} Producto: {{ product.title }}. Talla seleccionada: ${variant.title}. Link: ${productUrl}`;
+        const message = buildWhatsappMessage(mainWhatsappMessage, variant.title);
 
         url.searchParams.set('text', message);
         whatsappButton.href = url.toString();
         whatsappButton.classList.remove('is-disabled');
       }
+
+      updateSpecialRequestUrl();
 
       if (variant.featured_media && variant.featured_media.id) {
         const mediaIndex = mediaItems.findIndex((item) => item.dataset.borregoMedia === String(variant.featured_media.id));
@@ -1476,7 +1593,9 @@
       }
     });
 
-    sizeGuideOpen?.addEventListener('click', openSizeGuide);
+    sizeGuideOpenButtons.forEach((button) => {
+      button.addEventListener('click', openSizeGuide);
+    });
 
     sizeGuideCloseButtons.forEach((button) => {
       button.addEventListener('click', closeSizeGuide);
@@ -1597,13 +1716,13 @@
     {
       "type": "text",
       "id": "whatsapp_phone",
-      "label": "Número de WhatsApp",
+      "label": "Número de WhatsApp principal",
       "default": "51999999999"
     },
     {
       "type": "text",
       "id": "whatsapp_message",
-      "label": "Mensaje WhatsApp",
+      "label": "Mensaje WhatsApp principal",
       "default": "Hola, quiero comprar este producto de BORREGO."
     },
     {
@@ -1613,19 +1732,19 @@
     {
       "type": "checkbox",
       "id": "show_size_guide",
-      "label": "Mostrar botón guía de tallas",
+      "label": "Mostrar guía de tallas",
       "default": true
     },
     {
       "type": "text",
       "id": "size_guide_button_text",
-      "label": "Texto botón guía de tallas",
+      "label": "Texto link guía de tallas",
       "default": "Guía de tallas"
     },
     {
       "type": "image_picker",
       "id": "size_guide_image",
-      "label": "Imagen guía de tallas"
+      "label": "Imagen guía de tallas fallback"
     },
     {
       "type": "text",
@@ -1653,13 +1772,41 @@
       "max": 95,
       "step": 5,
       "unit": "%",
-      "default": 85
+      "default": 80
     },
     {
       "type": "color",
       "id": "size_guide_close_button_color",
       "label": "Color botón cerrar",
       "default": "#11110C"
+    },
+    {
+      "type": "header",
+      "content": "CTA talla especial"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_special_request_cta",
+      "label": "Mostrar CTA talla especial",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "special_request_cta_text",
+      "label": "Texto CTA talla especial",
+      "default": "¿No encuentras tu talla? Pídela por WhatsApp"
+    },
+    {
+      "type": "text",
+      "id": "special_request_whatsapp_phone",
+      "label": "Número WhatsApp talla especial",
+      "default": "51999999999"
+    },
+    {
+      "type": "text",
+      "id": "special_request_whatsapp_message",
+      "label": "Mensaje WhatsApp talla especial",
+      "default": "Hola BORREGO, quiero consultar por una talla especial."
     },
     {
       "type": "checkbox",
