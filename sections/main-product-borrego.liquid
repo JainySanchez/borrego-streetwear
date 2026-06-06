@@ -4,6 +4,7 @@
   assign base_whatsapp_message = section.settings.whatsapp_message | append: ' ' | append: product.title
   assign whatsapp_message = base_whatsapp_message | url_encode
   assign whatsapp_url = 'https://wa.me/' | append: whatsapp_phone | append: '?text=' | append: whatsapp_message
+  assign size_guide_image = section.settings.size_guide_image
 %}
 
 <section
@@ -21,6 +22,9 @@
     --border: {{ section.settings.border_color }};
     --padding-top: {{ section.settings.padding_top }}px;
     --padding-bottom: {{ section.settings.padding_bottom }}px;
+    --hanan-dev-size-guide-modal-bg: {{ section.settings.size_guide_modal_background }};
+    --hanan-dev-size-guide-overlay-opacity: {{ section.settings.size_guide_overlay_opacity | divided_by: 100.0 }};
+    --hanan-dev-size-guide-close-color: {{ section.settings.size_guide_close_button_color }};
   "
 >
   <script type="application/json" data-borrego-variants>
@@ -167,6 +171,17 @@
         </a>
       {% endif %}
 
+      {% if section.settings.show_size_guide and section.settings.size_guide_button_text != blank %}
+        <button
+          type="button"
+          class="hanan-dev-size-guide-button"
+          data-hanan-dev-size-guide-open
+          aria-label="{{ section.settings.size_guide_button_text | escape }}"
+        >
+          {{ section.settings.size_guide_button_text }}
+        </button>
+      {% endif %}
+
       {% if section.settings.show_showroom_availability %}
         <p class="borrego-product__showroom-note">
           {{ section.settings.showroom_availability_text }}
@@ -234,6 +249,65 @@
           <div>{{ section.settings.showroom_text }}</div>
         </div>
       {% endif %}
+    </div>
+  </div>
+
+  <div
+    class="hanan-dev-size-guide-modal"
+    data-hanan-dev-size-guide-modal
+    aria-hidden="true"
+  >
+    <div class="hanan-dev-size-guide-overlay" data-hanan-dev-size-guide-close></div>
+
+    <div
+      class="hanan-dev-size-guide-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="hanan-dev-size-guide-title-{{ section.id }}"
+      tabindex="-1"
+    >
+      <button
+        type="button"
+        class="hanan-dev-size-guide-close"
+        data-hanan-dev-size-guide-close
+        aria-label="Cerrar guía de tallas"
+      >
+        ×
+      </button>
+
+      {% if section.settings.size_guide_modal_title != blank %}
+        <h2 id="hanan-dev-size-guide-title-{{ section.id }}" class="hanan-dev-size-guide-title">
+          {{ section.settings.size_guide_modal_title }}
+        </h2>
+      {% else %}
+        <h2 id="hanan-dev-size-guide-title-{{ section.id }}" class="hanan-dev-size-guide-title visually-hidden">
+          Guía de tallas
+        </h2>
+      {% endif %}
+
+      <div class="hanan-dev-size-guide-content">
+        {% if size_guide_image != blank %}
+          <img
+            src="{{ size_guide_image | image_url: width: 1200 }}"
+            srcset="
+              {{ size_guide_image | image_url: width: 500 }} 500w,
+              {{ size_guide_image | image_url: width: 800 }} 800w,
+              {{ size_guide_image | image_url: width: 1200 }} 1200w,
+              {{ size_guide_image | image_url: width: 1600 }} 1600w
+            "
+            sizes="(max-width: 749px) calc(100vw - 40px), min(900px, 88vw)"
+            alt="{{ section.settings.size_guide_image_alt | default: section.settings.size_guide_button_text | escape }}"
+            width="{{ size_guide_image.width }}"
+            height="{{ size_guide_image.height }}"
+            loading="lazy"
+            class="hanan-dev-size-guide-image"
+          >
+        {% else %}
+          <div class="hanan-dev-size-guide-fallback">
+            Configura una imagen de guía de tallas desde el editor del tema.
+          </div>
+        {% endif %}
+      </div>
     </div>
   </div>
 
@@ -452,8 +526,8 @@
       letter-spacing: 0.052em;
       text-transform: uppercase;
       font-family: "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
-       font-size: 31px;
-        line-height: 1;
+      font-size: 31px;
+      line-height: 1;
     }
 
     .borrego-product__price {
@@ -546,39 +620,39 @@
       transform: translateY(-1px);
     }
 
-   .borrego-product__option-value.is-unavailable {
-    pointer-events: none;
-  }
+    .borrego-product__option-value.is-unavailable {
+      pointer-events: none;
+    }
 
-  .borrego-product__option-value.is-unavailable input {
-    cursor: not-allowed;
-  }
+    .borrego-product__option-value.is-unavailable input {
+      cursor: not-allowed;
+    }
 
-  .borrego-product__option-value.is-unavailable span {
-    position: relative;
-    opacity: 0.34;
-    cursor: not-allowed;
-    color: var(--muted);
-    background: transparent;
-    border-color: rgba(17, 17, 12, 0.12);
-  }
+    .borrego-product__option-value.is-unavailable span {
+      position: relative;
+      opacity: 0.34;
+      cursor: not-allowed;
+      color: var(--muted);
+      background: transparent;
+      border-color: rgba(17, 17, 12, 0.12);
+    }
 
-  .borrego-product__option-value.is-unavailable span::after {
-    content: "";
-    position: absolute;
-    left: 8px;
-    right: 8px;
-    top: 50%;
-    height: 1px;
-    background: currentColor;
-    transform: rotate(-18deg);
-    transform-origin: center;
-  }
+    .borrego-product__option-value.is-unavailable span::after {
+      content: "";
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      top: 50%;
+      height: 1px;
+      background: currentColor;
+      transform: rotate(-18deg);
+      transform-origin: center;
+    }
 
-  .borrego-product__option-value.is-unavailable span:hover {
-    border-color: rgba(17, 17, 12, 0.12);
-    transform: none;
-  }
+    .borrego-product__option-value.is-unavailable span:hover {
+      border-color: rgba(17, 17, 12, 0.12);
+      transform: none;
+    }
 
     .borrego-product__purchase-copy {
       margin: 4px 0 18px;
@@ -625,6 +699,151 @@
     .borrego-product__primary-cta.is-disabled {
       opacity: 0.55;
       cursor: not-allowed;
+    }
+
+    .borrego-product .hanan-dev-size-guide-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      width: 100%;
+      margin-top: 10px;
+      padding: 0 18px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        background 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 420ms cubic-bezier(0.16, 1, 0.3, 1),
+        transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .borrego-product .hanan-dev-size-guide-button:hover {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+      transform: translateY(-2px);
+    }
+
+    .borrego-product .hanan-dev-size-guide-button:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .borrego-product .hanan-dev-size-guide-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .borrego-product .hanan-dev-size-guide-modal.is-open {
+      display: flex;
+    }
+
+    .borrego-product .hanan-dev-size-guide-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(17, 17, 12, var(--hanan-dev-size-guide-overlay-opacity));
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .borrego-product .hanan-dev-size-guide-dialog {
+      position: relative;
+      z-index: 1;
+      width: min(920px, 94vw);
+      max-height: calc(100vh - 48px);
+      overflow: auto;
+      background: var(--hanan-dev-size-guide-modal-bg);
+      color: var(--text);
+      border: 1px solid rgba(242, 236, 221, 0.18);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+      padding: clamp(18px, 3vw, 32px);
+    }
+
+    .borrego-product .hanan-dev-size-guide-close {
+      position: sticky;
+      top: 0;
+      margin-left: auto;
+      z-index: 2;
+      display: flex;
+      width: 42px;
+      height: 42px;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--hanan-dev-size-guide-close-color);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      transition:
+        background 320ms ease,
+        color 320ms ease,
+        transform 320ms ease;
+    }
+
+    .borrego-product .hanan-dev-size-guide-close:hover {
+      background: var(--hanan-dev-size-guide-close-color);
+      color: var(--hanan-dev-size-guide-modal-bg);
+      transform: rotate(90deg);
+    }
+
+    .borrego-product .hanan-dev-size-guide-close:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 4px;
+    }
+
+    .borrego-product .hanan-dev-size-guide-title {
+      margin: 0 56px 22px 0;
+      color: var(--text);
+      font-size: clamp(22px, 3vw, 34px);
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .borrego-product .hanan-dev-size-guide-content {
+      display: flex;
+      justify-content: center;
+    }
+
+    .borrego-product .hanan-dev-size-guide-image {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: calc(100vh - 190px);
+      object-fit: contain;
+    }
+
+    .borrego-product .hanan-dev-size-guide-fallback {
+      width: 100%;
+      min-height: 260px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+      text-align: center;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    body.hanan-dev-size-guide-open {
+      overflow: hidden;
     }
 
     .borrego-product__showroom-note {
@@ -954,9 +1173,36 @@
         flex-basis: 84px;
       }
 
-
       .borrego-product__price {
         font-size: 16px;
+      }
+
+      .borrego-product .hanan-dev-size-guide-modal {
+        padding: 14px;
+      }
+
+      .borrego-product .hanan-dev-size-guide-dialog {
+        width: 100%;
+        max-height: calc(100vh - 28px);
+        padding: 16px;
+      }
+
+      .borrego-product .hanan-dev-size-guide-title {
+        margin-right: 50px;
+        margin-bottom: 16px;
+        font-size: 20px;
+      }
+
+      .borrego-product .hanan-dev-size-guide-close {
+        width: 40px;
+        height: 40px;
+        font-size: 26px;
+      }
+
+      .borrego-product .hanan-dev-size-guide-image {
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - 150px);
       }
 
       .borrego-product__benefits {
@@ -997,14 +1243,15 @@
       }
     }
 </style>
+
 <script>
   (() => {
     const script = document.currentScript;
-const section =
-  script.closest('.shopify-section')?.querySelector('.borrego-product') ||
-  document.querySelector('.borrego-product');
+    const section =
+      script.closest('.shopify-section')?.querySelector('.borrego-product') ||
+      document.querySelector('.borrego-product');
 
-if (!section) return;
+    if (!section) return;
 
     const thumbs = [...section.querySelectorAll('[data-borrego-thumb]')];
     const mediaItems = [...section.querySelectorAll('[data-borrego-media]')];
@@ -1016,10 +1263,15 @@ if (!section) return;
     const availabilityEl = section.querySelector('[data-borrego-availability]');
     const whatsappButton = section.querySelector('[data-borrego-whatsapp]');
     const mainGallery = section.querySelector('.borrego-product__media-main');
+    const sizeGuideOpen = section.querySelector('[data-hanan-dev-size-guide-open]');
+    const sizeGuideModal = section.querySelector('[data-hanan-dev-size-guide-modal]');
+    const sizeGuideDialog = section.querySelector('.hanan-dev-size-guide-dialog');
+    const sizeGuideCloseButtons = [...section.querySelectorAll('[data-hanan-dev-size-guide-close]')];
 
     let currentIndex = mediaItems.findIndex((item) => item.classList.contains('is-active'));
     let touchStartX = 0;
     let variants = [];
+    let lastFocusedElement = null;
 
     if (currentIndex < 0) currentIndex = 0;
 
@@ -1082,7 +1334,7 @@ if (!section) return;
       const selectedOptions = getSelectedOptions();
 
       return variants.some((variant) => {
-         if (!variant.available) return false;
+        if (!variant.available) return false;
 
         return variant.options.every((optionValue, index) => {
           if (index === position - 1) return optionValue === value;
@@ -1179,6 +1431,31 @@ if (!section) return;
       }
     };
 
+    const openSizeGuide = () => {
+      if (!sizeGuideModal) return;
+
+      lastFocusedElement = document.activeElement;
+      sizeGuideModal.classList.add('is-open');
+      sizeGuideModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('hanan-dev-size-guide-open');
+
+      window.setTimeout(() => {
+        sizeGuideDialog?.focus();
+      }, 50);
+    };
+
+    const closeSizeGuide = () => {
+      if (!sizeGuideModal) return;
+
+      sizeGuideModal.classList.remove('is-open');
+      sizeGuideModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('hanan-dev-size-guide-open');
+
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    };
+
     thumbs.forEach((thumb, index) => {
       thumb.addEventListener('click', () => showMedia(index));
     });
@@ -1196,6 +1473,18 @@ if (!section) return;
       if (!variant || !variant.available) {
         event.preventDefault();
         alert('Selecciona una talla disponible para continuar por WhatsApp.');
+      }
+    });
+
+    sizeGuideOpen?.addEventListener('click', openSizeGuide);
+
+    sizeGuideCloseButtons.forEach((button) => {
+      button.addEventListener('click', closeSizeGuide);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && sizeGuideModal?.classList.contains('is-open')) {
+        closeSizeGuide();
       }
     });
 
@@ -1316,6 +1605,61 @@ if (!section) return;
       "id": "whatsapp_message",
       "label": "Mensaje WhatsApp",
       "default": "Hola, quiero comprar este producto de BORREGO."
+    },
+    {
+      "type": "header",
+      "content": "Guía de tallas"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_size_guide",
+      "label": "Mostrar botón guía de tallas",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "size_guide_button_text",
+      "label": "Texto botón guía de tallas",
+      "default": "Guía de tallas"
+    },
+    {
+      "type": "image_picker",
+      "id": "size_guide_image",
+      "label": "Imagen guía de tallas"
+    },
+    {
+      "type": "text",
+      "id": "size_guide_image_alt",
+      "label": "Texto alternativo imagen guía de tallas",
+      "default": "Guía de tallas BORREGO"
+    },
+    {
+      "type": "text",
+      "id": "size_guide_modal_title",
+      "label": "Título modal guía de tallas",
+      "default": "Guía de tallas"
+    },
+    {
+      "type": "color",
+      "id": "size_guide_modal_background",
+      "label": "Color fondo modal",
+      "default": "#F5F1E8"
+    },
+    {
+      "type": "range",
+      "id": "size_guide_overlay_opacity",
+      "label": "Opacidad overlay modal",
+      "min": 30,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "default": 85
+    },
+    {
+      "type": "color",
+      "id": "size_guide_close_button_color",
+      "label": "Color botón cerrar",
+      "default": "#11110C"
     },
     {
       "type": "checkbox",
