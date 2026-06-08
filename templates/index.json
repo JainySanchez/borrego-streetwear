@@ -370,7 +370,7 @@
       "settings": {
         "small_label": "PRIVATE SHOWROOM",
         "heading": "VISÍTANOS EN LIMA",
-        "description": "<p>Descubre sneakers, apparel y piezas premium en una experiencia privada y personalizada.</p>",
+        "description": "<p>Descubre sneakers, ropa y artículos premium en una experiencia privada y personalizada.</p>",
         "showroom_address": "📍 Av. Ejemplo 123 — Lima, Perú",
         "showroom_schedule": "🕒 Lunes — Sábado · 10AM — 8PM",
         "google_maps_url": "https://maps.app.goo.gl/3Mt8dPBh5MNQoz6f8",
@@ -431,7 +431,7 @@
           "settings": {
             "step_number": "01",
             "step_title": "Elige tu pieza",
-            "step_description": "<p>Explora nuestra selección de sneakers, apparel y productos exclusivos.</p>",
+            "step_description": "<p>Explora nuestra selección de sneakers, ropa y productos exclusivos.</p>",
             "icon": "✦"
           }
         },
