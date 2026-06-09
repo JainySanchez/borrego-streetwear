@@ -690,6 +690,8 @@
           {% endcomment %}
         </ul>
       </div>
+{% comment %}
+  
 
       <a class="hanan-dev-header-icon hanan-dev-cart-icon hanan-dev-mobile-cart" href="{{ routes.cart_url }}" aria-label="{{ 'templates.cart.cart' | t }}">
         <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none">
@@ -700,6 +702,10 @@
           <span class="hanan-dev-cart-count" aria-hidden="true">{{ cart.item_count }}</span>
           <span class="hanan-dev-sr-only">{{ 'sections.header.cart_count' | t: count: cart.item_count }}</span>
         {%- endif -%}
+      </a>
+      {% endcomment %}
+      <a class="hanan-dev-header-icon hanan-dev-mobile-cart" href="{{ routes.search_url }}" aria-label="{{ 'general.search.search' | t }}">
+              {{ 'icon-search.svg' | inline_asset_content }}
       </a>
     </div>
   </div>
