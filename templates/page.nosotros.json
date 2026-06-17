@@ -69,7 +69,7 @@
         "years_in_business": "2020",
         "community_size": "Streetwear community",
         "tagline": "",
-        "founder_image": "shopify://shop_images/WhatsApp_Image_2026-01-26_at_8.42.33_PM.jpg",
+        "founder_image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.59.01.jpg",
         "founder_image_alt": "Fundador de BORREGO Streetwear",
         "image_position": "left",
         "image_width": 46,
@@ -137,57 +137,65 @@
         "community_image_U6nKki": {
           "type": "community_image",
           "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29.jpg",
             "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "caption": ""
           }
         },
         "community_image_NTEyPn": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_1.jpg",
+            "alt_text": "BORREGO moment",
+            "caption": ""
           }
         },
         "community_image_6aeifH": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_7.jpg",
+            "alt_text": "BORREGO moment",
+            "caption": ""
           }
         },
         "community_image_QnXzQn": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_6.jpg",
+            "alt_text": "BORREGO moment",
+            "caption": ""
           }
         },
         "community_image_PBNhKG": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_3.jpg",
+            "alt_text": "Momento  la comunidad BORREGO",
+            "caption": ""
           }
         },
         "community_image_8tJaBp": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_2.jpg",
+            "alt_text": "Momento  la comunidad BORREGO",
+            "caption": ""
           }
         },
         "community_image_DfjytK": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_5.jpg",
+            "alt_text": "Momento  la comunidad BORREGO",
+            "caption": ""
           }
         },
         "community_image_hhiEM3": {
           "type": "community_image",
           "settings": {
-            "alt_text": "Momento de la comunidad BORREGO",
-            "caption": "BORREGO moment"
+            "image": "shopify://shop_images/WhatsApp_Image_2026-06-17_at_11.57.29_4.jpg",
+            "alt_text": "Momento  la comunidad BORREGO",
+            "caption": ""
           }
         },
         "community_image_KHFXJV": {
@@ -227,8 +235,8 @@
         "mobile_columns": 2,
         "image_gap": 16,
         "background_color": "#ffffff",
-        "text_color": "#11110C",
-        "accent_color": "#A8733D",
+        "text_color": "#11110c",
+        "accent_color": "#a8733d",
         "section_max_width": 1240,
         "padding_desktop": 96,
         "padding_mobile": 64
