@@ -18,7 +18,7 @@
           "type": "custom_link",
           "settings": {
             "title": "SHOP",
-            "link_label_1": "Sneakers",
+            "link_label_1": "Zapatillas",
             "link_url_1": "",
             "open_new_tab_1": false,
             "link_label_2": "Ropa",
@@ -27,7 +27,7 @@
             "link_label_3": "Accesorios",
             "link_url_3": "",
             "open_new_tab_3": false,
-            "link_label_4": "Pre venta",
+            "link_label_4": "Preventa",
             "link_url_4": "",
             "open_new_tab_4": false
           }
@@ -36,16 +36,16 @@
           "type": "custom_link",
           "settings": {
             "title": "INFORMACIÓN",
-            "link_label_1": "Showroom",
-            "link_url_1": "",
+            "link_label_1": "Nosotros",
+            "link_url_1": "shopify://pages/nosotros",
             "open_new_tab_1": false,
-            "link_label_2": "Envíos",
-            "link_url_2": "",
+            "link_label_2": "Contáctanos",
+            "link_url_2": "shopify://pages/contactanos",
             "open_new_tab_2": false,
-            "link_label_3": "Cambios y devoluciones",
+            "link_label_3": "",
             "link_url_3": "",
             "open_new_tab_3": false,
-            "link_label_4": "Preguntas frecuentes",
+            "link_label_4": "",
             "link_url_4": "",
             "open_new_tab_4": false
           }
@@ -55,11 +55,11 @@
           "settings": {
             "title": "COMUNIDAD",
             "social_label_1": "Instagram",
-            "social_url_1": "",
+            "social_url_1": "https://www.instagram.com/borregostreetwear/",
             "social_label_2": "TikTok",
-            "social_url_2": "",
+            "social_url_2": "https://www.tiktok.com/@borregostreetwear",
             "social_label_3": "WhatsApp",
-            "social_url_3": ""
+            "social_url_3": "https://chat.whatsapp.com/LhPMcvmfjxy2K1el3EUzFC?s=sh&p=i&ilr=2&amv=2"
           }
         },
         "showroom_info_NejEjB": {
@@ -67,7 +67,7 @@
           "settings": {
             "title": "SHOWROOM",
             "label": "PRIVATE SHOWROOM",
-            "address": "Lima, Perú",
+            "address": "Callao, Perú",
             "schedule": "Lunes — Sábado · 10AM — 8PM",
             "detail": "Visitas solo con cita"
           }
