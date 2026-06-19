@@ -108,7 +108,7 @@
           {%- if section.settings.community_size != blank -%}
             <div class="hanan-dev-founder-story__meta-item">
               <dt>Comunidad</dt>
-              <dd>{{ section.settings.community_size }}</dd>
+              <div>{{ section.settings.community_size }}</div>
             </div>
           {%- endif -%}
         </dl>
@@ -500,10 +500,10 @@
       "default": "2018"
     },
     {
-      "type": "text",
+      "type": "richtext",
       "id": "community_size",
       "label": "Community size",
-      "default": "Streetwear community"
+      "default": "<p>Streetwear community</p>"
     },
     {
       "type": "text",
