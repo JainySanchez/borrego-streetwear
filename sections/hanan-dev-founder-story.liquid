@@ -108,7 +108,16 @@
           {%- if section.settings.community_size != blank -%}
             <div class="hanan-dev-founder-story__meta-item">
               <dt>Comunidad</dt>
-              <div>{{ section.settings.community_size }}</div>
+              <dd>
+                <a
+                  href="{{ section.settings.community_size }}"
+                  class="hanan-dev-founder-story__community-link"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  {{ section.settings.community_size }}
+                </a>
+              </dd>
             </div>
           {%- endif -%}
         </dl>
@@ -307,6 +316,18 @@
     line-height: 1.35;
     font-weight: 800;
   }
+  #{{ section_id }} .hanan-dev-founder-story__community-link {
+  color: currentColor;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 220ms ease, color 220ms ease;
+  word-break: break-word;
+}
+
+#{{ section_id }} .hanan-dev-founder-story__community-link:hover {
+  color: var(--hanan-dev-founder-accent);
+  opacity: 0.78;
+}
 
   #{{ section_id }} .hanan-dev-founder-story__tagline {
     margin: clamp(24px, 3vw, 36px) 0 0;
@@ -500,10 +521,9 @@
       "default": "2018"
     },
     {
-      "type": "richtext",
+      "type": "url",
       "id": "community_size",
-      "label": "Community size",
-      "default": "<p>Streetwear community</p>"
+      "label": "Community link"
     },
     {
       "type": "text",
