@@ -105,12 +105,12 @@
             </div>
           {%- endif -%}
 
-          {%- if section.settings.community_size != blank -%}
+          {%- if section.settings.community_size != blank and section.settings.community_link != blank -%}
             <div class="hanan-dev-founder-story__meta-item">
               <dt>Comunidad</dt>
               <dd>
                 <a
-                  href="{{ section.settings.community_size }}"
+                  href="{{ section.settings.community_link }}"
                   class="hanan-dev-founder-story__community-link"
                   target="_blank"
                   rel="noopener"
@@ -118,6 +118,11 @@
                   {{ section.settings.community_size }}
                 </a>
               </dd>
+            </div>
+          {%- elsif section.settings.community_size != blank -%}
+            <div class="hanan-dev-founder-story__meta-item">
+              <dt>Comunidad</dt>
+              <dd>{{ section.settings.community_size }}</dd>
             </div>
           {%- endif -%}
         </dl>
@@ -172,302 +177,303 @@
 </section>
 
 <style>
-  #{{ section_id }} {
-    background: var(--hanan-dev-founder-bg);
-    color: var(--hanan-dev-founder-text);
-    padding-top: var(--hanan-dev-founder-padding-desktop);
-    padding-bottom: var(--hanan-dev-founder-padding-desktop);
-    overflow: hidden;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__inner {
-    width: min(100% - 40px, var(--hanan-dev-founder-max-width));
-    margin: 0 auto;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__header {
-    max-width: 980px;
-    margin-bottom: clamp(34px, 5vw, 70px);
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__eyebrow {
-    margin: 0 0 18px;
-    color: var(--hanan-dev-founder-accent);
-    font-size: clamp(11px, 1vw, 13px);
-    line-height: 1.2;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    font-weight: 800;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__heading {
-    margin: 0;
-    max-width: 920px;
-    color: currentColor;
-    font-size: clamp(42px, 6.4vw, 94px);
-    line-height: 0.9;
-    letter-spacing: -0.02em;
-    text-transform: uppercase;
-    font-weight: 900;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__main {
-    display: grid;
-    grid-template-columns: minmax(0, var(--hanan-dev-founder-image-width)) minmax(0, 1fr);
-    align-items: center;
-    gap: clamp(34px, 5vw, 82px);
-  }
-
-  #{{ section_id }}.hanan-dev-founder-story--no-image .hanan-dev-founder-story__main {
-    grid-template-columns: 1fr;
-  }
-
-  #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__media {
-    order: 2;
-  }
-
-  #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__content {
-    order: 1;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__media {
-    min-width: 0;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__image {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 720px;
-    object-fit: cover;
-    border-radius: var(--hanan-dev-founder-image-radius);
-    box-shadow: 0 28px 70px rgba(17, 17, 12, 0.16);
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__content {
-    min-width: 0;
-    max-width: 680px;
-  }
-
-  #{{ section_id }}.hanan-dev-founder-story--no-image .hanan-dev-founder-story__content {
-    max-width: 820px;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__story {
-    color: currentColor;
-    opacity: 0.84;
-    font-size: clamp(16px, 1.35vw, 20px);
-    line-height: 1.75;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__story p {
-    margin: 0;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__story p + p {
-    margin-top: 1.15em;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__story strong,
-  #{{ section_id }} .hanan-dev-founder-story__story b {
-    color: currentColor;
-    font-weight: 900;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__story a {
-    color: var(--hanan-dev-founder-accent);
-    text-underline-offset: 4px;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__metadata {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1px;
-    margin: clamp(30px, 4vw, 48px) 0 0;
-    background: color-mix(in srgb, currentColor 16%, transparent);
-    border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
-    border-radius: 24px;
-    overflow: hidden;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__metadata:empty {
-    display: none;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__meta-item {
-    padding: 18px;
-    background: color-mix(in srgb, var(--hanan-dev-founder-bg) 90%, var(--hanan-dev-founder-text) 10%);
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__meta-item dt {
-    margin: 0 0 8px;
-    color: var(--hanan-dev-founder-accent);
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-weight: 900;
-  }
-
-  #{{ section_id }} .hanan-dev-founder-story__meta-item dd {
-    margin: 0;
-    color: currentColor;
-    font-size: 14px;
-    line-height: 1.35;
-    font-weight: 800;
-  }
-  #{{ section_id }} .hanan-dev-founder-story__community-link {
-  color: currentColor;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: opacity 220ms ease, color 220ms ease;
-  word-break: break-word;
-}
-
-#{{ section_id }} .hanan-dev-founder-story__community-link:hover {
-  color: var(--hanan-dev-founder-accent);
-  opacity: 0.78;
-}
-
-  #{{ section_id }} .hanan-dev-founder-story__tagline {
-    margin: clamp(24px, 3vw, 36px) 0 0;
-    color: var(--hanan-dev-founder-accent);
-    font-size: clamp(12px, 1vw, 14px);
-    line-height: 1.4;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    font-weight: 900;
-  }
-
-  #{{ section_id }} .hanan-dev-history-gallery {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(12px, 1.6vw, 22px);
-    margin-top: clamp(44px, 6vw, 86px);
-  }
-
-  #{{ section_id }} .hanan-dev-history-gallery__item {
-    margin: 0;
-    min-width: 0;
-  }
-
-  #{{ section_id }} .hanan-dev-history-gallery__media {
-    position: relative;
-    aspect-ratio: 4 / 5;
-    overflow: hidden;
-    border-radius: calc(var(--hanan-dev-founder-image-radius) * 0.8);
-    background: color-mix(in srgb, var(--hanan-dev-founder-bg) 86%, var(--hanan-dev-founder-text) 14%);
-  }
-
-  #{{ section_id }} .hanan-dev-history-gallery__image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.01);
-    transition: transform 360ms ease;
-  }
-
-  #{{ section_id }} .hanan-dev-history-gallery__item:hover .hanan-dev-history-gallery__image {
-    transform: scale(1.055);
-  }
-
-  #{{ section_id }} .hanan-dev-history-gallery__caption {
-    margin-top: 12px;
-    color: currentColor;
-    opacity: 0.68;
-    font-size: 12px;
-    line-height: 1.45;
-  }
-
-  @media screen and (max-width: 989px) {
-    #{{ section_id }} .hanan-dev-founder-story__main {
-      grid-template-columns: 1fr;
-      gap: 34px;
-    }
-
-    #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__media,
-    #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__content {
-      order: initial;
-    }
-
-    #{{ section_id }} .hanan-dev-founder-story__image {
-      max-height: 620px;
-    }
-
-    #{{ section_id }} .hanan-dev-founder-story__content {
-      max-width: 780px;
-    }
-
-    #{{ section_id }} .hanan-dev-history-gallery {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media screen and (max-width: 749px) {
     #{{ section_id }} {
-      padding-top: var(--hanan-dev-founder-padding-mobile);
-      padding-bottom: var(--hanan-dev-founder-padding-mobile);
+      background: var(--hanan-dev-founder-bg);
+      color: var(--hanan-dev-founder-text);
+      padding-top: var(--hanan-dev-founder-padding-desktop);
+      padding-bottom: var(--hanan-dev-founder-padding-desktop);
+      overflow: hidden;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__inner {
-      width: min(100% - 32px, 100%);
+      width: min(100% - 40px, var(--hanan-dev-founder-max-width));
+      margin: 0 auto;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__header {
-      margin-bottom: 30px;
+      max-width: 980px;
+      margin-bottom: clamp(34px, 5vw, 70px);
     }
 
     #{{ section_id }} .hanan-dev-founder-story__eyebrow {
-      margin-bottom: 16px;
+      margin: 0 0 18px;
+      color: var(--hanan-dev-founder-accent);
+      font-size: clamp(11px, 1vw, 13px);
+      line-height: 1.2;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      font-weight: 800;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__heading {
-      font-size: clamp(36px, 12vw, 56px);
-      line-height: 0.96;
+      margin: 0;
+      max-width: 920px;
+      color: currentColor;
+      font-size: clamp(42px, 6.4vw, 94px);
+      line-height: 0.9;
       letter-spacing: -0.02em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__main {
+      display: grid;
+      grid-template-columns: minmax(0, var(--hanan-dev-founder-image-width)) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(34px, 5vw, 82px);
+    }
+
+    #{{ section_id }}.hanan-dev-founder-story--no-image .hanan-dev-founder-story__main {
+      grid-template-columns: 1fr;
+    }
+
+    #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__media {
+      order: 2;
+    }
+
+    #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__content {
+      order: 1;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__media {
+      min-width: 0;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__image {
-      max-height: 520px;
-      border-radius: min(var(--hanan-dev-founder-image-radius), 24px);
+      display: block;
+      width: 100%;
+      height: auto;
+      max-height: 720px;
+      object-fit: cover;
+      border-radius: var(--hanan-dev-founder-image-radius);
+      box-shadow: 0 28px 70px rgba(17, 17, 12, 0.16);
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__content {
+      min-width: 0;
+      max-width: 680px;
+    }
+
+    #{{ section_id }}.hanan-dev-founder-story--no-image .hanan-dev-founder-story__content {
+      max-width: 820px;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__story {
-      font-size: 15px;
-      line-height: 1.68;
+      color: currentColor;
+      opacity: 0.84;
+      font-size: clamp(16px, 1.35vw, 20px);
+      line-height: 1.75;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__story p {
+      margin: 0;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__story p + p {
+      margin-top: 1.15em;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__story strong,
+    #{{ section_id }} .hanan-dev-founder-story__story b {
+      color: currentColor;
+      font-weight: 900;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__story a {
+      color: var(--hanan-dev-founder-accent);
+      text-underline-offset: 4px;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__metadata {
-      grid-template-columns: 1fr;
-      border-radius: 22px;
-      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin: clamp(30px, 4vw, 48px) 0 0;
+      background: color-mix(in srgb, currentColor 16%, transparent);
+      border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+      border-radius: 24px;
+      overflow: hidden;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__metadata:empty {
+      display: none;
     }
 
     #{{ section_id }} .hanan-dev-founder-story__meta-item {
-      padding: 17px;
+      padding: 18px;
+      background: color-mix(in srgb, var(--hanan-dev-founder-bg) 90%, var(--hanan-dev-founder-text) 10%);
     }
 
+    #{{ section_id }} .hanan-dev-founder-story__meta-item dt {
+      margin: 0 0 8px;
+      color: var(--hanan-dev-founder-accent);
+      font-size: 10px;
+      line-height: 1;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 900;
+    }
+
+    #{{ section_id }} .hanan-dev-founder-story__meta-item dd {
+      margin: 0;
+      color: currentColor;
+      font-size: 14px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+    #{{ section_id }} .hanan-dev-founder-story__community-link {
+    color: currentColor;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: opacity 220ms ease, color 220ms ease;
+    word-break: break-word;
+  }
+
+  #{{ section_id }} .hanan-dev-founder-story__community-link:hover {
+    color: var(--hanan-dev-founder-accent);
+    opacity: 0.78;
+  }
+
+
     #{{ section_id }} .hanan-dev-founder-story__tagline {
-      margin-top: 24px;
-      font-size: 11px;
+      margin: clamp(24px, 3vw, 36px) 0 0;
+      color: var(--hanan-dev-founder-accent);
+      font-size: clamp(12px, 1vw, 14px);
+      line-height: 1.4;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 900;
     }
 
     #{{ section_id }} .hanan-dev-history-gallery {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 42px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(12px, 1.6vw, 22px);
+      margin-top: clamp(44px, 6vw, 86px);
+    }
+
+    #{{ section_id }} .hanan-dev-history-gallery__item {
+      margin: 0;
+      min-width: 0;
     }
 
     #{{ section_id }} .hanan-dev-history-gallery__media {
-      border-radius: min(var(--hanan-dev-founder-image-radius), 20px);
+      position: relative;
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border-radius: calc(var(--hanan-dev-founder-image-radius) * 0.8);
+      background: color-mix(in srgb, var(--hanan-dev-founder-bg) 86%, var(--hanan-dev-founder-text) 14%);
+    }
+
+    #{{ section_id }} .hanan-dev-history-gallery__image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.01);
+      transition: transform 360ms ease;
+    }
+
+    #{{ section_id }} .hanan-dev-history-gallery__item:hover .hanan-dev-history-gallery__image {
+      transform: scale(1.055);
     }
 
     #{{ section_id }} .hanan-dev-history-gallery__caption {
-      margin-top: 9px;
-      font-size: 11px;
+      margin-top: 12px;
+      color: currentColor;
+      opacity: 0.68;
+      font-size: 12px;
+      line-height: 1.45;
     }
-  }
+
+    @media screen and (max-width: 989px) {
+      #{{ section_id }} .hanan-dev-founder-story__main {
+        grid-template-columns: 1fr;
+        gap: 34px;
+      }
+
+      #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__media,
+      #{{ section_id }}.hanan-dev-founder-story--image-right .hanan-dev-founder-story__content {
+        order: initial;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__image {
+        max-height: 620px;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__content {
+        max-width: 780px;
+      }
+
+      #{{ section_id }} .hanan-dev-history-gallery {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media screen and (max-width: 749px) {
+      #{{ section_id }} {
+        padding-top: var(--hanan-dev-founder-padding-mobile);
+        padding-bottom: var(--hanan-dev-founder-padding-mobile);
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__inner {
+        width: min(100% - 32px, 100%);
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__header {
+        margin-bottom: 30px;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__eyebrow {
+        margin-bottom: 16px;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__heading {
+        font-size: clamp(36px, 12vw, 56px);
+        line-height: 0.96;
+        letter-spacing: -0.02em;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__image {
+        max-height: 520px;
+        border-radius: min(var(--hanan-dev-founder-image-radius), 24px);
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__story {
+        font-size: 15px;
+        line-height: 1.68;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__metadata {
+        grid-template-columns: 1fr;
+        border-radius: 22px;
+        margin-top: 28px;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__meta-item {
+        padding: 17px;
+      }
+
+      #{{ section_id }} .hanan-dev-founder-story__tagline {
+        margin-top: 24px;
+        font-size: 11px;
+      }
+
+      #{{ section_id }} .hanan-dev-history-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 42px;
+      }
+
+      #{{ section_id }} .hanan-dev-history-gallery__media {
+        border-radius: min(var(--hanan-dev-founder-image-radius), 20px);
+      }
+
+      #{{ section_id }} .hanan-dev-history-gallery__caption {
+        margin-top: 9px;
+        font-size: 11px;
+      }
+    }
 </style>
 
 {% schema %}
@@ -521,8 +527,14 @@
       "default": "2018"
     },
     {
-      "type": "url",
+      "type": "text",
       "id": "community_size",
+      "label": "Community text",
+      "default": "La granja del Borrego"
+    },
+    {
+      "type": "url",
+      "id": "community_link",
       "label": "Community link"
     },
     {
