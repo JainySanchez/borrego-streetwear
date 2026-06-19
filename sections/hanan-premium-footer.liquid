@@ -1,4 +1,5 @@
 <section
+  id="hanan-footer-{{ section.id }}"
   class="hanan-footer {% if section.settings.mobile_accordion %}hanan-footer--accordion{% endif %} {% if section.settings.enable_animation %}hanan-footer--animated{% endif %}"
   style="
     --footer-bg: {{ section.settings.background_color }};
@@ -523,7 +524,7 @@
 
 <script>
   (() => {
-    const footer = document.currentScript.closest('.hanan-footer');
+    const footer = document.querySelector('#hanan-footer-{{ section.id }}');
     if (!footer) return;
 
     const columns = footer.querySelectorAll('.hanan-footer__column-title');
@@ -540,7 +541,6 @@
     });
   })();
 </script>
-
 {% schema %}
 {
   "name": "HANAN Premium Footer",
