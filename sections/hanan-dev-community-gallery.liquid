@@ -1,17 +1,6 @@
 {%- liquid
   assign section_id = 'hanan-dev-community-gallery-' | append: section.id
-  assign whatsapp_number = section.settings.whatsapp_phone | remove: ' ' | remove: '+' | remove: '-' | remove: '(' | remove: ')'
-  assign whatsapp_message = section.settings.whatsapp_message | url_encode
-
-  if whatsapp_number != blank
-    assign whatsapp_url = 'https://wa.me/' | append: whatsapp_number
-
-    if section.settings.whatsapp_message != blank
-      assign whatsapp_url = whatsapp_url | append: '?text=' | append: whatsapp_message
-    endif
-  else
-    assign whatsapp_url = '#'
-  endif
+  assign cta_url = section.settings.cta_link | default: '#'
 -%}
 
 <section
@@ -57,7 +46,7 @@
       {%- if section.settings.show_cta and section.settings.button_text != blank -%}
         <div class="hanan-dev-community-gallery__cta-wrapper">
           <a
-            href="{{ whatsapp_url }}"
+            href="{{ cta_url }}"
             class="hanan-dev-community-cta"
             target="_blank"
             rel="noopener noreferrer"
@@ -105,7 +94,10 @@
               {%- endif -%}
             </figure>
           {%- else -%}
-            <figure class="hanan-dev-community-card hanan-dev-community-card--placeholder" {{ block.shopify_attributes }}>
+            <figure
+              class="hanan-dev-community-card hanan-dev-community-card--placeholder"
+              {{ block.shopify_attributes }}
+            >
               <div class="hanan-dev-community-card__media hanan-dev-community-card__media--{{ section.settings.image_aspect_ratio }}">
                 <div class="hanan-dev-community-card__placeholder" aria-hidden="true">
                   <span>BORREGO</span>
@@ -485,17 +477,9 @@
       "default": "Únete a la comunidad"
     },
     {
-      "type": "text",
-      "id": "whatsapp_phone",
-      "label": "WhatsApp phone number",
-      "info": "Ingresa el número con código de país. Ejemplo: 51999999999",
-      "default": "51999999999"
-    },
-    {
-      "type": "textarea",
-      "id": "whatsapp_message",
-      "label": "WhatsApp message",
-      "default": "Hola BORREGO, quiero unirme a la comunidad y recibir más información."
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link"
     },
     {
       "type": "header",
