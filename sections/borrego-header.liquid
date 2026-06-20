@@ -12,589 +12,595 @@
 -%}
 
 {% style %}
-  #hanan-dev-borrego-header-{{ section.id }} {
-    --hanan-dev-header-bg: {{ section.settings.header_background }};
-    --hanan-dev-header-text: {{ section.settings.header_text_color }};
-    --hanan-dev-header-hover: {{ section.settings.header_hover_color }};
-    --hanan-dev-header-scrolled-bg: {{ section.settings.header_scrolled_background }};
-    --hanan-dev-transparent-text: {{ section.settings.transparent_text_color }};
-    --hanan-dev-logo-desktop-width: {{ section.settings.logo_width_desktop }}px;
-    --hanan-dev-logo-mobile-width: {{ section.settings.logo_width_mobile }}px;
-    --hanan-dev-mobile-community-icon: {{ section.settings.mobile_community_icon_color }};
-    --hanan-dev-mobile-community-text: {{ section.settings.mobile_community_text_color }};
-    position: relative;
-    z-index: 40;
-  }
+    #hanan-dev-borrego-header-{{ section.id }} {
+      --hanan-dev-header-bg: {{ section.settings.header_background }};
+      --hanan-dev-header-text: {{ section.settings.header_text_color }};
+      --hanan-dev-header-hover: {{ section.settings.header_hover_color }};
+      --hanan-dev-header-scrolled-bg: {{ section.settings.header_scrolled_background }};
+      --hanan-dev-transparent-text: {{ section.settings.transparent_text_color }};
+      --hanan-dev-logo-desktop-width: {{ section.settings.logo_width_desktop }}px;
+      --hanan-dev-logo-mobile-width: {{ section.settings.logo_width_mobile }}px;
+      --hanan-dev-mobile-community-icon: {{ section.settings.mobile_community_icon_color }};
+      --hanan-dev-mobile-community-text: {{ section.settings.mobile_community_text_color }};
+      position: relative;
+      z-index: 40;
+    }
 
-  {%- if transparent_home -%}
-    #shopify-section-{{ section.id }} {
-      position: absolute;
+    {%- if transparent_home -%}
+      #shopify-section-{{ section.id }} {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        background: transparent;
+      }
+    {%- endif -%}
+
+    body.hanan-dev-header-lock {
+      overflow: hidden;
+    }
+
+    .hanan-dev-borrego-header {
+      color: var(--hanan-dev-header-text);
+      background: transparent;
+    }
+
+    .hanan-dev-header-shell {
+      position: sticky;
       top: 0;
+      z-index: 8;
+      background: var(--hanan-dev-header-bg);
+      color: var(--hanan-dev-header-text);
+      transition: background 180ms ease, color 180ms ease, backdrop-filter 180ms ease, box-shadow 180ms ease;
+    }
+
+    .hanan-dev-borrego-header.is-transparent .hanan-dev-header-shell {
+      position: fixed;
       left: 0;
       right: 0;
       width: 100%;
+    }
+
+    .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-header-shell {
       background: transparent;
+      color: var(--hanan-dev-transparent-text);
+      backdrop-filter: none;
+      box-shadow: none;
     }
-  {%- endif -%}
 
-  body.hanan-dev-header-lock {
-    overflow: hidden;
-  }
+    .hanan-dev-borrego-header.is-scrolled .hanan-dev-header-shell,
+    .hanan-dev-borrego-header.is-mobile-open .hanan-dev-header-shell {
+      background: {{ section.settings.header_scrolled_background | color_modify: 'alpha', 0.92 }};
+      backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(242, 236, 221, 0.08);
+    }
 
-  .hanan-dev-borrego-header {
-    color: var(--hanan-dev-header-text);
-    background: transparent;
-  }
-
-  .hanan-dev-header-shell {
-    position: sticky;
-    top: 0;
-    z-index: 8;
-    background: var(--hanan-dev-header-bg);
-    color: var(--hanan-dev-header-text);
-    transition: background 180ms ease, color 180ms ease, backdrop-filter 180ms ease, box-shadow 180ms ease;
-  }
-
-  .hanan-dev-borrego-header.is-transparent .hanan-dev-header-shell {
-    position: fixed;
-    left: 0;
-    right: 0;
-    width: 100%;
-  }
-
-  .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-header-shell {
-    background: transparent;
-    color: var(--hanan-dev-transparent-text);
-    backdrop-filter: none;
-    box-shadow: none;
-  }
-
-  .hanan-dev-borrego-header.is-scrolled .hanan-dev-header-shell,
-  .hanan-dev-borrego-header.is-mobile-open .hanan-dev-header-shell {
-    background: {{ section.settings.header_scrolled_background | color_modify: 'alpha', 0.92 }};
-    backdrop-filter: blur(14px);
-    box-shadow: 0 1px 0 rgba(242, 236, 221, 0.08);
-  }
-
-  .hanan-dev-header-bar {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    align-items: center;
-    min-height: 7.8rem;
-    max-width: 152rem;
-    margin: 0 auto;
-    padding: 0 3.2rem;
-    gap: 2rem;
-  }
-
-  .hanan-dev-desktop-nav-list,
-  .hanan-dev-header-icons,
-  .hanan-dev-mobile-nav,
-  .hanan-dev-mobile-subnav,
-  .hanan-dev-mobile-actions,
-  .hanan-dev-mobile-socials {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .hanan-dev-desktop-nav {
-    justify-self: start;
-  }
-
-  .hanan-dev-desktop-nav-list {
-    display: flex;
-    align-items: center;
-    gap: 2.8rem;
-  }
-
-  .hanan-dev-desktop-link,
-  .hanan-dev-header-icon,
-  .hanan-dev-mobile-toggle,
-  .hanan-dev-mobile-close,
-  .hanan-dev-mobile-link,
-  .hanan-dev-mobile-parent-button,
-  .hanan-dev-mobile-subnav-link,
-  .hanan-dev-mobile-action,
-  .hanan-dev-mobile-social-link,
-  .hanan-dev-mobile-community-link {
-    color: currentColor;
-    text-decoration: none;
-  }
-
-  .hanan-dev-desktop-link {
-    display: inline-flex;
-    align-items: center;
-    min-height: 7.8rem;
-    font-size: 1.15rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: color 160ms ease;
-  }
-
-  .hanan-dev-desktop-link:hover,
-  .hanan-dev-desktop-link:focus-visible,
-  .hanan-dev-header-icon:hover,
-  .hanan-dev-header-icon:focus-visible,
-  .hanan-dev-mobile-link:hover,
-  .hanan-dev-mobile-link:focus-visible,
-  .hanan-dev-mobile-parent-button:hover,
-  .hanan-dev-mobile-parent-button:focus-visible,
-  .hanan-dev-mobile-subnav-link:hover,
-  .hanan-dev-mobile-subnav-link:focus-visible,
-  .hanan-dev-mobile-action:hover,
-  .hanan-dev-mobile-action:focus-visible,
-  .hanan-dev-mobile-social-link:hover,
-  .hanan-dev-mobile-social-link:focus-visible {
-    color: var(--hanan-dev-header-hover);
-  }
-
-  .hanan-dev-logo {
-    justify-self: center;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 9rem;
-    color: currentColor;
-    text-align: center;
-    text-decoration: none;
-  }
-
-  .hanan-dev-logo-image {
-    display: block;
-    width: var(--hanan-dev-logo-desktop-width);
-    max-width: 28vw;
-    height: auto;
-  }
-
-  .hanan-dev-logo-image--transparent,
-  .hanan-dev-logo-image--mobile {
-    display: none;
-  }
-
-  .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-logo-image--primary.has-transparent-logo {
-    display: none;
-  }
-
-  .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-logo-image--transparent {
-    display: block;
-  }
-
-  .hanan-dev-logo-text {
-    font-family: var(--font-heading-family);
-    font-size: 1.8rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .hanan-dev-header-utilities {
-    justify-self: end;
-  }
-
-  .hanan-dev-header-icons {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 1.4rem;
-  }
-
-  .hanan-dev-header-icon,
-  .hanan-dev-mobile-toggle,
-  .hanan-dev-mobile-close {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 4rem;
-    height: 4rem;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    transition: color 160ms ease;
-  }
-
-  .hanan-dev-header-icon svg,
-  .hanan-dev-mobile-toggle svg,
-  .hanan-dev-mobile-close svg,
-  .hanan-dev-mobile-action svg,
-  .hanan-dev-mobile-social-link svg {
-    display: block;
-    width: 3rem;
-    height: 3rem;
-  }
-
-  .hanan-dev-header-icon .svg-wrapper,
-  .hanan-dev-mobile-toggle .svg-wrapper,
-  .hanan-dev-mobile-close .svg-wrapper,
-  .hanan-dev-mobile-action .svg-wrapper {
-    display: inline-flex;
-    width: 2.2rem;
-    height: 2.2rem;
-  }
-
-  .hanan-dev-cart-icon svg {
-    width: 2.2rem;
-    height: 2.2rem;
-    overflow: visible;
-  }
-
-  .hanan-dev-cart-count {
-    position: absolute;
-    top: 0.1rem;
-    right: 0;
-    min-width: 1.8rem;
-    height: 1.8rem;
-    padding: 0 0.45rem;
-    border-radius: 999px;
-    background: var(--hanan-dev-header-hover);
-    color: #11110c;
-    font-size: 1rem;
-    font-weight: 800;
-    line-height: 1.8rem;
-    text-align: center;
-  }
-
-  .hanan-dev-mobile-toggle,
-  .hanan-dev-mobile-close,
-  .hanan-dev-mobile-cart {
-    display: none;
-  }
-
-  .hanan-dev-header-drawer {
-    position: fixed;
-    inset: 0;
-    z-index: 20;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 180ms ease;
-  }
-
-  .hanan-dev-borrego-header.is-mobile-open .hanan-dev-header-drawer {
-    pointer-events: auto;
-    opacity: 1;
-  }
-
-  .hanan-dev-drawer-overlay {
-    position: absolute;
-    inset: 0;
-    border: 0;
-    background: rgba(17, 17, 12, 0.64);
-    cursor: pointer;
-  }
-
-  .hanan-dev-drawer-panel {
-    position: absolute;
-    inset: 0 0 0 auto;
-    display: flex;
-    flex-direction: column;
-    width: min(100%, 48rem);
-    max-width: 100vw;
-    background: #11110c;
-    color: #f2ecdd;
-    transform: translateX(100%);
-    transition: transform 220ms ease;
-  }
-
-  .hanan-dev-borrego-header.is-mobile-open .hanan-dev-drawer-panel {
-    transform: translateX(0);
-  }
-
-  .hanan-dev-drawer-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1.8rem 2rem;
-  }
-
-  .hanan-dev-drawer-kicker {
-    font-size: 1.1rem;
-    font-weight: 900;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-  }
-
-  .hanan-dev-drawer-scroll {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-    flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 1.6rem 2rem 2.4rem;
-  }
-
-  .hanan-dev-mobile-nav {
-    display: grid;
-    gap: 0.2rem;
-  }
-
-  .hanan-dev-mobile-nav-item {
-    border-bottom: 1px solid rgba(242, 236, 221, 0.08);
-  }
-
-  .hanan-dev-mobile-link,
-  .hanan-dev-mobile-parent-button {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    min-height: 5.8rem;
-    padding: 1.4rem 0;
-    border: 0;
-    background: transparent;
-    color: currentColor;
-    font: inherit;
-    font-family: var(--font-heading-family);
-    font-size: clamp(2.2rem, 7vw, 3.8rem);
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    line-height: 1.05;
-    text-align: left;
-    text-transform: uppercase;
-    cursor: pointer;
-  }
-
-  .hanan-dev-mobile-parent-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
-    flex: 0 0 auto;
-    margin-left: 1.2rem;
-    transition: transform 160ms ease;
-  }
-
-  .hanan-dev-mobile-parent-button[aria-expanded='true'] .hanan-dev-mobile-parent-icon {
-    transform: rotate(180deg);
-  }
-
-  .hanan-dev-mobile-parent-icon svg {
-    width: 1.7rem;
-    height: 1.7rem;
-  }
-
-  .hanan-dev-mobile-subnav {
-    display: grid;
-    gap: 0.9rem;
-    max-height: 0;
-    overflow: hidden;
-    padding: 0;
-    opacity: 0;
-    transform: translateY(-0.4rem);
-    transition: max-height 220ms ease, opacity 180ms ease, transform 180ms ease, padding 180ms ease;
-  }
-
-  .hanan-dev-mobile-subnav.is-open {
-    max-height: 48rem;
-    padding: 0 0 1.8rem 1.4rem;
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .hanan-dev-mobile-subnav-link {
-    display: inline-flex;
-    width: fit-content;
-    max-width: 100%;
-    font-size: 1.45rem;
-    letter-spacing: 0.04em;
-    line-height: 1.35;
-  }
-
-  .hanan-dev-mobile-footer {
-    margin-top: auto;
-    padding-top: 3.6rem;
-  }
-
-.hanan-dev-mobile-community-link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  width: fit-content;
-  max-width: 100%;
-  min-height: 4.8rem;
-  margin-bottom: 2.4rem;
-  padding: 1.1rem 1.4rem;
-  border: 1px solid rgba(217, 178, 111, 0.42);
-  border-radius: 999px;
-  background: rgba(217, 178, 111, 0.12);
-  color: var(--hanan-dev-mobile-community-text);
-  font-size: 1.05rem;
-  font-weight: 900;
-  letter-spacing: 0.13em;
-  line-height: 1.25;
-  text-transform: uppercase;
-  box-shadow: 0 0 0 1px rgba(242, 236, 221, 0.03), 0 12px 28px rgba(0, 0, 0, 0.22);
-  transition: opacity 160ms ease, color 160ms ease, transform 160ms ease, background 160ms ease, border-color 160ms ease;
-}
-
-.hanan-dev-mobile-community-link::after {
-  content: "↗";
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 0.2rem;
-  color: var(--hanan-dev-mobile-community-icon);
-  font-size: 1.2rem;
-  line-height: 1;
-}
-
-.hanan-dev-mobile-community-link:hover,
-.hanan-dev-mobile-community-link:focus-visible {
-  opacity: 1;
-  color: var(--hanan-dev-header-hover);
-  background: rgba(217, 178, 111, 0.18);
-  border-color: rgba(217, 178, 111, 0.75);
-  transform: translateY(-0.2rem);
-}
-
-.hanan-dev-mobile-community-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.8rem;
-  height: 2.8rem;
-  flex: 0 0 2.8rem;
-  color: var(--hanan-dev-mobile-community-icon);
-  border-radius: 999px;
-  background: rgba(217, 178, 111, 0.16);
-}
-
-.hanan-dev-mobile-community-icon svg {
-  display: block;
-  width: 2rem;
-  height: 2rem;
-  fill: currentColor;
-}
-
-  .hanan-dev-mobile-community-text {
-    display: inline-block;
-    min-width: 0;
-  }
-
-  .hanan-dev-mobile-socials {
-    display: flex;
-    align-items: center;
-    gap: 1.6rem;
-    margin-bottom: 2.4rem;
-  }
-
-  .hanan-dev-mobile-social-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3.4rem;
-    height: 3.4rem;
-    color: rgba(242, 236, 221, 0.86);
-    transition: color 160ms ease, transform 160ms ease;
-  }
-
-  .hanan-dev-mobile-social-link:hover,
-  .hanan-dev-mobile-social-link:focus-visible {
-    transform: translateY(-0.1rem);
-  }
-
-  .hanan-dev-mobile-actions {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .hanan-dev-mobile-action {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    min-height: 4rem;
-    padding: 0 1.2rem;
-    border: 1px solid rgba(242, 236, 221, 0.12);
-    font-size: 1rem;
-    font-weight: 900;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .hanan-dev-sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
-  .hanan-dev-borrego-header :focus-visible {
-    outline: 0.2rem solid var(--hanan-dev-header-hover);
-    outline-offset: 0.3rem;
-  }
-
-  @media screen and (max-width: 989px) {
     .hanan-dev-header-bar {
-      min-height: 6.4rem;
-      padding: 0 1.6rem;
-      grid-template-columns: 4rem minmax(0, 1fr) 4rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      min-height: 7.8rem;
+      max-width: 152rem;
+      margin: 0 auto;
+      padding: 0 3.2rem;
+      gap: 2rem;
     }
 
-    .hanan-dev-desktop-nav,
-    .hanan-dev-header-utilities {
-      display: none;
+    .hanan-dev-desktop-nav-list,
+    .hanan-dev-header-icons,
+    .hanan-dev-mobile-nav,
+    .hanan-dev-mobile-subnav,
+    .hanan-dev-mobile-actions,
+    .hanan-dev-mobile-socials {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
-    .hanan-dev-mobile-toggle,
-    .hanan-dev-mobile-close,
-    .hanan-dev-mobile-cart {
-      display: inline-flex;
-    }
-
-    .hanan-dev-mobile-toggle {
+    .hanan-dev-desktop-nav {
       justify-self: start;
     }
 
-    .hanan-dev-mobile-cart {
+    .hanan-dev-desktop-nav-list {
+      display: flex;
+      align-items: center;
+      gap: 2.8rem;
+    }
+
+    .hanan-dev-desktop-link,
+    .hanan-dev-header-icon,
+    .hanan-dev-mobile-toggle,
+    .hanan-dev-mobile-close,
+    .hanan-dev-mobile-link,
+    .hanan-dev-mobile-parent-button,
+    .hanan-dev-mobile-subnav-link,
+    .hanan-dev-mobile-action,
+    .hanan-dev-mobile-social-link,
+    .hanan-dev-mobile-community-link {
+      color: currentColor;
+      text-decoration: none;
+    }
+
+    .hanan-dev-desktop-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 7.8rem;
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 160ms ease;
+    }
+
+    .hanan-dev-desktop-link:hover,
+    .hanan-dev-desktop-link:focus-visible,
+    .hanan-dev-header-icon:hover,
+    .hanan-dev-header-icon:focus-visible,
+    .hanan-dev-mobile-link:hover,
+    .hanan-dev-mobile-link:focus-visible,
+    .hanan-dev-mobile-parent-button:hover,
+    .hanan-dev-mobile-parent-button:focus-visible,
+    .hanan-dev-mobile-subnav-link:hover,
+    .hanan-dev-mobile-subnav-link:focus-visible,
+    .hanan-dev-mobile-action:hover,
+    .hanan-dev-mobile-action:focus-visible,
+    .hanan-dev-mobile-social-link:hover,
+    .hanan-dev-mobile-social-link:focus-visible {
+      color: var(--hanan-dev-header-hover);
+    }
+
+    .hanan-dev-logo {
+      justify-self: center;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 9rem;
+      color: currentColor;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .hanan-dev-logo-image {
+      display: block;
+      width: var(--hanan-dev-logo-desktop-width);
+      max-width: 28vw;
+      height: auto;
+    }
+
+    .hanan-dev-logo-image--transparent,
+    .hanan-dev-logo-image--mobile {
+      display: none;
+    }
+
+    .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-logo-image--primary.has-transparent-logo {
+      display: none;
+    }
+
+    .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-logo-image--transparent {
+      display: block;
+    }
+
+    .hanan-dev-logo-text {
+      font-family: var(--font-heading-family);
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hanan-dev-header-utilities {
       justify-self: end;
+    }
+
+    .hanan-dev-header-icons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 1.4rem;
+    }
+
+    .hanan-dev-header-icon,
+    .hanan-dev-mobile-toggle,
+    .hanan-dev-mobile-close {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 4rem;
+      height: 4rem;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      transition: color 160ms ease;
     }
 
     .hanan-dev-header-icon svg,
     .hanan-dev-mobile-toggle svg,
     .hanan-dev-mobile-close svg,
     .hanan-dev-mobile-action svg,
-    .hanan-dev-cart-icon svg {
-      width: 2.4rem;
-      height: 2.4rem;
+    .hanan-dev-mobile-social-link svg {
+      display: block;
+      width: 3rem;
+      height: 3rem;
     }
 
     .hanan-dev-header-icon .svg-wrapper,
     .hanan-dev-mobile-toggle .svg-wrapper,
     .hanan-dev-mobile-close .svg-wrapper,
     .hanan-dev-mobile-action .svg-wrapper {
-      width: 2.4rem;
-      height: 2.4rem;
+      display: inline-flex;
+      width: 2.2rem;
+      height: 2.2rem;
     }
 
-    .hanan-dev-logo-image {
-      width: var(--hanan-dev-logo-mobile-width);
-      max-width: 42vw;
+    .hanan-dev-cart-icon svg {
+      width: 2.2rem;
+      height: 2.2rem;
+      overflow: visible;
     }
 
-    .hanan-dev-logo-image--primary.has-mobile-logo,
-    .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-logo-image--transparent.has-mobile-logo {
-      display: none;
+    .hanan-dev-cart-count {
+      position: absolute;
+      top: 0.1rem;
+      right: 0;
+      min-width: 1.8rem;
+      height: 1.8rem;
+      padding: 0 0.45rem;
+      border-radius: 999px;
+      background: var(--hanan-dev-header-hover);
+      color: #11110c;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.8rem;
+      text-align: center;
     }
 
-    .hanan-dev-logo-image--mobile {
-      display: block;
-    }
-  }
-
-  @media screen and (min-width: 990px) {
+    .hanan-dev-mobile-toggle,
+    .hanan-dev-mobile-close,
     .hanan-dev-mobile-cart {
       display: none;
     }
+
+    .hanan-dev-header-drawer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    .hanan-dev-borrego-header.is-mobile-open .hanan-dev-header-drawer {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .hanan-dev-drawer-overlay {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: rgba(17, 17, 12, 0.64);
+      cursor: pointer;
+    }
+
+    .hanan-dev-drawer-panel {
+      position: absolute;
+      inset: 0 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      width: min(100%, 48rem);
+      max-width: 100vw;
+      background: #11110c;
+      color: #f2ecdd;
+      transform: translateX(100%);
+      transition: transform 220ms ease;
+    }
+
+    .hanan-dev-borrego-header.is-mobile-open .hanan-dev-drawer-panel {
+      transform: translateX(0);
+    }
+
+    .hanan-dev-drawer-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.8rem 2rem;
+    }
+
+    .hanan-dev-drawer-kicker {
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .hanan-dev-drawer-scroll {
+      display: flex;
+      flex: 1;
+      min-height: 0;
+      flex-direction: column;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 1.6rem 2rem 2.4rem;
+    }
+
+    .hanan-dev-mobile-nav {
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .hanan-dev-mobile-nav-item {
+      border-bottom: 1px solid rgba(242, 236, 221, 0.08);
+    }
+
+    .hanan-dev-mobile-link,
+    .hanan-dev-mobile-parent-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 5.8rem;
+      padding: 1.4rem 0;
+      border: 0;
+      background: transparent;
+      color: currentColor;
+      font: inherit;
+      font-family: var(--font-heading-family);
+      font-size: clamp(2.2rem, 7vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      line-height: 1.05;
+      text-align: left;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .hanan-dev-mobile-parent-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.2rem;
+      height: 2.2rem;
+      flex: 0 0 auto;
+      margin-left: 1.2rem;
+      transition: transform 160ms ease;
+    }
+
+    .hanan-dev-mobile-parent-button[aria-expanded='true'] .hanan-dev-mobile-parent-icon {
+      transform: rotate(180deg);
+    }
+
+    .hanan-dev-mobile-parent-icon svg {
+      width: 1.7rem;
+      height: 1.7rem;
+    }
+
+    .hanan-dev-mobile-subnav {
+      display: grid;
+      gap: 0.9rem;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0;
+      opacity: 0;
+      transform: translateY(-0.4rem);
+      transition: max-height 220ms ease, opacity 180ms ease, transform 180ms ease, padding 180ms ease;
+    }
+
+    .hanan-dev-mobile-subnav.is-open {
+      max-height: 48rem;
+      padding: 0 0 1.8rem 1.4rem;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hanan-dev-mobile-subnav-link {
+      display: inline-flex;
+      width: fit-content;
+      max-width: 100%;
+      font-size: 1.45rem;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+    }
+
+    .hanan-dev-mobile-footer {
+      margin-top: auto;
+      padding-top: 3.6rem;
+    }
+
+  .hanan-dev-mobile-community-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    justify-content: space-between;
+    padding: 1.2rem 1.6rem;
+    background: rgba(217, 178, 111, 0.16);
+    max-width: 100%;
+    min-height: 4.8rem;
+    margin-bottom: 2.4rem;
+    padding: 1.1rem 1.4rem;
+    border: 1px solid rgba(217, 178, 111, 0.42);
+    border-radius: 999px;
+    background: rgba(217, 178, 111, 0.12);
+    color: var(--hanan-dev-mobile-community-text);
+    font-size: 1.05rem;
+    font-weight: 900;
+    letter-spacing: 0.13em;
+    line-height: 1.25;
+    text-transform: uppercase;
+    box-shadow: 0 0 0 1px rgba(242, 236, 221, 0.03), 0 12px 28px rgba(0, 0, 0, 0.22);
+    transition: opacity 160ms ease, color 160ms ease, transform 160ms ease, background 160ms ease, border-color 160ms ease;
   }
+
+  .hanan-dev-mobile-community-link::after {
+    content: "↗";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.2rem;
+    color: var(--hanan-dev-mobile-community-icon);
+    line-height: 1;
+    font-size: 1.4rem;
+    opacity: 0.9;
+  }
+
+  .hanan-dev-mobile-community-link:hover,
+  .hanan-dev-mobile-community-link:focus-visible {
+    opacity: 1;
+    color: var(--hanan-dev-header-hover);
+    background: rgba(217, 178, 111, 0.18);
+    border-color: rgba(217, 178, 111, 0.75);
+    transform: translateY(-0.2rem);
+  }
+
+  .hanan-dev-mobile-community-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8rem;
+    height: 2.8rem;
+    flex: 0 0 2.8rem;
+    color: var(--hanan-dev-mobile-community-icon);
+    border-radius: 999px;
+    background: rgba(217, 178, 111, 0.16);
+  }
+
+  .hanan-dev-mobile-community-icon svg {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    fill: currentColor;
+  }
+
+    .hanan-dev-mobile-community-text {
+      display: inline-block;
+      min-width: 0;
+        flex: 1;
+    color: #f2ecdd;
+    }
+
+    .hanan-dev-mobile-socials {
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .hanan-dev-mobile-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.4rem;
+      height: 3.4rem;
+      color: rgba(242, 236, 221, 0.86);
+      transition: color 160ms ease, transform 160ms ease;
+    }
+
+    .hanan-dev-mobile-social-link:hover,
+    .hanan-dev-mobile-social-link:focus-visible {
+      transform: translateY(-0.1rem);
+    }
+
+    .hanan-dev-mobile-actions {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hanan-dev-mobile-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      min-height: 4rem;
+      padding: 0 1.2rem;
+      border: 1px solid rgba(242, 236, 221, 0.12);
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hanan-dev-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .hanan-dev-borrego-header :focus-visible {
+      outline: 0.2rem solid var(--hanan-dev-header-hover);
+      outline-offset: 0.3rem;
+    }
+
+    @media screen and (max-width: 989px) {
+      .hanan-dev-header-bar {
+        min-height: 6.4rem;
+        padding: 0 1.6rem;
+        grid-template-columns: 4rem minmax(0, 1fr) 4rem;
+      }
+
+      .hanan-dev-desktop-nav,
+      .hanan-dev-header-utilities {
+        display: none;
+      }
+
+      .hanan-dev-mobile-toggle,
+      .hanan-dev-mobile-close,
+      .hanan-dev-mobile-cart {
+        display: inline-flex;
+      }
+
+      .hanan-dev-mobile-toggle {
+        justify-self: start;
+      }
+
+      .hanan-dev-mobile-cart {
+        justify-self: end;
+      }
+
+      .hanan-dev-header-icon svg,
+      .hanan-dev-mobile-toggle svg,
+      .hanan-dev-mobile-close svg,
+      .hanan-dev-mobile-action svg,
+      .hanan-dev-cart-icon svg {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+
+      .hanan-dev-header-icon .svg-wrapper,
+      .hanan-dev-mobile-toggle .svg-wrapper,
+      .hanan-dev-mobile-close .svg-wrapper,
+      .hanan-dev-mobile-action .svg-wrapper {
+        width: 2.4rem;
+        height: 2.4rem;
+      }
+
+      .hanan-dev-logo-image {
+        width: var(--hanan-dev-logo-mobile-width);
+        max-width: 42vw;
+      }
+
+      .hanan-dev-logo-image--primary.has-mobile-logo,
+      .hanan-dev-borrego-header.is-transparent:not(.is-scrolled) .hanan-dev-logo-image--transparent.has-mobile-logo {
+        display: none;
+      }
+
+      .hanan-dev-logo-image--mobile {
+        display: block;
+      }
+    }
+
+    @media screen and (min-width: 990px) {
+      .hanan-dev-mobile-cart {
+        display: none;
+      }
+    }
 {% endstyle %}
 
 <hanan-dev-borrego-header
@@ -695,7 +701,11 @@
       <div class="hanan-dev-header-utilities">
         <ul class="hanan-dev-header-icons">
           <li>
-            <a class="hanan-dev-header-icon" href="{{ routes.search_url }}" aria-label="{{ 'general.search.search' | t }}">
+            <a
+              class="hanan-dev-header-icon"
+              href="{{ routes.search_url }}"
+              aria-label="{{ 'general.search.search' | t }}"
+            >
               {{ 'icon-search.svg' | inline_asset_content }}
             </a>
           </li>
@@ -725,7 +735,11 @@
         </ul>
       </div>
 
-      <a class="hanan-dev-header-icon hanan-dev-mobile-cart" href="{{ routes.search_url }}" aria-label="{{ 'general.search.search' | t }}">
+      <a
+        class="hanan-dev-header-icon hanan-dev-mobile-cart"
+        href="{{ routes.search_url }}"
+        aria-label="{{ 'general.search.search' | t }}"
+      >
         {{ 'icon-search.svg' | inline_asset_content }}
       </a>
     </div>
@@ -807,11 +821,18 @@
             </a>
           {%- endif -%}
 
-          {%- if section.settings.instagram_link != blank or section.settings.tiktok_link != blank or section.settings.whatsapp_link != blank -%}
+          {%- if section.settings.instagram_link != blank
+            or section.settings.tiktok_link != blank
+            or section.settings.whatsapp_link != blank
+          -%}
             <ul class="hanan-dev-mobile-socials" aria-label="Social links">
               {%- if section.settings.instagram_link != blank -%}
                 <li>
-                  <a class="hanan-dev-mobile-social-link" href="{{ section.settings.instagram_link }}" aria-label="Instagram">
+                  <a
+                    class="hanan-dev-mobile-social-link"
+                    href="{{ section.settings.instagram_link }}"
+                    aria-label="Instagram"
+                  >
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none">
                       <rect x="4" y="4" width="16" height="16" rx="4.2" stroke="currentColor" stroke-width="1.7"/>
                       <circle cx="12" cy="12" r="3.4" stroke="currentColor" stroke-width="1.7"/>
@@ -832,7 +853,11 @@
               {%- endif -%}
               {%- if section.settings.whatsapp_link != blank -%}
                 <li>
-                  <a class="hanan-dev-mobile-social-link" href="{{ section.settings.whatsapp_link }}" aria-label="WhatsApp">
+                  <a
+                    class="hanan-dev-mobile-social-link"
+                    href="{{ section.settings.whatsapp_link }}"
+                    aria-label="WhatsApp"
+                  >
                     <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none">
                       <path d="M5.6 19L6.5 15.7C5.9 14.7 5.6 13.6 5.6 12.4C5.6 8.8 8.5 5.9 12.1 5.9C15.7 5.9 18.6 8.8 18.6 12.4C18.6 16 15.7 18.9 12.1 18.9C11 18.9 9.9 18.6 9 18.1L5.6 19Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
                       <path d="M9.6 10.1C9.8 13 11.4 14.7 14.1 15.2L15.1 14.1L13.7 12.9L13 13.6C11.9 13.1 11.2 12.4 10.8 11.3L11.5 10.6L10.3 9.2L9.6 10.1Z" fill="currentColor"/>
