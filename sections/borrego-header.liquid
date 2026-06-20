@@ -408,46 +408,66 @@
     padding-top: 3.6rem;
   }
 
-  .hanan-dev-mobile-community-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-    max-width: 100%;
-    min-height: 4.4rem;
-    margin-bottom: 2.2rem;
-    color: var(--hanan-dev-mobile-community-text);
-    font-size: 1.1rem;
-    font-weight: 900;
-    letter-spacing: 0.12em;
-    line-height: 1.25;
-    text-transform: uppercase;
-    opacity: 0.88;
-    transition: opacity 160ms ease, color 160ms ease, transform 160ms ease;
-  }
+.hanan-dev-mobile-community-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 4.8rem;
+  margin-bottom: 2.4rem;
+  padding: 1.1rem 1.4rem;
+  border: 1px solid rgba(217, 178, 111, 0.42);
+  border-radius: 999px;
+  background: rgba(217, 178, 111, 0.12);
+  color: var(--hanan-dev-mobile-community-text);
+  font-size: 1.05rem;
+  font-weight: 900;
+  letter-spacing: 0.13em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 1px rgba(242, 236, 221, 0.03), 0 12px 28px rgba(0, 0, 0, 0.22);
+  transition: opacity 160ms ease, color 160ms ease, transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
 
-  .hanan-dev-mobile-community-link:hover,
-  .hanan-dev-mobile-community-link:focus-visible {
-    opacity: 1;
-    color: var(--hanan-dev-header-hover);
-    transform: translateY(-0.1rem);
-  }
+.hanan-dev-mobile-community-link::after {
+  content: "↗";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.2rem;
+  color: var(--hanan-dev-mobile-community-icon);
+  font-size: 1.2rem;
+  line-height: 1;
+}
 
-  .hanan-dev-mobile-community-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.6rem;
-    height: 2.6rem;
-    flex: 0 0 2.6rem;
-    color: var(--hanan-dev-mobile-community-icon);
-  }
+.hanan-dev-mobile-community-link:hover,
+.hanan-dev-mobile-community-link:focus-visible {
+  opacity: 1;
+  color: var(--hanan-dev-header-hover);
+  background: rgba(217, 178, 111, 0.18);
+  border-color: rgba(217, 178, 111, 0.75);
+  transform: translateY(-0.2rem);
+}
 
-  .hanan-dev-mobile-community-icon svg {
-    display: block;
-    width: 2.2rem;
-    height: 2.2rem;
-    fill: currentColor;
-  }
+.hanan-dev-mobile-community-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  flex: 0 0 2.8rem;
+  color: var(--hanan-dev-mobile-community-icon);
+  border-radius: 999px;
+  background: rgba(217, 178, 111, 0.16);
+}
+
+.hanan-dev-mobile-community-icon svg {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  fill: currentColor;
+}
 
   .hanan-dev-mobile-community-text {
     display: inline-block;
